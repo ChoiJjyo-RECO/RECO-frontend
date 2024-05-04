@@ -138,6 +138,18 @@
                 android:src="@drawable/signupbtn"
                 android:importantForAccessibility="no" />
 
+            <ImageButton
+                android:id="@+id/buttonAnonymousSignIn"
+                android:layout_width="273dp"
+                android:layout_height="47dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/anonymous_signin"
+                android:importantForAccessibility="no" />
+
         </LinearLayout>
 
     </LinearLayout>
