@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -151,7 +151,7 @@
                     app:passwordToggleEnabled="true">
 
                     <EditText
-                        android:id="@+id/inputPWD"
+                        android:id="@+id/inputPW"
                         android:layout_width="280dp"
                         android:layout_height="50dp"
                         android:background="#E8E6E6"
@@ -181,7 +181,7 @@
                     app:passwordToggleEnabled="true">
 
                     <EditText
-                        android:id="@+id/checkPWD"
+                        android:id="@+id/checkPW"
                         android:layout_width="280dp"
                         android:layout_height="50dp"
                         android:background="#E8E6E6"
@@ -238,3 +238,4 @@
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
