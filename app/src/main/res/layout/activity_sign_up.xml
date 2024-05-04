@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".SignUpActivity">
+
+    <!-- 회원가입 창 종료 -->
+    <Button
+        android:id="@+id/exitBtn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="end"
+        android:layout_margin="10dp"
+        android:background="@drawable/exitbtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="회원가입 창 닫기  버튼"/>
+
+    <LinearLayout
+        android:layout_width="360dp"
+        android:layout_height="73dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/reco_header" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="127dp"
+            android:layout_height="33dp"
+            android:src="@drawable/signup"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- 이름 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="이름"
+                    android:textColor="@color/black"
+                    android:textSize="8pt"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/inputName"
+                    android:layout_width="280dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="20dp"
+                    android:background="#E8E6E6"
+                    android:hint=" 이름"
+                    android:inputType="text"
+                    android:padding="7dp"
+                    android:textSize="10pt" />
+            </LinearLayout>
+
+            <!-- 아이디 포함 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="ID"
+                    android:textColor="@color/black"
+                    android:textSize="8pt"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/inputID"
+                    android:layout_width="280dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="20dp"
+                    android:background="#E8E6E6"
+                    android:hint=" ID"
+                    android:inputType="text"
+                    android:padding="7dp"
+                    android:textSize="10pt" />
+
+            </LinearLayout>
+
+            <!-- 사용 불가능한 아이디 -->
+            <TextView
+                android:id="@+id/checkIDText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_marginRight="20dp"
+                android:text="* 중복된 아이디입니다."
+                android:textColor="#8B0000"
+                android:visibility="invisible" />
+
+            <!-- 비밀번호 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="PW"
+                    android:textColor="@color/black"
+                    android:textSize="8pt"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:passwordToggleEnabled="true">
+
+                    <EditText
+                        android:id="@+id/inputPW"
+                        android:layout_width="280dp"
+                        android:layout_height="50dp"
+                        android:background="#E8E6E6"
+                        android:hint="Password"
+                        android:inputType="textPassword"
+                        android:padding="7dp"
+                        android:textSize="10pt" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- 비밀번호 확인 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:passwordToggleEnabled="true">
+
+                    <EditText
+                        android:id="@+id/checkPW"
+                        android:layout_width="280dp"
+                        android:layout_height="50dp"
+                        android:background="#E8E6E6"
+                        android:hint="Password Check"
+                        android:inputType="textPassword"
+                        android:padding="7dp"
+                        android:textSize="10pt" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- 비밀번호 안내문구 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_marginRight="20dp"
+                android:text="* 비빌번호는 영문자 + 특수문자 8글자 이상"
+                android:textColor="#3386FF"
+                android:visibility="visible" />
+
+            <!-- 성별 포함 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+
+            <!-- 상세 이용약관 확인 버튼 포함 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+
+                <ImageButton
+                    android:id="@+id/joinBtn"
+                    android:src="@drawable/signupbtn2"
+                    android:scaleType="fitXY"
+                    android:background="@android:color/transparent"
+                    android:layout_width="273dp"
+                    android:layout_height="57dp"
+                    android:contentDescription="회원가입 버튼"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
