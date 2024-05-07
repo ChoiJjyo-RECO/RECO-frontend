@@ -35,8 +35,8 @@ class SignUpActivity : AppCompatActivity() {
     private fun joinAccount() {
         var name = binding.inputName.text.toString()
         var identity = binding.inputID.text.toString()
-        var password = binding.inputPW.toString()
-        var passwordCheck = binding.checkPW.toString()
+        var password = binding.inputPW.text.toString()
+        var passwordCheck = binding.checkPW.text.toString()
 
         // TODO: 유효성 검사 추가
 
