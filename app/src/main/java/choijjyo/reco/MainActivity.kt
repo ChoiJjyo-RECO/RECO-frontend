@@ -1,5 +1,6 @@
 package choijjyo.reco
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -15,6 +16,8 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         binding.recognize.setOnClickListener {
+            intent = Intent(this, RecognizeActivity::class.java)
+            startActivity(intent)
         }
         binding.closet.setOnClickListener {
         }
