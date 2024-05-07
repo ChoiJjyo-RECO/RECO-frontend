@@ -8,24 +8,42 @@
         tools:context=".RecognizeActivity">
 
         <Button
-            android:id="@+id/btn_camera"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="카메라 촬영"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <ImageView
-            android:id="@+id/iv_profile"
+            android:id="@+id/cameraBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/btn_camera"
+            android:layout_marginTop="69dp"
+            android:layout_marginBottom="55dp"
+            android:text="카메라 촬영"
+            app:layout_constraintBottom_toTopOf="@+id/cameraIV"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.264"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/galleryBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="69dp"
+            android:layout_marginBottom="55dp"
+            android:text="갤러리 열기"
+            app:layout_constraintBottom_toTopOf="@+id/cameraIV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.709"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/reco_logo"
-            />
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/cameraIV"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="278dp"
+            android:background="#505050"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cameraBtn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
