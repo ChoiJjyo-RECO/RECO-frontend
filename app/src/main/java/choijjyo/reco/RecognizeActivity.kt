@@ -2,6 +2,7 @@ package choijjyo.reco
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
@@ -24,41 +25,110 @@ import java.util.Date
 
 class RecognizeActivity : AppCompatActivity() {
 
-    private var mBinding: ActivityRecognizeBinding? = null
-    private val binding get() = mBinding!!
+    private lateinit var binding: ActivityRecognizeBinding
+    private var galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
+            uri -> setGallery(uri)
+    }
+    val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val bitmap: Bitmap
+            val file = File(curPhotoPath)
+            if (Build.VERSION.SDK_INT < 28) {
+                bitmap = MediaStore.Images.Media.getBitmap(contentResolver, Uri.fromFile(file))
+                binding.cameraIV.setImageBitmap(bitmap)
+            } else {
+                val decode = ImageDecoder.createSource(
+                    this.contentResolver,
+                    Uri.fromFile(file)
+                )
+                bitmap = ImageDecoder.decodeBitmap(decode)
+                binding.cameraIV.setImageBitmap(bitmap)
+            }
+            savePhoto(bitmap)
+        }
+    }
 
     lateinit var curPhotoPath : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = ActivityRecognizeBinding.inflate(layoutInflater)
+        binding = ActivityRecognizeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setPermission()
 
-        binding.btnCamera.setOnClickListener {
+        binding.cameraBtn.setOnClickListener {
             takeCapture()
         }
-//        setContentView(R.layout.activity_recognize)
+
+        binding.galleryBtn.setOnClickListener {
+            galleryLauncher.launch("image/*")
+        }
     }
 
-    // 테트 퍼미션 설정
+    fun setGallery(uri : Uri?) {
+        binding.cameraIV.setImageURI(uri)
+    }
+
+    // 테드 퍼미션 설정
     private fun setPermission() {
-        val permission = object : PermissionListener {
-            override fun onPermissionGranted() {    // 설정해놓은 위험 권한들이 허용 되었을 경우에 이 곳을 수행
-                Toast.makeText(this@RecognizeActivity, "권한이 허용되었습니다.", Toast.LENGTH_LONG).show()
+        val readPermission = object : PermissionListener {
+            override fun onPermissionGranted() {
+                setGalleryButton()
             }
 
-            override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {  // 설정해놓은 위험 권한을 거부한 경우에 이 곳을 수행
-                Toast.makeText(this@RecognizeActivity, "권한이 거부되었습니다.", Toast.LENGTH_LONG).show()
+            override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+                binding.galleryBtn.isEnabled = false
+                Toast.makeText(this@RecognizeActivity, "갤러리를 사용하려면 읽기 권한을 허용해주세요.", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        val cameraPermission = object : PermissionListener {
+            override fun onPermissionGranted() {
+                setCameraButton()
+            }
+
+            override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+                binding.cameraBtn.isEnabled = false
+                Toast.makeText(this@RecognizeActivity, "카메라를 사용하려면 쓰기 권한을 허용해주세요.2", Toast.LENGTH_LONG).show()
             }
         }
 
         TedPermission.create()
-            .setPermissionListener(permission)
-            .setRationaleMessage("카메라 앱을 사용하시려면 권한을 허용해주세요.")
-            .setDeniedMessage("권한을 거부하셨습니다. [앱 설정] -> [권한] 항목에서 허용해주세요.")
-            .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA)
+            .setPermissionListener(readPermission)
+            .setPermissions(android.Manifest.permission.READ_EXTERNAL_STORAGE)
             .check()
+
+        TedPermission.create()
+            .setPermissionListener(cameraPermission)
+            .setPermissions(android.Manifest.permission.CAMERA)
+            .check()
+    }
+    private fun setGalleryButton() {
+        binding.galleryBtn.setOnClickListener {
+            if (hasReadStoragePermission()) {
+                galleryLauncher.launch("image/*")
+            } else {
+                Toast.makeText(this, "갤러리를 사용하려면 읽기 권한을 허용해주세요.", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun setCameraButton() {
+        binding.cameraBtn.setOnClickListener {
+            if (hasWriteStoragePermission()) {
+                takeCapture()
+            } else {
+                Toast.makeText(this, "카메라를 사용하려면 쓰기 권한을 허용해주세요.", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun hasReadStoragePermission(): Boolean {
+        return (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+    }
+
+    private fun hasWriteStoragePermission(): Boolean {
+        return (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
     }
 
     // 카메라 촬영
@@ -75,37 +145,13 @@ class RecognizeActivity : AppCompatActivity() {
                 photoFile?.also {
                     val photoURI: Uri = FileProvider.getUriForFile(
                         this,
-                        "com.example.usecamera.fileprovider",
+                        "choijjyo.reco.fileprovider",
                         it
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    launcher.launch(takePictureIntent)
+                    cameraLauncher.launch(takePictureIntent)
                 }
             }
-        }
-    }
-
-    override fun onDestroy() {
-        mBinding = null
-        super.onDestroy()
-    }
-
-    val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val bitmap: Bitmap
-            val file = File(curPhotoPath)
-            if (Build.VERSION.SDK_INT < 28) {
-                bitmap = MediaStore.Images.Media.getBitmap(contentResolver, Uri.fromFile(file))
-                binding.ivProfile.setImageBitmap(bitmap)
-            } else {
-                val decode = ImageDecoder.createSource(
-                    this.contentResolver,
-                    Uri.fromFile(file)
-                )
-                bitmap = ImageDecoder.decodeBitmap(decode)
-                binding.ivProfile.setImageBitmap(bitmap)
-            }
-            savePhoto(bitmap)
         }
     }
 
