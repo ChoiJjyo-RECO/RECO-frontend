@@ -15,8 +15,6 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivitySignUpBinding
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -25,7 +23,6 @@ class SignUpActivity : AppCompatActivity() {
 
         binding.joinBtn.setOnClickListener {
             joinAccount()
-
         }
         binding.exitBtn.setOnClickListener {
             intent = Intent(this, SignInActivity::class.java)
@@ -34,22 +31,30 @@ class SignUpActivity : AppCompatActivity() {
     }
     private fun joinAccount() {
         var name = binding.inputName.text.toString()
-        var identity = binding.inputID.text.toString()
+        var email = binding.inputID.text.toString()
         var password = binding.inputPW.text.toString()
         var passwordCheck = binding.checkPW.text.toString()
 
         // TODO: 유효성 검사 추가
 
 
-        auth.createUserWithEmailAndPassword(identity, password)
+        auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
+                    val user = auth.currentUser
+                    if (user != null) {
+                        val uid = user.uid
+                        FirestoreHelper.setDocument(this, uid, UsersData(
+                            name = name,
+                            email = email
+                        ))
+                    }
                     intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {
-                    Toast.makeText(this, "no", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "회원가입 실패: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
     }
