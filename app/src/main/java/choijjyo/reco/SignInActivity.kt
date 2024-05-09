@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import choijjyo.reco.databinding.ActivitySignInBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -38,8 +37,6 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun signIn(identity: String, password: String) {
-//        Toast.makeText(this, "Id: " + identity, Toast.LENGTH_LONG).show()
-//        Toast.makeText(this, "Pw: " + password, Toast.LENGTH_LONG).show()
         auth.signInWithEmailAndPassword(identity, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -60,13 +57,25 @@ class SignInActivity : AppCompatActivity() {
         auth.signInAnonymously()
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "signInAnonymously:success", Toast.LENGTH_SHORT).show()
-                    intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                    val uid = auth.currentUser?.uid
+                    if (uid != null) {
+                        Toast.makeText(this, "익명 로그인: success", Toast.LENGTH_SHORT).show()
+                        intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                        FirestoreHelper.setDocument(this, uid, UsersData(
+                            name = "익명${getRandomNumber()}",
+                            email = ""
+                        ))
+                    } else {
+                        Toast.makeText(this, "익명 사용자 ID를 가져오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
+                    }
                 } else {
-                    Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "익명 로그인: failed.", Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+    private fun getRandomNumber(): Int {
+        return (1..1000).random()
     }
 }
