@@ -34,7 +34,7 @@
                 android:id="@+id/username"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25"
+                android:layout_weight="0.3"
                 android:textSize="23dp"
                 android:text="눈송이"
                 android:textColor="#FFFFFF" />
@@ -42,7 +42,7 @@
                 android:id="@+id/welcomemessage"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.75"
+                android:layout_weight="0.7"
                 android:textSize="23dp"
                 android:text=" 님 환영합니다!"
                 android:textColor="#FFFFFF" />
