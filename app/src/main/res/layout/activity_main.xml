@@ -20,18 +20,33 @@
                 android:src="@drawable/reco_header" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/welcomemessage"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             android:layout_marginHorizontal="20dp"
             android:padding="20dp"
-            android:textSize="23dp"
-            android:text="눈송이 님 환영합니다!"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/welcome_rectangle" />
+            android:background="@drawable/welcome_rectangle">
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.235"
+                android:textSize="23dp"
+                android:text="눈송이"
+                android:textColor="#FFFFFF" />
+            <TextView
+                android:id="@+id/welcomemessage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="23dp"
+                android:text=" 님 환영합니다!"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
 
         <GridLayout
             android:layout_width="match_parent"
@@ -42,6 +57,7 @@
 
             <!-- 첫 번째 버튼 -->
             <LinearLayout
+                android:id="@+id/recognize"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/main_button"
@@ -53,7 +69,6 @@
                 android:layout_rowSpan="2">
 
                 <ImageView
-                    android:id="@+id/recognize"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:layout_gravity="center"
@@ -73,6 +88,7 @@
 
             <!-- 두 번째 버튼 -->
             <LinearLayout
+                android:id="@+id/closet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/main_button"
@@ -83,7 +99,6 @@
                 android:layout_marginRight="30dp">
 
                 <ImageView
-                    android:id="@+id/closet"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center"
@@ -101,6 +116,7 @@
 
             <!-- 세 번째 버튼 -->
             <LinearLayout
+                android:id="@+id/preference"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="1"
@@ -112,7 +128,6 @@
                 android:paddingVertical="10dp">
 
                 <ImageView
-                    android:id="@+id/preference"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
