@@ -24,6 +24,7 @@
 
             <!-- 버튼 -->
             <Button
+                android:id="@+id/backToMainButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
@@ -45,6 +46,43 @@
             app:tabIndicatorHeight="0dp"
             app:tabMode="fixed"
             app:tabSelectedTextColor="#000000"
-            app:tabTextColor="#000000" />
+            app:tabTextColor="#ffffff">
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/closet_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tab1" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/closet_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tab2" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/closet_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tab3" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/closet_outer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tab4" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/closet_onepiece"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tab4" />
+        </com.google.android.material.tabs.TabLayout>
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_below="@+id/showitem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 </layout>
