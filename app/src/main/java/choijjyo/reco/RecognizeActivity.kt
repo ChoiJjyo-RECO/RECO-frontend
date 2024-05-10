@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import choijjyo.reco.databinding.ActivityRecognizeBinding
+import com.google.firebase.Timestamp
 import com.google.firebase.storage.FirebaseStorage
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
@@ -218,18 +219,24 @@ class RecognizeActivity : AppCompatActivity() {
 
             imagesRef.downloadUrl.addOnSuccessListener { downloadUri ->
                 val imageUrl = downloadUri.toString()
-                FirestoreHelper.saveImageUrlToCloset(this, uid, imageName, imageUrl)
-            }.addOnFailureListener { exception ->
+                FirestoreHelper.saveImageUrlToCloset(this, uid, imageName, ClosetData(
+                    closetColorRGB = emptyList(),
+                    closetColorCategory = "",
+                    clothes = "",
+                    imgURL = imageUrl,
+                    timestamp = Timestamp.now()
+                ))
+            }.addOnFailureListener {
                 Toast.makeText(this@RecognizeActivity, "이미지 URL을 가져오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
             }
-        }.addOnFailureListener { exception ->
+        }.addOnFailureListener {
             Toast.makeText(this@RecognizeActivity, "이미지 업로드에 실패했습니다.", Toast.LENGTH_SHORT).show()
         }
     }
     private fun request() {
         try {
-            Log.d("uid", "uid:"+uid)
-            Log.d("uri", "uri:"+ uri?.lastPathSegment)
+            Log.d("uid", "uid: $uid")
+            Log.d("uri", "uri: "+ uri?.lastPathSegment)
             val docId = uri?.lastPathSegment
 
             // 요청 URL에 쿼리 매개변수 추가
