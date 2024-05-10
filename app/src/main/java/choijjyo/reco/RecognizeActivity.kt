@@ -1,5 +1,6 @@
 package choijjyo.reco
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,29 +12,39 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import choijjyo.reco.databinding.ActivityRecognizeBinding
-import com.google.firebase.storage.FirebaseStorage
+//import com.google.firebase.storage.FirebaseStorage
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.json.JSONObject
+import java.io.BufferedReader
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.Date
 
 class RecognizeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecognizeBinding
-    private lateinit var uid: String
     private var galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
-            uri -> setGallery(uri)
+            //uri -> setGallery(uri)
     }
 
     val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
+        if (result.resultCode == RESULT_OK) {
             val bitmap: Bitmap
             val file = File(curPhotoPath)
             if (Build.VERSION.SDK_INT < 28) {
@@ -55,7 +66,6 @@ class RecognizeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRecognizeBinding.inflate(layoutInflater)
-        uid = intent.getStringExtra("userUid") ?: ""
         setContentView(binding.root)
 
         setPermission()
@@ -71,16 +81,18 @@ class RecognizeActivity : AppCompatActivity() {
         }
 
         binding.runModel.setOnClickListener {
-            val recogIntent = Intent(this, ClosetActivity::class.java)
-            recogIntent.putExtra("userUid", uid)
-            startActivity(recogIntent)
+            //통신시작
+            GlobalScope.launch(Dispatchers.IO){
+                request()
+            }
         }
     }
 
-    fun setGallery(uri : Uri?) {
-        binding.cameraIV.setImageURI(uri)
-        uri?.let { uploadImageToFirebase(it) }
-    }
+
+//    fun setGallery(uri : Uri?) {
+//        binding.cameraIV.setImageURI(uri)
+//        uri?.let { uploadImageToFirebase(it) }
+//    }
 
     // 테드 퍼미션 설정
     private fun setPermission() {
@@ -108,12 +120,12 @@ class RecognizeActivity : AppCompatActivity() {
 
         TedPermission.create()
             .setPermissionListener(readPermission)
-            .setPermissions(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+            .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
             .check()
 
         TedPermission.create()
             .setPermissionListener(cameraPermission)
-            .setPermissions(android.Manifest.permission.CAMERA)
+            .setPermissions(Manifest.permission.CAMERA)
             .check()
     }
     private fun setGalleryButton() {
@@ -137,11 +149,11 @@ class RecognizeActivity : AppCompatActivity() {
     }
 
     private fun hasReadStoragePermission(): Boolean {
-        return (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+        return (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
     }
 
     private fun hasWriteStoragePermission(): Boolean {
-        return (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+        return (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
     }
 
     // 카메라 촬영
@@ -189,29 +201,70 @@ class RecognizeActivity : AppCompatActivity() {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
         Toast.makeText(this, "사진이 앨범에 저장되었습니다.", Toast.LENGTH_LONG).show()
         // 이미지를 Firebase에 업로드
-        uploadImageToFirebase(Uri.fromFile(File(curPhotoPath)))
+        //uploadImageToFirebase(Uri.fromFile(File(curPhotoPath)))
     }
 
 
 
     // Firebase Storage에 이미지 업로드
-    private fun uploadImageToFirebase(uri: Uri) {
-        val storageRef = FirebaseStorage.getInstance().reference
-        val uid = intent.getStringExtra("userUid")
-        val imagesRef = storageRef.child("users/${uid}/closet/${uri.lastPathSegment}")
+//    private fun uploadImageToFirebase(uri: Uri) {
+//        val storageRef = FirebaseStorage.getInstance().reference
+//        val uid = intent.getStringExtra("userUid")
+//        val imagesRef = storageRef.child("users/${uid}/closet/${uri.lastPathSegment}")
+//
+//        val uploadTask = imagesRef.putFile(uri)
+//
+//        uploadTask.addOnSuccessListener {
+//            Toast.makeText(this@RecognizeActivity, "이미지가 업로드되었습니다.", Toast.LENGTH_SHORT).show()
+//
+//            imagesRef.downloadUrl.addOnSuccessListener { downloadUri ->
+//                val imageUrl = downloadUri.toString()
+//            }.addOnFailureListener { exception ->
+//                Toast.makeText(this@RecognizeActivity, "이미지 URL을 가져오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
+//            }
+//        }.addOnFailureListener { exception ->
+//            Toast.makeText(this@RecognizeActivity, "이미지 업로드에 실패했습니다.", Toast.LENGTH_SHORT).show()
+//        }
+//    }
+    private fun request() {
+        try {
+            val uid = intent.getStringExtra("userUid")
+            Log.d("uid", "uid"+uid)
+            val docId = "20240510"
 
-        val uploadTask = imagesRef.putFile(uri)
+            // 요청 URL에 쿼리 매개변수 추가
+            val url = URL("https://b4f3-121-166-22-33.ngrok-free.app/detect_and_analyze?uid=$uid&doc_id=$docId")
+            val conn = url.openConnection() as HttpURLConnection
+            conn.connectTimeout = 10000
+            conn.requestMethod = "GET"
+            conn.doInput = true
 
-        uploadTask.addOnSuccessListener {
-            Toast.makeText(this@RecognizeActivity, "이미지가 업로드되었습니다.", Toast.LENGTH_SHORT).show()
+            val resCode = conn.responseCode
+            val reader = BufferedReader(InputStreamReader(conn.inputStream))
+            val response = StringBuilder()
+            var line: String?
 
-            imagesRef.downloadUrl.addOnSuccessListener { downloadUri ->
-                val imageUrl = downloadUri.toString()
-            }.addOnFailureListener { exception ->
-                Toast.makeText(this@RecognizeActivity, "이미지 URL을 가져오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
+            while (reader.readLine().also { line = it } != null) {
+                response.append(line).append("\n")
             }
-        }.addOnFailureListener { exception ->
-            Toast.makeText(this@RecognizeActivity, "이미지 업로드에 실패했습니다.", Toast.LENGTH_SHORT).show()
+            reader.close()
+            conn.disconnect()
+
+            // JSON 파싱
+            val jsonResponse = JSONObject(response.toString())
+            val objectClass = jsonResponse.getString("object_class")
+            val closestColorCategory = jsonResponse.getString("closest_color_category")
+            val imgURL = jsonResponse.getString("image_URL")
+
+            // 결과 표시
+            runOnUiThread {
+                binding.resultText.text = "종류: $objectClass\n색깔: $closestColorCategory"
+//                Glide.with(this@ClosetActivity)
+//                    .load(imgURL)
+//                    .into(clotheImg)
+            }
+        } catch (ex: Exception) {
+            println("예외 발생함: ${ex.toString()}")
         }
     }
 }
