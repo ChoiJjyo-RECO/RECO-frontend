@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import choijjyo.reco.databinding.ActivityRecognizeBinding
+import com.google.firebase.Timestamp
 import com.google.firebase.storage.FirebaseStorage
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
@@ -222,7 +223,8 @@ class RecognizeActivity : AppCompatActivity() {
                     closetColorRGB = emptyList(),
                     closetColorCategory = "",
                     clothes = "",
-                    imgURL = imageUrl
+                    imgURL = imageUrl,
+                    timestamp = Timestamp.now()
                 ))
             }.addOnFailureListener {
                 Toast.makeText(this@RecognizeActivity, "이미지 URL을 가져오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
