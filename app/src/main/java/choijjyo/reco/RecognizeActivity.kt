@@ -1,7 +1,6 @@
 package choijjyo.reco
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -38,6 +37,7 @@ class RecognizeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecognizeBinding
     private lateinit var uid: String
+    private var uri: Uri? = null
     private var galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
             uri -> setGallery(uri)
     }
@@ -206,6 +206,7 @@ class RecognizeActivity : AppCompatActivity() {
 
     // Firebase Storage에 이미지 업로드
     private fun uploadImageToFirestore(uri: Uri) {
+        this.uri = uri
         val storageRef = FirebaseStorage.getInstance().reference
         val imageName = uri.lastPathSegment ?: "default_filename"
         val imagesRef = storageRef.child("users/${uid}/closet/$imageName")
@@ -227,8 +228,9 @@ class RecognizeActivity : AppCompatActivity() {
     }
     private fun request() {
         try {
-            Log.d("uid", "uid"+uid)
-            val docId = "20240510"
+            Log.d("uid", "uid:"+uid)
+            Log.d("uri", "uri:"+ uri?.lastPathSegment)
+            val docId = uri?.lastPathSegment
 
             // 요청 URL에 쿼리 매개변수 추가
             val url = URL("https://b4f3-121-166-22-33.ngrok-free.app/detect_and_analyze?uid=$uid&doc_id=$docId")
