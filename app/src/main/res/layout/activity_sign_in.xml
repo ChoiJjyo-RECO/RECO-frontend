@@ -2,87 +2,87 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    tools:context=".SignInActivity">
-
-    <LinearLayout
-        android:layout_width="360dp"
-        android:layout_height="73dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/reco_header" />
-    </LinearLayout>
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/white"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        tools:context=".SignInActivity">
 
-        <!-- 앱 로고 -->
-        <ImageView
-            android:layout_width="94dp"
-            android:layout_height="33dp"
-            android:layout_gravity="center"
-            android:src="@drawable/signin" />
+        <LinearLayout
+            android:layout_width="360dp"
+            android:layout_height="73dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/reco_header" />
+        </LinearLayout>
 
-        <!-- 아이디 -->
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp">
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/ID"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:text="ID"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <EditText
-                android:id="@+id/editTextID"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
+            <!-- 앱 로고 -->
+            <ImageView
+                android:layout_width="94dp"
+                android:layout_height="33dp"
                 android:layout_gravity="center"
-                android:inputType="text"
-                android:padding="7dp"
-                android:textSize="22dp"
-                android:textColor="#585858"
-                android:backgroundTint="@color/black"
-                app:layout_constraintTop_toBottomOf="@id/ID"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:src="@drawable/signin" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp">
-            <TextView
-                android:id="@+id/PW"
-                android:layout_width="300dp"
+            <!-- 아이디 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="PW"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:layout_marginTop="50dp">
 
-                <!-- 비밀번호 -->
+                <TextView
+                    android:id="@+id/ID"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:text="ID"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <EditText
+                    android:id="@+id/editTextID"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center"
+                    android:inputType="text"
+                    android:padding="7dp"
+                    android:textSize="10pt"
+                    android:textColor="#585858"
+                    android:backgroundTint="@color/black"
+                    app:layout_constraintTop_toBottomOf="@id/ID"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- 비밀번호 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp">
+                <TextView
+                    android:id="@+id/PW"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:text="PW"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
                 <EditText
                     android:id="@+id/editTextPassWord"
                     android:layout_width="300dp"
@@ -90,62 +90,63 @@
                     android:backgroundTint="@color/black"
                     android:inputType="textPassword"
                     android:padding="7dp"
-                    android:textSize="22dp"
+                    android:textColorHint="#E8E6E6"
+                    android:textSize="10pt"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/PW" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <!-- 로그인하기, 회원가입 버튼 포함 -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:orientation="vertical">
-
-            <ImageButton
-                android:id="@+id/buttonSignIn"
-                android:layout_width="273dp"
-                android:layout_height="47dp"
+            <!-- 로그인하기, 회원가입 버튼 포함 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/loginbtn"
-                android:importantForAccessibility="no" />
+                android:layout_marginTop="50dp"
+                android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/buttonSignUp"
-                android:layout_width="273dp"
-                android:layout_height="47dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/signupbtn"
-                android:importantForAccessibility="no" />
+                <ImageButton
+                    android:id="@+id/buttonSignIn"
+                    android:layout_width="273dp"
+                    android:layout_height="47dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/loginbtn"
+                    android:importantForAccessibility="no" />
 
-            <ImageButton
-                android:id="@+id/buttonAnonymousSignIn"
-                android:layout_width="273dp"
-                android:layout_height="47dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/anonymous_signin"
-                android:importantForAccessibility="no" />
+                <ImageButton
+                    android:id="@+id/buttonSignUp"
+                    android:layout_width="273dp"
+                    android:layout_height="47dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/signupbtn"
+                    android:importantForAccessibility="no" />
+
+                <ImageButton
+                    android:id="@+id/buttonAnonymousSignIn"
+                    android:layout_width="273dp"
+                    android:layout_height="47dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/anonymous_signin"
+                    android:importantForAccessibility="no" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
 
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
