@@ -1,7 +1,6 @@
 package choijjyo.reco
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -37,12 +36,14 @@ import java.util.Date
 class RecognizeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecognizeBinding
+    private lateinit var curPhotoPath : String
     private lateinit var uid: String
+    private var uri: Uri? = null
     private var galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
             uri -> setGallery(uri)
     }
 
-    val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             val bitmap: Bitmap
             val file = File(curPhotoPath)
@@ -61,7 +62,6 @@ class RecognizeActivity : AppCompatActivity() {
         }
     }
 
-    lateinit var curPhotoPath : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRecognizeBinding.inflate(layoutInflater)
@@ -206,6 +206,7 @@ class RecognizeActivity : AppCompatActivity() {
 
     // Firebase Storage에 이미지 업로드
     private fun uploadImageToFirestore(uri: Uri) {
+        this.uri = uri
         val storageRef = FirebaseStorage.getInstance().reference
         val imageName = uri.lastPathSegment ?: "default_filename"
         val imagesRef = storageRef.child("users/${uid}/closet/$imageName")
@@ -217,18 +218,24 @@ class RecognizeActivity : AppCompatActivity() {
 
             imagesRef.downloadUrl.addOnSuccessListener { downloadUri ->
                 val imageUrl = downloadUri.toString()
-                FirestoreHelper.saveImageUrlToCloset(this, uid, imageName, imageUrl)
-            }.addOnFailureListener { exception ->
+                FirestoreHelper.saveImageUrlToCloset(this, uid, imageName, ClosetData(
+                    closetColorRGB = emptyList(),
+                    closetColorCategory = "",
+                    clothes = "",
+                    imgURL = imageUrl
+                ))
+            }.addOnFailureListener {
                 Toast.makeText(this@RecognizeActivity, "이미지 URL을 가져오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
             }
-        }.addOnFailureListener { exception ->
+        }.addOnFailureListener {
             Toast.makeText(this@RecognizeActivity, "이미지 업로드에 실패했습니다.", Toast.LENGTH_SHORT).show()
         }
     }
     private fun request() {
         try {
-            Log.d("uid", "uid"+uid)
-            val docId = "20240510"
+            Log.d("uid", "uid: $uid")
+            Log.d("uri", "uri: "+ uri?.lastPathSegment)
+            val docId = uri?.lastPathSegment
 
             // 요청 URL에 쿼리 매개변수 추가
             val url = URL("https://b4f3-121-166-22-33.ngrok-free.app/detect_and_analyze?uid=$uid&doc_id=$docId")
