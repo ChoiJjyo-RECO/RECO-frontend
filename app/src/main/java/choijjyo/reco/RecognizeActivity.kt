@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import choijjyo.reco.databinding.ActivityRecognizeBinding
+import com.google.firebase.storage.FirebaseStorage
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import java.io.File
@@ -26,6 +27,7 @@ import java.util.Date
 class RecognizeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecognizeBinding
+    private lateinit var uid: String
     private var galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
             uri -> setGallery(uri)
     }
@@ -53,11 +55,12 @@ class RecognizeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRecognizeBinding.inflate(layoutInflater)
+        uid = intent.getStringExtra("userUid") ?: ""
         setContentView(binding.root)
 
         setPermission()
 
-        val uid = intent.getStringExtra("userUid")
+//        val uid = intent.getStringExtra("userUid")
 
         binding.cameraBtn.setOnClickListener {
             takeCapture()
@@ -76,6 +79,7 @@ class RecognizeActivity : AppCompatActivity() {
 
     fun setGallery(uri : Uri?) {
         binding.cameraIV.setImageURI(uri)
+        uri?.let { uploadImageToFirebase(it) }
     }
 
     // 테드 퍼미션 설정
@@ -184,10 +188,30 @@ class RecognizeActivity : AppCompatActivity() {
         val out = FileOutputStream(folderPath + fileName)
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
         Toast.makeText(this, "사진이 앨범에 저장되었습니다.", Toast.LENGTH_LONG).show()
-
-
+        // 이미지를 Firebase에 업로드
+        uploadImageToFirebase(Uri.fromFile(File(curPhotoPath)))
     }
 
 
 
+    // Firebase Storage에 이미지 업로드
+    private fun uploadImageToFirebase(uri: Uri) {
+        val storageRef = FirebaseStorage.getInstance().reference
+        val uid = intent.getStringExtra("userUid")
+        val imagesRef = storageRef.child("users/${uid}/closet/${uri.lastPathSegment}")
+
+        val uploadTask = imagesRef.putFile(uri)
+
+        uploadTask.addOnSuccessListener {
+            Toast.makeText(this@RecognizeActivity, "이미지가 업로드되었습니다.", Toast.LENGTH_SHORT).show()
+
+            imagesRef.downloadUrl.addOnSuccessListener { downloadUri ->
+                val imageUrl = downloadUri.toString()
+            }.addOnFailureListener { exception ->
+                Toast.makeText(this@RecognizeActivity, "이미지 URL을 가져오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }.addOnFailureListener { exception ->
+            Toast.makeText(this@RecognizeActivity, "이미지 업로드에 실패했습니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
 }
