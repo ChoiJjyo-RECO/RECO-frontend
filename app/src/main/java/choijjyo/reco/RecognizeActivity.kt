@@ -29,6 +29,7 @@ class RecognizeActivity : AppCompatActivity() {
     private var galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
             uri -> setGallery(uri)
     }
+
     val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val bitmap: Bitmap
@@ -56,12 +57,20 @@ class RecognizeActivity : AppCompatActivity() {
 
         setPermission()
 
+        val uid = intent.getStringExtra("userUid")
+
         binding.cameraBtn.setOnClickListener {
             takeCapture()
         }
 
         binding.galleryBtn.setOnClickListener {
             galleryLauncher.launch("image/*")
+        }
+
+        binding.runModel.setOnClickListener {
+            val recogIntent = Intent(this, ClosetActivity::class.java)
+            recogIntent.putExtra("userUid", uid)
+            startActivity(recogIntent)
         }
     }
 
@@ -176,5 +185,9 @@ class RecognizeActivity : AppCompatActivity() {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
         Toast.makeText(this, "사진이 앨범에 저장되었습니다.", Toast.LENGTH_LONG).show()
 
+
     }
+
+
+
 }

@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
+    private lateinit var uid:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         val currentUser = auth.currentUser
         if (currentUser != null) {
-            val uid = currentUser.uid
+            uid = currentUser.uid
             firestore.collection("users").document(uid)
                 .get()
                 .addOnSuccessListener { document ->
@@ -40,8 +41,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.recognize.setOnClickListener {
-            intent = Intent(this, RecognizeActivity::class.java)
-            startActivity(intent)
+            val mainintent = Intent(this, RecognizeActivity::class.java)
+            mainintent.putExtra("userUid", uid)
+            startActivity(mainintent)
         }
         binding.closet.setOnClickListener {
         }
