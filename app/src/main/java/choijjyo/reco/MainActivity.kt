@@ -46,6 +46,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(mainintent)
         }
         binding.closet.setOnClickListener {
+            val closetIntent = Intent(this, MyClosetActivity::class.java)
+            startActivity(closetIntent)
+
+
         }
         binding.preference.setOnClickListener {
         }
