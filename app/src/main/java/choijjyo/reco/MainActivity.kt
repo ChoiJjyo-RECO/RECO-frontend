@@ -17,7 +17,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
-    private lateinit var uid:String
+    private lateinit var uid: String
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
+        recyclerView = findViewById(R.id.recentView)
 
         val currentUser = auth.currentUser
         if (currentUser != null) {
@@ -37,13 +39,13 @@ class MainActivity : AppCompatActivity() {
                         if (name != null) {
                             binding.username.text = name
                         }
+                        FirestoreHelper.loadImagesFromFirestore(this, uid, recyclerView)
                     }
                 }
                 .addOnFailureListener { exception ->
                     // Firestore에서 사용자 이름을 가져오는 데 실패한 경우에 대한 처리
                 }
         }
-        loadImagesFromFirestore()
 
         binding.recognize.setOnClickListener {
             val mainintent = Intent(this, RecognizeActivity::class.java)
@@ -62,32 +64,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        loadImagesFromFirestore()
+        FirestoreHelper.loadImagesFromFirestore(this, "userUid", recyclerView)
     }
 
 
-    private fun loadImagesFromFirestore() {
-        val imageList = mutableListOf<String>()
-        val recyclerView: RecyclerView = findViewById(R.id.recentView)
 
-        firestore.collection("users").document(uid).collection("closet")
-            .orderBy("timestamp", Query.Direction.DESCENDING)
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    val imageUrl = document.getString("imgURL")
-                    if (imageUrl != null) {
-                        imageList.add(imageUrl)
-                    }
-                }
-                val adapter = ImageAdapter(imageList)
-                recyclerView.adapter = adapter
-                recyclerView.layoutManager = GridLayoutManager(this, 3)
-            }
-            .addOnFailureListener { exception ->
-                Log.e("LoadImages", "Error getting documents: ", exception)
-            }
-    }
 
 
 }

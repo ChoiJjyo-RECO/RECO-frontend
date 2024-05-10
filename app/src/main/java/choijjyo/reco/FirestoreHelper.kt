@@ -2,9 +2,14 @@ package choijjyo.reco
 
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 object FirestoreHelper {
+    private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+
     fun setDocument(activity: AppCompatActivity, userId: String, data: UsersData) {
         FirebaseFirestore.getInstance()
             .collection("users")
@@ -29,6 +34,28 @@ object FirestoreHelper {
             }
             .addOnFailureListener { e ->
                 Log.e("FirestoreHelper", "Error saving image URL to closet", e)
+            }
+    }
+
+    fun loadImagesFromFirestore(activity: AppCompatActivity, userId: String, recyclerView: RecyclerView) {
+        val imageList = mutableListOf<String>()
+
+        firestore.collection("users").document(userId).collection("closet")
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val imageUrl = document.getString("imgURL")
+                    if (imageUrl != null) {
+                        imageList.add(imageUrl)
+                    }
+                }
+                val adapter = ImageAdapter(imageList)
+                recyclerView.adapter = adapter
+                recyclerView.layoutManager = GridLayoutManager(activity, 3)
+            }
+            .addOnFailureListener { exception ->
+                Log.e("LoadImages", "Error getting documents: ", exception)
             }
     }
 }
