@@ -13,8 +13,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
@@ -39,6 +37,7 @@ import java.util.Date
 class RecognizeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecognizeBinding
+    private lateinit var uid: String
     private var galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
             uri -> setGallery(uri)
     }
