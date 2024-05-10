@@ -17,4 +17,21 @@ object FirestoreHelper {
                 Log.e("FirestoreHelper", "Error setting document", e)
             }
     }
+    fun saveImageUrlToCloset(activity: AppCompatActivity, userId: String, imageName:String, imageUrl: String) {
+        val imageData = hashMapOf(
+            "imgURL" to imageUrl
+        )
+        FirebaseFirestore.getInstance()
+            .collection("users")
+            .document(userId)
+            .collection("closet")
+            .document(imageName)
+            .set(imageData)
+            .addOnSuccessListener {
+                Log.d("FirestoreHelper", "Image URL saved to closet successfully!")
+            }
+            .addOnFailureListener { e ->
+                Log.e("FirestoreHelper", "Error saving image URL to closet", e)
+            }
+    }
 }

@@ -66,11 +66,10 @@ class RecognizeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRecognizeBinding.inflate(layoutInflater)
+        uid = intent.getStringExtra("userUid") ?: ""
         setContentView(binding.root)
 
         setPermission()
-
-        val uid = intent.getStringExtra("userUid")
 
         binding.cameraBtn.setOnClickListener {
             takeCapture()
@@ -91,7 +90,7 @@ class RecognizeActivity : AppCompatActivity() {
 
     fun setGallery(uri : Uri?) {
         binding.cameraIV.setImageURI(uri)
-        uri?.let { uploadImageToFirebase(it) }
+        uri?.let { uploadImageToFirestore(it) }
     }
 
     // 테드 퍼미션 설정
@@ -201,16 +200,16 @@ class RecognizeActivity : AppCompatActivity() {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
         Toast.makeText(this, "사진이 앨범에 저장되었습니다.", Toast.LENGTH_LONG).show()
         // 이미지를 Firebase에 업로드
-        uploadImageToFirebase(Uri.fromFile(File(curPhotoPath)))
+        uploadImageToFirestore(Uri.fromFile(File(curPhotoPath)))
     }
 
 
 
-     //Firebase Storage에 이미지 업로드
-    private fun uploadImageToFirebase(uri: Uri) {
+    // Firebase Storage에 이미지 업로드
+    private fun uploadImageToFirestore(uri: Uri) {
         val storageRef = FirebaseStorage.getInstance().reference
-        val uid = intent.getStringExtra("userUid")
-        val imagesRef = storageRef.child("users/${uid}/closet/${uri.lastPathSegment}")
+        val imageName = uri.lastPathSegment ?: "default_filename"
+        val imagesRef = storageRef.child("users/${uid}/closet/$imageName")
 
         val uploadTask = imagesRef.putFile(uri)
 
@@ -219,6 +218,7 @@ class RecognizeActivity : AppCompatActivity() {
 
             imagesRef.downloadUrl.addOnSuccessListener { downloadUri ->
                 val imageUrl = downloadUri.toString()
+                FirestoreHelper.saveImageUrlToCloset(this, uid, imageName, imageUrl)
             }.addOnFailureListener { exception ->
                 Toast.makeText(this@RecognizeActivity, "이미지 URL을 가져오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
             }
@@ -228,7 +228,6 @@ class RecognizeActivity : AppCompatActivity() {
     }
     private fun request() {
         try {
-            val uid = intent.getStringExtra("userUid")
             Log.d("uid", "uid"+uid)
             val docId = "20240510"
 
