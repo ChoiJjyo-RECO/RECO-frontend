@@ -163,16 +163,10 @@
             android:layout_marginHorizontal="25dp"
             android:background="@drawable/recent_line" />
 
-        <ScrollView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recentView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="25dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
-        </ScrollView>
+            android:layout_marginHorizontal="25dp" />
     </LinearLayout>
 </layout>
