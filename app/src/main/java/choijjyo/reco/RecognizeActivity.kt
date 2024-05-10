@@ -218,18 +218,23 @@ class RecognizeActivity : AppCompatActivity() {
 
             imagesRef.downloadUrl.addOnSuccessListener { downloadUri ->
                 val imageUrl = downloadUri.toString()
-                FirestoreHelper.saveImageUrlToCloset(this, uid, imageName, imageUrl)
-            }.addOnFailureListener { exception ->
+                FirestoreHelper.saveImageUrlToCloset(this, uid, imageName, ClosetData(
+                    closetColorRGB = emptyList(),
+                    closetColorCategory = "",
+                    clothes = "",
+                    imgURL = imageUrl
+                ))
+            }.addOnFailureListener {
                 Toast.makeText(this@RecognizeActivity, "이미지 URL을 가져오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
             }
-        }.addOnFailureListener { exception ->
+        }.addOnFailureListener {
             Toast.makeText(this@RecognizeActivity, "이미지 업로드에 실패했습니다.", Toast.LENGTH_SHORT).show()
         }
     }
     private fun request() {
         try {
-            Log.d("uid", "uid:"+uid)
-            Log.d("uri", "uri:"+ uri?.lastPathSegment)
+            Log.d("uid", "uid: $uid")
+            Log.d("uri", "uri: "+ uri?.lastPathSegment)
             val docId = uri?.lastPathSegment
 
             // 요청 URL에 쿼리 매개변수 추가
