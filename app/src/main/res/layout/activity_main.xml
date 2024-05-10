@@ -1,92 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragments.TipFragment">
+        android:background="@color/white"
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:layout_width="360dp"
+            android:layout_height="73dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/reco_header" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/welcomemessage"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <!--            <TextView-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_centerHorizontal="true"-->
-            <!--                android:text="님, 환영합니다!" />-->
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:padding="20dp"
+            android:textSize="23dp"
+            android:text="눈송이 님 환영합니다!"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/welcome_rectangle" />
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="30dp"
+            android:columnCount="2"
+            android:rowCount="2">
+
+            <!-- 첫 번째 버튼 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/main_button"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:layout_marginRight="15dp"
+                android:layout_column="0"
+                android:layout_row="0"
+                android:layout_rowSpan="2">
+
+                <ImageView
+                    android:id="@+id/recognize"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="25dp"
+                    android:src="@drawable/main_icon_recognizebtn2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/recognize"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="5dp"
+                    style="@style/ButtonText1"
+                    android:text="대상 인식하기" />
+            </LinearLayout>
+
+            <!-- 두 번째 버튼 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/main_button"
+                android:orientation="vertical"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="25dp"
+                android:layout_column="1"
+                android:layout_marginRight="30dp">
+
+                <ImageView
+                    android:id="@+id/closet"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/main_icon_closetbtn2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/closet"
+                    android:layout_gravity="center_horizontal"
+                    style="@style/ButtonText2"
+                    android:text="나만의 옷장보기" />
+            </LinearLayout>
+
+            <!-- 세 번째 버튼 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/main_button"
+                android:orientation="horizontal"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="10dp">
+
+                <ImageView
+                    android:id="@+id/preference"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="13dp"
+                    android:src="@drawable/main_icon_preferbtn2" />
+
+                <TextView
+                    style="@style/ButtonText2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="취향 선택" />
+            </LinearLayout>
+
+        </GridLayout>
+
+
+        <TextView
+            android:id="@+id/RecentText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginHorizontal="25dp"
+            style="@style/recent"
+            android:text="Recent Scan Items"/>
+
+        <TextView
+            android:id="@+id/RecentLine"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginHorizontal="25dp"
+            android:background="@drawable/recent_line" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="25dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="70dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp">
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:id="@+id/recognize"
-                            android:src="@drawable/main_icon_recognizebtn"
-                            android:layout_weight="1"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/recognize"
-                            android:layout_centerHorizontal="true"
-                            android:text="대상 인식하기" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:id="@+id/closet"
-                            android:src="@drawable/main_icon_closetbtn"
-                            android:layout_weight="1"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/closet"
-                            android:layout_centerHorizontal="true"
-                            android:text="나만의 옷장보기" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:id="@+id/preference"
-                            android:src="@drawable/main_icon_preferbtn"
-                            android:layout_weight="1"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/preference"
-                            android:layout_centerHorizontal="true"
-                            android:text="대상 인식하기" />
-                    </RelativeLayout>
-
-                </LinearLayout>
-            </LinearLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </FrameLayout>
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
+    </LinearLayout>
 </layout>
