@@ -36,13 +36,14 @@ import java.util.Date
 class RecognizeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecognizeBinding
+    private lateinit var curPhotoPath : String
     private lateinit var uid: String
     private var uri: Uri? = null
     private var galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
             uri -> setGallery(uri)
     }
 
-    val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             val bitmap: Bitmap
             val file = File(curPhotoPath)
@@ -61,7 +62,6 @@ class RecognizeActivity : AppCompatActivity() {
         }
     }
 
-    lateinit var curPhotoPath : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRecognizeBinding.inflate(layoutInflater)
