@@ -60,12 +60,13 @@ object FirestoreHelper {
             }
     }
 
-    fun loadImagesFromFirestoreForFragment(fragment: Fragment, userId: String, recyclerView: RecyclerView) {
+    fun loadImagesFromFirestoreForFragment(fragment: Fragment, userId: String, recyclerView: RecyclerView, categories: List<String>) {
         val imageList = mutableListOf<String>()
         val colorCategoryList = mutableListOf<String>()
         val clothesList = mutableListOf<String>()
 
         firestore.collection("users").document(userId).collection("closet")
+            .whereIn("clothes", categories)
             .orderBy("timestamp", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { documents ->

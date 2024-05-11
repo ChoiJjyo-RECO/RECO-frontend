@@ -25,7 +25,7 @@ class Fragment_onepiece : Fragment() {
         val currentUser = auth.currentUser
         if (currentUser != null) {
             uid = currentUser.uid
-            FirestoreHelper.loadImagesFromFirestoreForFragment(this, uid, recyclerView)
+            FirestoreHelper.loadImagesFromFirestoreForFragment(this, uid, recyclerView, mutableListOf("원피스"))
         }
     }
 }
