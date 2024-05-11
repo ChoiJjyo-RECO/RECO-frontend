@@ -17,6 +17,9 @@
 .cxx
 local.properties
 app/google-services.json
-/opencv/build/intermediates/cxx/Debug/37691c3j/logs/arm64-v8a/*
-/opencv/build/intermediates/incremental/*
 /opencv/build/outputs/logs/*
+/opencv/build/intermediates/incremental/*
+/opencv/build/intermediates/cxx/Debug/37691c3j/logs/arm64-v8a/*
+/opencv/build/intermediates/cxx/Debug/37691c3j/logs/x86/metadata_generation_record.json
+/opencv/build/intermediates/cxx/Debug/37691c3j/logs/x86/configure_stdout.txt
+/opencv/build/intermediates/cxx/Debug/37691c3j/logs/x86/build_model.json

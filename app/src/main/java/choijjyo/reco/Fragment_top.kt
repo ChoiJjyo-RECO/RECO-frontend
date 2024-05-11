@@ -25,7 +25,7 @@ class Fragment_top : Fragment() {
         val currentUser = auth.currentUser
         if (currentUser != null) {
             uid = currentUser.uid
-            FirestoreHelper.loadImagesFromFirestoreForFragment(this, uid, recyclerView)
+            FirestoreHelper.loadImagesFromFirestoreForFragment(this, uid, recyclerView, mutableListOf("티셔츠", "셔츠", "긴팔", "긴소매"))
         }
     }
 }
