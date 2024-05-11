@@ -110,12 +110,6 @@ class RecognizeActivity : AppCompatActivity() {
             galleryLauncher.launch("image/*")
         }
 
-        binding.runModel.setOnClickListener {
-            //통신시작
-            GlobalScope.launch(Dispatchers.IO){
-                request()
-            }
-        }
         binding.deuteranopiaButton.setOnClickListener {
             applyDeuteranopia()
         }
@@ -263,6 +257,10 @@ class RecognizeActivity : AppCompatActivity() {
 
         uploadTask.addOnSuccessListener {
             Toast.makeText(this@RecognizeActivity, "이미지가 업로드되었습니다.", Toast.LENGTH_SHORT).show()
+            // 자동으로 모델 실행
+            GlobalScope.launch(Dispatchers.IO){
+                request()
+            }
 
             imagesRef.downloadUrl.addOnSuccessListener { downloadUri ->
                 val imageUrl = downloadUri.toString()
@@ -313,10 +311,8 @@ class RecognizeActivity : AppCompatActivity() {
             // 결과 표시
             runOnUiThread {
                 binding.resultText.text = "종류: $objectClass\n색깔: $closestColorCategory"
-//                Glide.with(this@ClosetActivity)
-//                    .load(imgURL)
-//                    .into(clotheImg)
             }
+            Toast.makeText(this, "모델 분석에 성공했습니다.", Toast.LENGTH_SHORT).show()
         } catch (ex: Exception) {
             println("예외 발생함: ${ex.toString()}")
         }
