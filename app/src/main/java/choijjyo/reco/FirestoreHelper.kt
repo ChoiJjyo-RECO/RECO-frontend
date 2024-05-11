@@ -51,7 +51,7 @@ object FirestoreHelper {
                         imageList.add(imageUrl)
                     }
                 }
-                val adapter = ImageAdapter(imageList)
+                val adapter = RecentImageAdapter(imageList)
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = GridLayoutManager(activity, 3)
             }
@@ -62,6 +62,8 @@ object FirestoreHelper {
 
     fun loadImagesFromFirestoreForFragment(fragment: Fragment, userId: String, recyclerView: RecyclerView) {
         val imageList = mutableListOf<String>()
+        val colorCategoryList = mutableListOf<String>()
+        val clothesList = mutableListOf<String>()
 
         firestore.collection("users").document(userId).collection("closet")
             .orderBy("timestamp", Query.Direction.DESCENDING)
@@ -69,33 +71,21 @@ object FirestoreHelper {
             .addOnSuccessListener { documents ->
                 for (document in documents) {
                     val imageUrl = document.getString("imgURL")
-                    if (imageUrl != null) {
+                    val colorCategory = document.getString("closetColorCategory")
+                    val clothes = document.getString("clothes")
+
+                    if (imageUrl != null && colorCategory != null && clothes != null) {
                         imageList.add(imageUrl)
+                        colorCategoryList.add(colorCategory)
+                        clothesList.add(clothes)
                     }
                 }
-                val adapter = ImageAdapter(imageList)
+                val adapter = ClosetImageAdapter(imageList, colorCategoryList, clothesList)
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = GridLayoutManager(fragment.requireContext(), 3)
             }
             .addOnFailureListener { exception ->
                 Log.e("LoadImages", "Error getting documents: ", exception)
-            }
-    }
-    fun saveImageUrlToCloset(activity: AppCompatActivity, userId: String, imageName:String, imageUrl: String) {
-        val imageData = hashMapOf(
-            "imgURL" to imageUrl
-        )
-        FirebaseFirestore.getInstance()
-            .collection("users")
-            .document(userId)
-            .collection("closet")
-            .document(imageName)
-            .set(imageData)
-            .addOnSuccessListener {
-                Log.d("FirestoreHelper", "Image URL saved to closet successfully!")
-            }
-            .addOnFailureListener { e ->
-                Log.e("FirestoreHelper", "Error saving image URL to closet", e)
             }
     }
 }
