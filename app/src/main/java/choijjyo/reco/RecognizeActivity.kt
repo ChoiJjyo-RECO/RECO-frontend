@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +14,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
@@ -33,8 +36,17 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.Date
+import org.opencv.android.Utils
+import org.opencv.core.Core
+import org.opencv.core.CvType
+import org.opencv.core.Mat
 
 class RecognizeActivity : AppCompatActivity() {
+    companion object {
+        init{
+            System.loadLibrary("opencv_java4")
+        }
+    }
 
     private lateinit var binding: ActivityRecognizeBinding
     private lateinit var curPhotoPath : String
@@ -43,6 +55,27 @@ class RecognizeActivity : AppCompatActivity() {
     private var galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
         uri -> setGallery(uri)
     }
+    private lateinit var originalBitmap: Bitmap
+    private lateinit var correctedBitmap: Bitmap
+    private lateinit var originalMat: Mat
+    private lateinit var correctedMat: Mat
+    private val matrixDeuteranopia = arrayOf(
+        doubleArrayOf(0.625, 0.375, 0.0),
+        doubleArrayOf(0.7, 0.3, 0.0),
+        doubleArrayOf(0.0, 0.3, 0.7)
+    )
+
+    private val matrixProtanopia = arrayOf(
+        doubleArrayOf(0.567, 0.433, 0.0),
+        doubleArrayOf(0.558, 0.442, 0.0),
+        doubleArrayOf(0.0, 0.242, 0.758)
+    )
+
+    private val matrixTritanopia = arrayOf(
+        doubleArrayOf(0.95, 0.05, 0.0),
+        doubleArrayOf(0.0, 0.433, 0.567),
+        doubleArrayOf(0.0, 0.475, 0.525)
+    )
 
     private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
@@ -85,11 +118,23 @@ class RecognizeActivity : AppCompatActivity() {
                 request()
             }
         }
+        binding.deuteranopiaButton.setOnClickListener {
+            applyDeuteranopia()
+        }
+        binding.protanopiaButton.setOnClickListener {
+            applyProtanopia()
+        }
+        binding.tritanopiaButton.setOnClickListener {
+            applyTritanopia()
+        }
+
+
     }
 
 
     fun setGallery(uri : Uri?) {
         binding.cameraIV.setImageURI(uri)
+        originalBitmap = (binding.cameraIV.drawable as BitmapDrawable).bitmap
         uri?.let { uploadImageToFirestore(it) }
     }
 
@@ -188,6 +233,7 @@ class RecognizeActivity : AppCompatActivity() {
     }
 
     private fun savePhoto(bitmap: Bitmap) {
+
         val folderPath = Environment.getExternalStorageDirectory().absolutePath + "/Pictures/"
         val timestamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val fileName = "${timestamp}.jpeg"
@@ -201,6 +247,9 @@ class RecognizeActivity : AppCompatActivity() {
         Toast.makeText(this, "사진이 앨범에 저장되었습니다.", Toast.LENGTH_LONG).show()
         // 이미지를 Firebase에 업로드
         uploadImageToFirestore(Uri.fromFile(File(curPhotoPath)))
+        // 이미지를 저장하고 나서 originalBitmap을 초기화
+        binding.cameraIV.setImageBitmap(bitmap)
+        originalBitmap = bitmap
     }
 
 
@@ -274,4 +323,45 @@ class RecognizeActivity : AppCompatActivity() {
             println("예외 발생함: ${ex.toString()}")
         }
     }
+    fun applyDeuteranopia() {
+        val correctedBitmap = applyColorBlindnessCorrection(originalBitmap, matrixDeuteranopia)
+        binding.cameraIV.setImageBitmap(correctedBitmap)
+    }
+
+    fun applyProtanopia() {
+        val correctedBitmap = applyColorBlindnessCorrection(originalBitmap, matrixProtanopia)
+        binding.cameraIV.setImageBitmap(correctedBitmap)
+    }
+
+    fun applyTritanopia() {
+        val correctedBitmap = applyColorBlindnessCorrection(originalBitmap, matrixTritanopia)
+        binding.cameraIV.setImageBitmap(correctedBitmap)
+    }
+
+    private fun applyColorBlindnessCorrection(inputBitmap: Bitmap, matrix: Array<DoubleArray>): Bitmap {
+        val inputMat = Mat(inputBitmap.width, inputBitmap.height, CvType.CV_8UC4)
+        Utils.bitmapToMat(inputBitmap, inputMat)
+
+        val correctedMat = Mat(inputBitmap.width, inputBitmap.height, CvType.CV_8UC4)
+
+        val correctionMatrix = Mat(3, 4, CvType.CV_64F)
+        for (i in 0 until 3) {
+            for (j in 0 until 3) {
+                correctionMatrix.put(i, j, matrix[i][j])
+            }
+        }
+
+        // Set the last column to 0
+        for (i in 0 until 3) {
+            correctionMatrix.put(i, 3, 0.0)
+        }
+
+        Core.transform(inputMat, correctedMat, correctionMatrix)
+
+        val correctedBitmap = Bitmap.createBitmap(inputBitmap.width, inputBitmap.height, Bitmap.Config.ARGB_8888)
+        Utils.matToBitmap(correctedMat, correctedBitmap)
+
+        return correctedBitmap
+    }
+
 }
