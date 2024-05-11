@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +14,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
@@ -36,10 +36,6 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.Date
-import org.opencv.android.Utils
-import org.opencv.core.Core
-import org.opencv.core.CvType
-import org.opencv.core.Mat
 
 class RecognizeActivity : AppCompatActivity() {
     companion object {
@@ -50,10 +46,12 @@ class RecognizeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecognizeBinding
     private lateinit var curPhotoPath : String
+    private lateinit var progressBar: ProgressBar
     private lateinit var uid: String
     private var uri: Uri? = null
     private var galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
-        uri -> setGallery(uri)
+            uri -> setGallery(uri)
+        progressBar.visibility = View.VISIBLE
     }
     private lateinit var originalBitmap: Bitmap
     private val colorFilterHelper = ColorFilterHelper()
@@ -84,8 +82,8 @@ class RecognizeActivity : AppCompatActivity() {
                 binding.cameraIV.setImageBitmap(bitmap)
             } else {
                 val decode = ImageDecoder.createSource(
-                        this.contentResolver,
-                        Uri.fromFile(file)
+                    this.contentResolver,
+                    Uri.fromFile(file)
                 )
                 bitmap = ImageDecoder.decodeBitmap(decode)
                 binding.cameraIV.setImageBitmap(bitmap)
@@ -100,6 +98,8 @@ class RecognizeActivity : AppCompatActivity() {
         uid = intent.getStringExtra("userUid") ?: ""
         setContentView(binding.root)
 
+        progressBar = findViewById(R.id.progressBar)
+
         setPermission()
 
         binding.cameraBtn.setOnClickListener {
@@ -110,12 +110,6 @@ class RecognizeActivity : AppCompatActivity() {
             galleryLauncher.launch("image/*")
         }
 
-        binding.runModel.setOnClickListener {
-            //통신시작
-            GlobalScope.launch(Dispatchers.IO){
-                request()
-            }
-        }
         binding.deuteranopiaButton.setOnClickListener {
             applyDeuteranopia()
         }
@@ -133,6 +127,7 @@ class RecognizeActivity : AppCompatActivity() {
     fun setGallery(uri : Uri?) {
         binding.cameraIV.setImageURI(uri)
         originalBitmap = (binding.cameraIV.drawable as BitmapDrawable).bitmap
+        binding.resultText.text = ""
         uri?.let { uploadImageToFirestore(it) }
     }
 
@@ -161,14 +156,14 @@ class RecognizeActivity : AppCompatActivity() {
         }
 
         TedPermission.create()
-                .setPermissionListener(readPermission)
-                .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
-                .check()
+            .setPermissionListener(readPermission)
+            .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
+            .check()
 
         TedPermission.create()
-                .setPermissionListener(cameraPermission)
-                .setPermissions(Manifest.permission.CAMERA)
-                .check()
+            .setPermissionListener(cameraPermission)
+            .setPermissions(Manifest.permission.CAMERA)
+            .check()
     }
     private fun setGalleryButton() {
         binding.galleryBtn.setOnClickListener {
@@ -211,9 +206,9 @@ class RecognizeActivity : AppCompatActivity() {
 
                 photoFile?.also {
                     val photoURI: Uri = FileProvider.getUriForFile(
-                            this,
-                            "choijjyo.reco.fileprovider",
-                            it
+                        this,
+                        "choijjyo.reco.fileprovider",
+                        it
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                     cameraLauncher.launch(takePictureIntent)
@@ -227,7 +222,7 @@ class RecognizeActivity : AppCompatActivity() {
         val timestamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile("JPEG_${timestamp}_", ".jpg", storageDir)
-                .apply {  curPhotoPath = absolutePath}
+            .apply {  curPhotoPath = absolutePath}
     }
 
     private fun savePhoto(bitmap: Bitmap) {
@@ -248,6 +243,7 @@ class RecognizeActivity : AppCompatActivity() {
         // 이미지를 저장하고 나서 originalBitmap을 초기화
         binding.cameraIV.setImageBitmap(bitmap)
         originalBitmap = bitmap
+        progressBar.visibility = View.VISIBLE
     }
 
 
@@ -262,22 +258,28 @@ class RecognizeActivity : AppCompatActivity() {
         val uploadTask = imagesRef.putFile(uri)
 
         uploadTask.addOnSuccessListener {
-            Toast.makeText(this@RecognizeActivity, "이미지가 업로드되었습니다.", Toast.LENGTH_SHORT).show()
+            Log.d("RecognizeActivity", "이미지가 업로드되었습니다.")
+
+            // 자동으로 모델 실행
+            GlobalScope.launch(Dispatchers.IO){
+                request()
+            }
 
             imagesRef.downloadUrl.addOnSuccessListener { downloadUri ->
                 val imageUrl = downloadUri.toString()
                 FirestoreHelper.saveImageUrlToCloset(this, uid, imageName, ClosetData(
-                        closetColorRGB = emptyList(),
-                        closetColorCategory = "",
-                        clothes = "",
-                        imgURL = imageUrl,
-                        timestamp = Timestamp.now()
+                    closetColorRGB = emptyList(),
+                    closetColorCategory = "",
+                    clothes = "",
+                    imgURL = imageUrl,
+                    timestamp = Timestamp.now()
                 ))
             }.addOnFailureListener {
-                Toast.makeText(this@RecognizeActivity, "이미지 URL을 가져오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
+                Log.d("RecognizeActivity", "이미지 URL을 가져오는 데 실패했습니다.")
             }
         }.addOnFailureListener {
-            Toast.makeText(this@RecognizeActivity, "이미지 업로드에 실패했습니다.", Toast.LENGTH_SHORT).show()
+            progressBar.visibility = View.GONE
+            Log.d("RecognizeActivity", "이미지 업로드에 실패했습니다.")
         }
     }
     private fun request() {
@@ -312,13 +314,18 @@ class RecognizeActivity : AppCompatActivity() {
 
             // 결과 표시
             runOnUiThread {
-                binding.resultText.text = "종류: $objectClass\n색깔: $closestColorCategory"
-//                Glide.with(this@ClosetActivity)
-//                    .load(imgURL)
-//                    .into(clotheImg)
+                binding.resultText.text = "색상: $closestColorCategory\n종류: $objectClass"
             }
+
         } catch (ex: Exception) {
             println("예외 발생함: ${ex.toString()}")
+            runOnUiThread {
+                Toast.makeText(this@RecognizeActivity, "의류를 인식할 수 없습니다. 다시 촬영해주세요.", Toast.LENGTH_SHORT).show()
+            }
+        } finally {
+            runOnUiThread {
+                progressBar.visibility = View.GONE
+            }
         }
     }
     fun applyDeuteranopia() {
