@@ -56,9 +56,7 @@ class RecognizeActivity : AppCompatActivity() {
         uri -> setGallery(uri)
     }
     private lateinit var originalBitmap: Bitmap
-    private lateinit var correctedBitmap: Bitmap
-    private lateinit var originalMat: Mat
-    private lateinit var correctedMat: Mat
+    private val colorFilterHelper = ColorFilterHelper()
     private val matrixDeuteranopia = arrayOf(
         doubleArrayOf(0.625, 0.375, 0.0),
         doubleArrayOf(0.7, 0.3, 0.0),
@@ -324,44 +322,18 @@ class RecognizeActivity : AppCompatActivity() {
         }
     }
     fun applyDeuteranopia() {
-        val correctedBitmap = applyColorBlindnessCorrection(originalBitmap, matrixDeuteranopia)
+        val correctedBitmap = colorFilterHelper.applyDeuteranopia(originalBitmap)
         binding.cameraIV.setImageBitmap(correctedBitmap)
     }
 
     fun applyProtanopia() {
-        val correctedBitmap = applyColorBlindnessCorrection(originalBitmap, matrixProtanopia)
+        val correctedBitmap = colorFilterHelper.applyProtanopia(originalBitmap)
         binding.cameraIV.setImageBitmap(correctedBitmap)
     }
 
     fun applyTritanopia() {
-        val correctedBitmap = applyColorBlindnessCorrection(originalBitmap, matrixTritanopia)
+        val correctedBitmap = colorFilterHelper.applyTritanopia(originalBitmap)
         binding.cameraIV.setImageBitmap(correctedBitmap)
-    }
-
-    private fun applyColorBlindnessCorrection(inputBitmap: Bitmap, matrix: Array<DoubleArray>): Bitmap {
-        val inputMat = Mat(inputBitmap.width, inputBitmap.height, CvType.CV_8UC4)
-        Utils.bitmapToMat(inputBitmap, inputMat)
-
-        val correctedMat = Mat(inputBitmap.width, inputBitmap.height, CvType.CV_8UC4)
-
-        val correctionMatrix = Mat(3, 4, CvType.CV_64F)
-        for (i in 0 until 3) {
-            for (j in 0 until 3) {
-                correctionMatrix.put(i, j, matrix[i][j])
-            }
-        }
-
-        // Set the last column to 0
-        for (i in 0 until 3) {
-            correctionMatrix.put(i, 3, 0.0)
-        }
-
-        Core.transform(inputMat, correctedMat, correctionMatrix)
-
-        val correctedBitmap = Bitmap.createBitmap(inputBitmap.width, inputBitmap.height, Bitmap.Config.ARGB_8888)
-        Utils.matToBitmap(correctedMat, correctedBitmap)
-
-        return correctedBitmap
     }
 
 }
