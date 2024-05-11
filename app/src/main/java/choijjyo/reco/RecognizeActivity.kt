@@ -41,7 +41,7 @@ class RecognizeActivity : AppCompatActivity() {
     private lateinit var uid: String
     private var uri: Uri? = null
     private var galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
-            uri -> setGallery(uri)
+        uri -> setGallery(uri)
     }
 
     private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -53,8 +53,8 @@ class RecognizeActivity : AppCompatActivity() {
                 binding.cameraIV.setImageBitmap(bitmap)
             } else {
                 val decode = ImageDecoder.createSource(
-                    this.contentResolver,
-                    Uri.fromFile(file)
+                        this.contentResolver,
+                        Uri.fromFile(file)
                 )
                 bitmap = ImageDecoder.decodeBitmap(decode)
                 binding.cameraIV.setImageBitmap(bitmap)
@@ -118,14 +118,14 @@ class RecognizeActivity : AppCompatActivity() {
         }
 
         TedPermission.create()
-            .setPermissionListener(readPermission)
-            .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
-            .check()
+                .setPermissionListener(readPermission)
+                .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .check()
 
         TedPermission.create()
-            .setPermissionListener(cameraPermission)
-            .setPermissions(Manifest.permission.CAMERA)
-            .check()
+                .setPermissionListener(cameraPermission)
+                .setPermissions(Manifest.permission.CAMERA)
+                .check()
     }
     private fun setGalleryButton() {
         binding.galleryBtn.setOnClickListener {
@@ -168,9 +168,9 @@ class RecognizeActivity : AppCompatActivity() {
 
                 photoFile?.also {
                     val photoURI: Uri = FileProvider.getUriForFile(
-                        this,
-                        "choijjyo.reco.fileprovider",
-                        it
+                            this,
+                            "choijjyo.reco.fileprovider",
+                            it
                     )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                     cameraLauncher.launch(takePictureIntent)
@@ -184,7 +184,7 @@ class RecognizeActivity : AppCompatActivity() {
         val timestamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile("JPEG_${timestamp}_", ".jpg", storageDir)
-            .apply {  curPhotoPath = absolutePath}
+                .apply {  curPhotoPath = absolutePath}
     }
 
     private fun savePhoto(bitmap: Bitmap) {
@@ -220,11 +220,11 @@ class RecognizeActivity : AppCompatActivity() {
             imagesRef.downloadUrl.addOnSuccessListener { downloadUri ->
                 val imageUrl = downloadUri.toString()
                 FirestoreHelper.saveImageUrlToCloset(this, uid, imageName, ClosetData(
-                    closetColorRGB = emptyList(),
-                    closetColorCategory = "",
-                    clothes = "",
-                    imgURL = imageUrl,
-                    timestamp = Timestamp.now()
+                        closetColorRGB = emptyList(),
+                        closetColorCategory = "",
+                        clothes = "",
+                        imgURL = imageUrl,
+                        timestamp = Timestamp.now()
                 ))
             }.addOnFailureListener {
                 Toast.makeText(this@RecognizeActivity, "이미지 URL을 가져오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
@@ -240,7 +240,7 @@ class RecognizeActivity : AppCompatActivity() {
             val docId = uri?.lastPathSegment
 
             // 요청 URL에 쿼리 매개변수 추가
-            val url = URL("https://b4f3-121-166-22-33.ngrok-free.app/detect_and_analyze?uid=$uid&doc_id=$docId")
+            val url = URL("https://c989-121-166-22-33.ngrok-free.app/detect_and_analyze?uid=$uid&doc_id=$docId")
             val conn = url.openConnection() as HttpURLConnection
             conn.connectTimeout = 10000
             conn.requestMethod = "GET"
