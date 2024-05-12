@@ -1,6 +1,7 @@
 package choijjyo.reco
 
 import android.graphics.Bitmap
+import android.view.View
 import org.opencv.android.Utils
 import org.opencv.core.Core
 import org.opencv.core.CvType
@@ -37,6 +38,7 @@ class ColorFilterHelper {
     fun applyTritanopia(inputBitmap: Bitmap): Bitmap {
         return applyColorBlindnessCorrection(inputBitmap, matrixTritanopia)
     }
+
 
     private fun applyColorBlindnessCorrection(inputBitmap: Bitmap, matrix: Array<DoubleArray>): Bitmap {
         val inputMat = Mat(inputBitmap.width, inputBitmap.height, CvType.CV_8UC4)

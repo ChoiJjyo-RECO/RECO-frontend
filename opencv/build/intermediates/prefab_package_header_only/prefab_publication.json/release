@@ -1,5 +1,5 @@
 {
-  "installationFolder": "/Users/cho-eunchae/Desktop/2024-1/대회/IPS/RECO/frontend/opencv/build/intermediates/prefab_package/release/prefab",
+  "installationFolder": "C:\\Users\\User\\AndroidStudioProjects\\RECO-frontend\\opencv\\build\\intermediates\\prefab_package\\release\\prefab",
   "gradlePath": ":opencv",
   "packageInfo": {
     "packageName": "opencv",
@@ -8,7 +8,7 @@
     "modules": [
       {
         "moduleName": "opencv_jni_shared",
-        "moduleHeaders": "/Users/cho-eunchae/Desktop/2024-1/대회/IPS/RECO/frontend/opencv/native/jni/include",
+        "moduleHeaders": "C:\\Users\\User\\AndroidStudioProjects\\RECO-frontend\\opencv\\native\\jni\\include",
         "moduleExportLibraries": [],
         "abis": []
       }
