@@ -119,6 +119,9 @@ class RecognizeActivity : AppCompatActivity() {
         binding.tritanopiaButton.setOnClickListener {
             applyTritanopia()
         }
+        binding.originalImgButton.setOnClickListener {
+            showOriginal()
+        }
 
 
     }
@@ -341,6 +344,9 @@ class RecognizeActivity : AppCompatActivity() {
     fun applyTritanopia() {
         val correctedBitmap = colorFilterHelper.applyTritanopia(originalBitmap)
         binding.cameraIV.setImageBitmap(correctedBitmap)
+    }
+    fun showOriginal() {
+        binding.cameraIV.setImageBitmap(originalBitmap)
     }
 
 }
