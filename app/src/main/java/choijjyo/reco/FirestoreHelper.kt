@@ -38,6 +38,21 @@ object FirestoreHelper {
             }
     }
 
+    fun deleteClothesDocFromFirestore(activity: AppCompatActivity, userId: String, imageName:String) {
+        FirebaseFirestore.getInstance()
+            .collection("users")
+            .document(userId)
+            .collection("closet")
+            .document(imageName)
+            .delete()
+            .addOnSuccessListener {
+                Log.d("FirestoreHelper", "DocumentSnapshot successfully deleted!")
+            }
+            .addOnFailureListener { e ->
+                Log.e("FirestoreHelper", "Error deleting document", e)
+            }
+    }
+
     fun loadImagesFromFirestore(activity: AppCompatActivity, userId: String, recyclerView: RecyclerView) {
         val imageList = mutableListOf<String>()
 
