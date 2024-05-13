@@ -292,7 +292,7 @@ class RecognizeActivity : AppCompatActivity() {
             val docId = uri?.lastPathSegment
 
             // 요청 URL에 쿼리 매개변수 추가
-            val url = URL("https://c989-121-166-22-33.ngrok-free.app/detect_and_analyze?uid=$uid&doc_id=$docId")
+            val url = URL("https://a06c-121-166-22-33.ngrok-free.app/detect_and_analyze?uid=$uid&doc_id=$docId")
             val conn = url.openConnection() as HttpURLConnection
             conn.connectTimeout = 10000
             conn.requestMethod = "GET"
@@ -323,7 +323,11 @@ class RecognizeActivity : AppCompatActivity() {
         } catch (ex: Exception) {
             println("예외 발생함: ${ex.toString()}")
             runOnUiThread {
+                val docId = uri?.lastPathSegment
                 Toast.makeText(this@RecognizeActivity, "의류를 인식할 수 없습니다. 다시 촬영해주세요.", Toast.LENGTH_SHORT).show()
+                if (docId != null) {
+                    FirestoreHelper.deleteClothesDocFromFirestore(this, uid, docId)
+                }
             }
         } finally {
             runOnUiThread {
