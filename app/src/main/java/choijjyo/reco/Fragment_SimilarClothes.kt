@@ -37,7 +37,7 @@ class Fragment_SimilarClothes : Fragment() {
     }
     fun setSearchKeyword(keyword: String) {
         searchKeyword = keyword
-        searchImages(keyword) // 검색 키워드가 설정되면 즉시 검색을 시작합니다.
+        searchImages(keyword)
     }
 
     private fun searchImages(googleSearchKeyword: String) {
