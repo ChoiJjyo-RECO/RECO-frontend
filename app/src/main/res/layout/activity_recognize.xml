@@ -11,12 +11,12 @@
                 android:id="@+id/cameraBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="69dp"
-                android:layout_marginBottom="55dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:text="카메라 촬영"
                 app:layout_constraintBottom_toTopOf="@+id/cameraIV"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.264"
+                app:layout_constraintHorizontal_bias="0.2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,8 +24,8 @@
                 android:id="@+id/galleryBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="69dp"
-                android:layout_marginBottom="55dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:text="갤러리 열기"
                 app:layout_constraintBottom_toTopOf="@+id/cameraIV"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +38,7 @@
                 android:id="@+id/cameraIV"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginBottom="278dp"
+                android:layout_marginBottom="420dp"
                 android:src="@drawable/placeholder_view"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="녹색맹 필터"
-                android:layout_marginBottom="44dp"
+                android:layout_marginBottom="350dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="16dp" />
@@ -73,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="적색맹 필터"
-                android:layout_marginBottom="44dp"
+                android:layout_marginBottom="350dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/deuteranopiaButton"
                 android:layout_marginStart="8dp" />
@@ -83,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="청색맹 필터"
-                android:layout_marginBottom="44dp"
+                android:layout_marginBottom="350dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/protanopiaButton"
                 android:layout_marginStart="8dp" />
@@ -93,7 +93,7 @@
                 android:layout_width="89dp"
                 android:layout_height="50dp"
                 android:text="원본"
-                android:layout_marginBottom="44dp"
+                android:layout_marginBottom="350dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/protanopiaButton"
                 android:layout_marginStart="108dp" />
@@ -106,10 +106,21 @@
                 android:textColor="#0000ff"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintHorizontal_bias="0.506"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.834" />
+                app:layout_constraintVertical_bias="0.396" />
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recommedRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.995" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

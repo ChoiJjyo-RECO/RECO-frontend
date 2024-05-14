@@ -1,4 +1,0 @@
-/Users/cho-eunchae/Library/Android/sdk/cmake/3.22.1/bin/ninja \
-  -C \
-  /Users/cho-eunchae/Desktop/2024-1/대회/IPS/RECO/frontend/opencv/.cxx/Debug/37691c3j/x86_64 \
-  opencv_jni_shared

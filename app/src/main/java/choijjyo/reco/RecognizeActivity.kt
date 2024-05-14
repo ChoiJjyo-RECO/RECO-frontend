@@ -18,6 +18,8 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import choijjyo.reco.databinding.ActivityRecognizeBinding
 import com.google.firebase.Timestamp
 import com.google.firebase.storage.FirebaseStorage
@@ -36,8 +38,49 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.Date
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Query
+
+interface GoogleCustomSearchAPI {
+    @GET("customsearch/v1")
+    fun searchImages(
+        @Query("key") apiKey: String,
+        @Query("cx") searchEngineId: String,
+        @Query("q") query: String,
+        @Query("searchType") searchType: String = "image",
+        @Query("num") num: Int = 4
+    ): Call<SearchResponse>
+}
+
+data class SearchResponse(
+    val items: List<SearchItem>
+)
+
+data class SearchItem(
+    val link: String, // 이미지 URL
+    val image: Image
+)
+
+data class Image(
+    val contextLink: String // 클릭 시 이동할 URL
+)
+data class SearchResultItem(
+    val imageUrl: String,
+    val clickUrl: String
+)
+
+
 
 class RecognizeActivity : AppCompatActivity() {
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: RecommendImageAdapter
+
     companion object {
         init{
             System.loadLibrary("opencv_java4")
@@ -123,9 +166,11 @@ class RecognizeActivity : AppCompatActivity() {
             showOriginal()
         }
 
+        recyclerView = findViewById(R.id.recommedRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
 
     }
-
 
     fun setGallery(uri : Uri?) {
         binding.cameraIV.setImageURI(uri)
@@ -292,7 +337,7 @@ class RecognizeActivity : AppCompatActivity() {
             val docId = uri?.lastPathSegment
 
             // 요청 URL에 쿼리 매개변수 추가
-            val url = URL("https://a06c-121-166-22-33.ngrok-free.app/detect_and_analyze?uid=$uid&doc_id=$docId")
+            val url = URL("https://21fa-61-98-10-215.ngrok-free.app/detect_and_analyze?uid=$uid&doc_id=$docId")
             val conn = url.openConnection() as HttpURLConnection
             conn.connectTimeout = 10000
             conn.requestMethod = "GET"
@@ -319,6 +364,9 @@ class RecognizeActivity : AppCompatActivity() {
             runOnUiThread {
                 binding.resultText.text = "색상: $closestColorCategory\n종류: $objectClass"
             }
+            val googleSearchKeyword = "$closestColorCategory $objectClass 제품 사진"
+            Log.d("googleSearch keyword",googleSearchKeyword)
+            showRecommend(googleSearchKeyword)
 
         } catch (ex: Exception) {
             println("예외 발생함: ${ex.toString()}")
@@ -351,6 +399,43 @@ class RecognizeActivity : AppCompatActivity() {
     }
     fun showOriginal() {
         binding.cameraIV.setImageBitmap(originalBitmap)
+    }
+    private fun showRecommend(query: String){
+        // Retrofit 객체 생성 및 ApiService 인터페이스 초기화
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://www.googleapis.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val apiService = retrofit.create(GoogleCustomSearchAPI::class.java)
+
+        // API 호출
+        val call = apiService.searchImages(query = query, apiKey = BuildConfig.GOOGLESEARCH_APIKEY, searchEngineId = BuildConfig.GOOGLESEARCH_SEARCHID)
+        call.enqueue(object : Callback<SearchResponse> {
+            override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
+                if (response.isSuccessful) {
+                    // API 응답으로부터 이미지 목록을 초기화
+                    val imageList: List<SearchResultItem> = response.body()?.items?.map { apiItem ->
+                        SearchResultItem(
+                            imageUrl = apiItem.link,
+                            clickUrl = apiItem.image.contextLink
+                        )
+                    } ?: listOf()
+
+                    // 이미지 목록을 RecyclerView 어댑터에 전달
+                    adapter = RecommendImageAdapter(imageList)
+                    recyclerView.adapter = adapter
+                } else {
+                    // 에러 처리
+                    Log.e("API Error", "Response Code: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
+                // 네트워크 에러 처리
+                Log.e("API Error", "Network Error: ${t.message}")
+            }
+        })
     }
 
 }
