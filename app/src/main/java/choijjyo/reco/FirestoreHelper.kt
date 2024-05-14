@@ -53,7 +53,7 @@ object FirestoreHelper {
                 }
                 val adapter = RecentImageAdapter(imageList)
                 recyclerView.adapter = adapter
-                recyclerView.layoutManager = GridLayoutManager(activity, 3)
+                recyclerView.layoutManager = GridLayoutManager(activity, Constants.SPAN_COUNT)
             }
             .addOnFailureListener { exception ->
                 Log.e("LoadImages", "Error getting documents: ", exception)
