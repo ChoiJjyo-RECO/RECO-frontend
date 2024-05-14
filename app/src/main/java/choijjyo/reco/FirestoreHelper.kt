@@ -1,6 +1,8 @@
 package choijjyo.reco
 
 import android.util.Log
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -66,9 +68,16 @@ object FirestoreHelper {
                         imageList.add(imageUrl)
                     }
                 }
-                val adapter = RecentImageAdapter(imageList)
-                recyclerView.adapter = adapter
-                recyclerView.layoutManager = GridLayoutManager(activity, Constants.SPAN_COUNT)
+                if (imageList.isEmpty()) {
+                    recyclerView.visibility = View.GONE
+                    val noImagesTextView = activity.findViewById<TextView>(R.id.noImagesTextView)
+                    noImagesTextView.visibility = View.VISIBLE
+                } else {
+                    recyclerView.visibility = View.VISIBLE
+                    val adapter = RecentImageAdapter(imageList)
+                    recyclerView.adapter = adapter
+                    recyclerView.layoutManager = GridLayoutManager(activity, Constants.SPAN_COUNT)
+                }
             }
             .addOnFailureListener { exception ->
                 Log.e("LoadImages", "Error getting documents: ", exception)
