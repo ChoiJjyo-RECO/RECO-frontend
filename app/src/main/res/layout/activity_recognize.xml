@@ -63,30 +63,40 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="녹색맹 필터"
-                android:layout_marginLeft="16dp"
-                android:layout_marginBottom="40dp"
+                android:layout_marginBottom="44dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp" />
 
         <Button
                 android:id="@+id/protanopiaButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="적색맹 필터"
-                android:layout_marginBottom="40dp"
+                android:layout_marginBottom="44dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/deuteranopiaButton"
-                android:layout_marginStart="56dp" />
+                android:layout_marginStart="8dp" />
 
         <Button
                 android:id="@+id/tritanopiaButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="청색맹 필터"
-                android:layout_marginBottom="40dp"
+                android:layout_marginBottom="44dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/protanopiaButton"
-                android:layout_marginStart="44dp" />
+                android:layout_marginStart="8dp" />
+
+        <Button
+                android:id="@+id/originalImgButton"
+                android:layout_width="89dp"
+                android:layout_height="50dp"
+                android:text="원본"
+                android:layout_marginBottom="44dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/protanopiaButton"
+                android:layout_marginStart="108dp" />
 
         <TextView
                 android:id="@+id/resultText"
