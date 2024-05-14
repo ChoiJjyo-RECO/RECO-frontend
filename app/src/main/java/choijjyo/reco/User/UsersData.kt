@@ -1,4 +1,4 @@
-package choijjyo.reco
+package choijjyo.reco.User
 
 data class UsersData(
     val name: String,

@@ -1,4 +1,4 @@
-package choijjyo.reco
+package choijjyo.reco.User
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import choijjyo.reco.FirestoreHelper
+import choijjyo.reco.Main.MainActivity
+import choijjyo.reco.R
 import choijjyo.reco.databinding.ActivitySignInBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -63,10 +66,12 @@ class SignInActivity : AppCompatActivity() {
                         intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                         finish()
-                        FirestoreHelper.setDocument(this, uid, UsersData(
-                            name = "익명${getRandomNumber()}",
-                            email = ""
-                        ))
+                        FirestoreHelper.setDocument(
+                            this, uid, UsersData(
+                                name = "익명${getRandomNumber()}",
+                                email = ""
+                            )
+                        )
                     } else {
                         Toast.makeText(this, "익명 사용자 ID를 가져오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
                     }

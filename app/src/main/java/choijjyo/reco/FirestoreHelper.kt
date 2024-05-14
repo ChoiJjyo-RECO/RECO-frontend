@@ -9,6 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import choijjyo.reco.Main.Constants
+import choijjyo.reco.Main.RecentImageAdapter
+import choijjyo.reco.MyCloset.ClosetImageAdapter
+import choijjyo.reco.MyCloset.ClothesActivity
+import choijjyo.reco.Recognize.ClosetData
+import choijjyo.reco.User.UsersData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions

@@ -1,4 +1,4 @@
-package choijjyo.reco
+package choijjyo.reco.Recognize
 
 import android.content.Intent
 import android.net.Uri
@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import choijjyo.reco.R
 import com.bumptech.glide.Glide
 
 class SearchImageAdapter (private var imageList: List<SearchResultItem>) : RecyclerView.Adapter<SearchImageAdapter.ImageViewHolder>() {

@@ -1,4 +1,4 @@
-package choijjyo.reco
+package choijjyo.reco.Main
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,7 +6,11 @@ import android.os.Bundle
 import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import choijjyo.reco.FirestoreHelper
+import choijjyo.reco.MyCloset.MyClosetActivity
+import choijjyo.reco.R
 import choijjyo.reco.databinding.ActivityMainBinding
+import choijjyo.reco.Recognize.RecognizeActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
