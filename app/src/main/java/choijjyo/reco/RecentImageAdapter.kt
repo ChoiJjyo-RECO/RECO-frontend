@@ -7,7 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class RecentImageAdapter(private val imageList: List<String>) : RecyclerView.Adapter<RecentImageViewHolder>() {
+class RecentImageAdapter(
+    private val imageList: List<String>,
+    private val listener: OnItemClickListener
+) : RecyclerView.Adapter<RecentImageViewHolder>() {
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentImageViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.recent_item_image, parent, false)
@@ -22,9 +29,16 @@ class RecentImageAdapter(private val imageList: List<String>) : RecyclerView.Ada
         }
         Glide.with(holder.itemView.context).load(imageUrl).apply(requestOptions)
             .into(holder.imageView)
+        holder.itemView.setOnClickListener {
+            listener.onItemClick(position)
+        }
     }
 
     override fun getItemCount(): Int {
         return imageList.size
+    }
+
+    fun getImageUrl(position: Int): String {
+        return imageList[position]
     }
 }

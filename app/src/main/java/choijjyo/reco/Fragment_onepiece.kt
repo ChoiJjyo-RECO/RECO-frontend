@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 
-class Fragment_onepiece : Fragment() {
+class Fragment_onepiece : Fragment(), ClosetImageAdapter.OnItemClickListener {
     private lateinit var auth: FirebaseAuth
     private lateinit var uid: String
     private lateinit var recyclerView: RecyclerView
@@ -28,4 +28,8 @@ class Fragment_onepiece : Fragment() {
             FirestoreHelper.loadImagesFromFirestoreForFragment(this, uid, recyclerView, mutableListOf("원피스"))
         }
     }
+
+    override fun onItemClick(position: Int) {
+    }
+
 }

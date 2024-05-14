@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 
-class Fragment_outer : Fragment() {
+class Fragment_outer : Fragment(), ClosetImageAdapter.OnItemClickListener {
     private lateinit var auth: FirebaseAuth
     private lateinit var uid: String
     private lateinit var recyclerView: RecyclerView
@@ -28,4 +28,8 @@ class Fragment_outer : Fragment() {
             FirestoreHelper.loadImagesFromFirestoreForFragment(this, uid, recyclerView, mutableListOf("자켓"))
         }
     }
+
+    override fun onItemClick(position: Int) {
+    }
+
 }
