@@ -10,8 +10,13 @@ import com.bumptech.glide.request.RequestOptions
 class ClosetImageAdapter(
     private val imageList: List<String>,
     private val colorCategoryList: List<String>,
-    private val clothesList: List<String>
+    private val clothesList: List<String>,
+    private val listener: OnItemClickListener
 ) : RecyclerView.Adapter<ClosetImageViewHolder>() {
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClosetImageViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.closet_item_image, parent, false)
@@ -29,6 +34,9 @@ class ClosetImageAdapter(
         Glide.with(holder.itemView.context).load(imageUrl).apply(requestOptions).into(holder.imageView)
         holder.colorCategoryTextView.text = "색상: $colorCategory"
         holder.clothesTextView.text = "분류: $clothes"
+        holder.itemView.setOnClickListener {
+            listener.onItemClick(position)
+        }
     }
 
     override fun getItemCount(): Int {

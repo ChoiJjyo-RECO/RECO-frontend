@@ -1,5 +1,6 @@
 package choijjyo.reco
 
+import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.widget.TextView
@@ -55,8 +56,10 @@ object FirestoreHelper {
             }
     }
 
-    fun loadImagesFromFirestore(activity: AppCompatActivity, userId: String, recyclerView: RecyclerView) {
+    fun loadImagesFromFirestoreForActivity(activity: AppCompatActivity, userId: String, recyclerView: RecyclerView) {
         val imageList = mutableListOf<String>()
+        val colorCategoryList = mutableListOf<String>()
+        val clothesList = mutableListOf<String>()
 
         firestore.collection("users").document(userId).collection("closet")
             .orderBy("timestamp", Query.Direction.DESCENDING)
@@ -64,8 +67,12 @@ object FirestoreHelper {
             .addOnSuccessListener { documents ->
                 for (document in documents) {
                     val imageUrl = document.getString("imgURL")
-                    if (imageUrl != null) {
+                    val colorCategory = document.getString("closetColorCategory")
+                    val clothes = document.getString("clothes")
+                    if (imageUrl != null && colorCategory != null && clothes != null) {
                         imageList.add(imageUrl)
+                        colorCategoryList.add(colorCategory)
+                        clothesList.add(clothes)
                     }
                 }
                 if (imageList.isEmpty()) {
@@ -74,7 +81,21 @@ object FirestoreHelper {
                     noImagesTextView.visibility = View.VISIBLE
                 } else {
                     recyclerView.visibility = View.VISIBLE
-                    val adapter = RecentImageAdapter(imageList)
+                    val adapter = RecentImageAdapter(imageList, object : RecentImageAdapter.OnItemClickListener {
+                        override fun onItemClick(position: Int) {
+                            val imageUrl = imageList[position]
+                            val colorCategory = colorCategoryList[position]
+                            val clothes = clothesList[position]
+                            Log.d("FirestoreHelper", position.toString())
+                            val intent = Intent(activity, ClothesActivity::class.java).apply {
+                                putExtra("imageUrl", imageUrl)
+                                putExtra("colorCategory", colorCategory)
+                                putExtra("clothes", clothes)
+                            }
+                            activity.startActivity(intent)
+                        }
+                    })
+
                     recyclerView.adapter = adapter
                     recyclerView.layoutManager = GridLayoutManager(activity, Constants.SPAN_COUNT)
                 }
@@ -105,7 +126,20 @@ object FirestoreHelper {
                         clothesList.add(clothes)
                     }
                 }
-                val adapter = ClosetImageAdapter(imageList, colorCategoryList, clothesList)
+                val adapter = ClosetImageAdapter(imageList, colorCategoryList, clothesList, object : ClosetImageAdapter.OnItemClickListener {
+                    override fun onItemClick(position: Int) {
+                        val imageUrl = imageList[position]
+                        val colorCategory = colorCategoryList[position]
+                        val clothes = clothesList[position]
+                        Log.d("FirestoreHelper", position.toString())
+                        val intent = Intent(fragment.requireContext(), ClothesActivity::class.java).apply {
+                            putExtra("imageUrl", imageUrl)
+                            putExtra("colorCategory", colorCategory)
+                            putExtra("clothes", clothes)
+                        }
+                        fragment.startActivity(intent)
+                    }
+                })
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = GridLayoutManager(fragment.requireContext(), 3)
             }
