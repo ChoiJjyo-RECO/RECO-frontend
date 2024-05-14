@@ -58,8 +58,10 @@
                 android:exported="false" />
         <activity
                 android:name=".MyCloset.ClothesActivity"
-                android:exported="false">\
-        </activity>
+                android:exported="false" />
+        <activity
+                android:name=".Like.LikeActivity"
+                android:exported="false" />
     </application>
 
 </manifest>
