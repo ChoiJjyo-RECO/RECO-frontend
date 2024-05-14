@@ -6,19 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 class RecommendImageAdapter (private val imageList: List<SearchResultItem>) : RecyclerView.Adapter<RecommendImageAdapter.ImageViewHolder>() {
 
     class ImageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imageView: ImageView = view.findViewById(R.id.recoImage)
+        val imageView: ImageView = view.findViewById(R.id.similarImage)
         //val imageUrlText: TextView = view.findViewById(R.id.recoImageUrlText1)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.recommend_image_xml, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.similar_image_xml, parent, false)
         return ImageViewHolder(itemView)
     }
 

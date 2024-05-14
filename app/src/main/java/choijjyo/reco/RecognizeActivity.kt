@@ -21,6 +21,7 @@ import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import choijjyo.reco.databinding.ActivityRecognizeBinding
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.Timestamp
 import com.google.firebase.storage.FirebaseStorage
 import com.gun0912.tedpermission.PermissionListener
@@ -96,6 +97,7 @@ class RecognizeActivity : AppCompatActivity() {
             uri -> setGallery(uri)
         progressBar.visibility = View.VISIBLE
     }
+    private val tabTextList = listOf<String>("Recommend Cloth", "Similar Cloth")
     private lateinit var originalBitmap: Bitmap
     private val colorFilterHelper = ColorFilterHelper()
     private val matrixDeuteranopia = arrayOf(
@@ -168,6 +170,7 @@ class RecognizeActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recommedRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
+
 
 
     }
