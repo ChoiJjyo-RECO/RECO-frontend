@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "RECO"
 include(":app")
+include(":opencv")
  
