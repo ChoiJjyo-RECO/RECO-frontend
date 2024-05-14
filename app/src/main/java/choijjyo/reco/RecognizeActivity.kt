@@ -21,6 +21,7 @@ import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import choijjyo.reco.databinding.ActivityRecognizeBinding
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.Timestamp
 import com.google.firebase.storage.FirebaseStorage
@@ -75,12 +76,8 @@ data class SearchResultItem(
     val clickUrl: String
 )
 
-
-
 class RecognizeActivity : AppCompatActivity() {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: RecommendImageAdapter
 
     companion object {
         init{
@@ -97,26 +94,8 @@ class RecognizeActivity : AppCompatActivity() {
             uri -> setGallery(uri)
         progressBar.visibility = View.VISIBLE
     }
-    private val tabTextList = listOf<String>("Recommend Cloth", "Similar Cloth")
     private lateinit var originalBitmap: Bitmap
     private val colorFilterHelper = ColorFilterHelper()
-    private val matrixDeuteranopia = arrayOf(
-        doubleArrayOf(0.625, 0.375, 0.0),
-        doubleArrayOf(0.7, 0.3, 0.0),
-        doubleArrayOf(0.0, 0.3, 0.7)
-    )
-
-    private val matrixProtanopia = arrayOf(
-        doubleArrayOf(0.567, 0.433, 0.0),
-        doubleArrayOf(0.558, 0.442, 0.0),
-        doubleArrayOf(0.0, 0.242, 0.758)
-    )
-
-    private val matrixTritanopia = arrayOf(
-        doubleArrayOf(0.95, 0.05, 0.0),
-        doubleArrayOf(0.0, 0.433, 0.567),
-        doubleArrayOf(0.0, 0.475, 0.525)
-    )
 
     private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
@@ -168,10 +147,23 @@ class RecognizeActivity : AppCompatActivity() {
             showOriginal()
         }
 
-        recyclerView = findViewById(R.id.recommedRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        val fragmentList = listOf(Fragment_RecommendClothes(),Fragment_SimilarClothes())
 
+        binding.tabLayoutSearch.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                val fragment = fragmentList[tab.position]
+                val transaction = supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.searchfragment_container, fragment)
+                transaction.commit()
+            }
 
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+        })
+        binding.tabLayoutSearch.selectTab(binding.tabLayoutSearch.getTabAt(0))
 
     }
 
@@ -369,7 +361,7 @@ class RecognizeActivity : AppCompatActivity() {
             }
             val googleSearchKeyword = "$closestColorCategory $objectClass 제품 사진"
             Log.d("googleSearch keyword",googleSearchKeyword)
-            showRecommend(googleSearchKeyword)
+            sendKeywordtoFragment(googleSearchKeyword)
 
         } catch (ex: Exception) {
             println("예외 발생함: ${ex.toString()}")
@@ -403,42 +395,16 @@ class RecognizeActivity : AppCompatActivity() {
     fun showOriginal() {
         binding.cameraIV.setImageBitmap(originalBitmap)
     }
-    private fun showRecommend(query: String){
-        // Retrofit 객체 생성 및 ApiService 인터페이스 초기화
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://www.googleapis.com/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        val apiService = retrofit.create(GoogleCustomSearchAPI::class.java)
-
-        // API 호출
-        val call = apiService.searchImages(query = query, apiKey = BuildConfig.GOOGLESEARCH_APIKEY, searchEngineId = BuildConfig.GOOGLESEARCH_SEARCHID)
-        call.enqueue(object : Callback<SearchResponse> {
-            override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
-                if (response.isSuccessful) {
-                    // API 응답으로부터 이미지 목록을 초기화
-                    val imageList: List<SearchResultItem> = response.body()?.items?.map { apiItem ->
-                        SearchResultItem(
-                            imageUrl = apiItem.link,
-                            clickUrl = apiItem.image.contextLink
-                        )
-                    } ?: listOf()
-
-                    // 이미지 목록을 RecyclerView 어댑터에 전달
-                    adapter = RecommendImageAdapter(imageList)
-                    recyclerView.adapter = adapter
-                } else {
-                    // 에러 처리
-                    Log.e("API Error", "Response Code: ${response.code()}")
-                }
-            }
-
-            override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
-                // 네트워크 에러 처리
-                Log.e("API Error", "Network Error: ${t.message}")
-            }
-        })
+    fun sendKeywordtoFragment(googleSearchKeyword: String) {
+        val similarFragment = Fragment_SimilarClothes()
+        val args = Bundle().apply {
+            putString("similarquery", googleSearchKeyword)
+        }
+        similarFragment.arguments = args
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.searchfragment_container, similarFragment)
+            commit()
+        }
     }
 
 }

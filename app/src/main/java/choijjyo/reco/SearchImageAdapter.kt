@@ -2,6 +2,7 @@ package choijjyo.reco
 
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class RecommendImageAdapter (private val imageList: List<SearchResultItem>) : RecyclerView.Adapter<RecommendImageAdapter.ImageViewHolder>() {
+class SearchImageAdapter (private var imageList: List<SearchResultItem>) : RecyclerView.Adapter<SearchImageAdapter.ImageViewHolder>() {
 
     class ImageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.similarImage)
@@ -31,6 +32,11 @@ class RecommendImageAdapter (private val imageList: List<SearchResultItem>) : Re
             it.context.startActivity(intent)
         }
     }
+    fun updateData(newData: List<SearchResultItem>) {
+        this.imageList = newData
+        notifyDataSetChanged()
+    }
+
 
     override fun getItemCount() = imageList.size
 }
