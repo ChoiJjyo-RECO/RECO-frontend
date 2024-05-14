@@ -18,9 +18,10 @@ class RecentImageAdapter(private val imageList: List<String>) : RecyclerView.Ada
         val imageUrl = imageList[position]
         val screenWidth = Resources.getSystem().displayMetrics.widthPixels
         val requestOptions = RequestOptions().apply {
-            override(screenWidth/3)
+            override(screenWidth / Constants.SPAN_COUNT)
         }
-        Glide.with(holder.itemView.context).load(imageUrl).apply(requestOptions).into(holder.imageView)
+        Glide.with(holder.itemView.context).load(imageUrl).apply(requestOptions)
+            .into(holder.imageView)
     }
 
     override fun getItemCount(): Int {
