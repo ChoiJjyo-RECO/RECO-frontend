@@ -55,9 +55,6 @@
         <activity
             android:name=".MyClosetActivity"
             android:exported="false" />
-        <activity
-            android:name=".LikeActivity"
-            android:exported="false" />
     </application>
 
 </manifest>
