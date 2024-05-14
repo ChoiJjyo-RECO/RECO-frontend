@@ -6,10 +6,12 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.SetOptions
 
 object FirestoreHelper {
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -145,6 +147,20 @@ object FirestoreHelper {
             }
             .addOnFailureListener { exception ->
                 Log.e("LoadImages", "Error getting documents: ", exception)
+            }
+    }
+    fun saveSimilarUrlToCloset(activity: FragmentActivity?, userId: String, docId:String, imageData: HashMap<String, Any>) {
+        FirebaseFirestore.getInstance()
+            .collection("users")
+            .document(userId)
+            .collection("closet")
+            .document(docId)
+            .set(imageData, SetOptions.merge())
+            .addOnSuccessListener {
+                Log.d("FirestoreHelper", "Image URL saved to closet successfully!")
+            }
+            .addOnFailureListener { e ->
+                Log.e("FirestoreHelper", "Error saving image URL to closet", e)
             }
     }
 }
