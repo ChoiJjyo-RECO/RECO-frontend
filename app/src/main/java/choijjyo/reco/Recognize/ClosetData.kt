@@ -1,4 +1,4 @@
-package choijjyo.reco
+package choijjyo.reco.Recognize
 
 import com.google.firebase.Timestamp
 

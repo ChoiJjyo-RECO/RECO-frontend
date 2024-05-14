@@ -1,4 +1,4 @@
-package choijjyo.reco
+package choijjyo.reco.Recognize
 
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import choijjyo.reco.BuildConfig
+import choijjyo.reco.FirestoreHelper
+import choijjyo.reco.R
 import com.google.firebase.auth.FirebaseAuth
 import retrofit2.Call
 import retrofit2.Callback
@@ -78,7 +81,7 @@ class Fragment_SimilarClothes : Fragment() {
                     }
                     if (currentUser != null) {
                         uid = currentUser.uid
-                        FirestoreHelper.saveSimilarUrlToCloset(activity,uid,docId,imageData)
+                        FirestoreHelper.saveSimilarUrlToCloset(activity, uid, docId, imageData)
                     }
                 } else {
                     Log.e("API Error", "Response Code: ${response.code()}")

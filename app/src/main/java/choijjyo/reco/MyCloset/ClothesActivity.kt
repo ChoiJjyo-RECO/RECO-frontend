@@ -1,4 +1,4 @@
-package choijjyo.reco
+package choijjyo.reco.MyCloset
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import choijjyo.reco.R
 import choijjyo.reco.databinding.ActivityClothesBinding
 import com.bumptech.glide.Glide
 

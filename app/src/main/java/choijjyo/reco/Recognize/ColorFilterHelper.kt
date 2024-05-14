@@ -1,7 +1,6 @@
-package choijjyo.reco
+package choijjyo.reco.Recognize
 
 import android.graphics.Bitmap
-import android.view.View
 import org.opencv.android.Utils
 import org.opencv.core.Core
 import org.opencv.core.CvType

@@ -1,9 +1,10 @@
-package choijjyo.reco
+package choijjyo.reco.Main
 
 import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import choijjyo.reco.R
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 

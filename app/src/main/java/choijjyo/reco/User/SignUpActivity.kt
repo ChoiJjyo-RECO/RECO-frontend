@@ -1,10 +1,13 @@
-package choijjyo.reco
+package choijjyo.reco.User
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import choijjyo.reco.FirestoreHelper
+import choijjyo.reco.Main.MainActivity
+import choijjyo.reco.R
 import choijjyo.reco.databinding.ActivitySignUpBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -45,10 +48,12 @@ class SignUpActivity : AppCompatActivity() {
                     val user = auth.currentUser
                     if (user != null) {
                         val uid = user.uid
-                        FirestoreHelper.setDocument(this, uid, UsersData(
-                            name = name,
-                            email = email
-                        ))
+                        FirestoreHelper.setDocument(
+                            this, uid, UsersData(
+                                name = name,
+                                email = email
+                            )
+                        )
                     }
                     intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)

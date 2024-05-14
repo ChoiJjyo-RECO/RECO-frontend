@@ -33,7 +33,7 @@
         </provider>
 
         <activity
-                android:name=".RecognizeActivity"
+                android:name=".Recognize.RecognizeActivity"
                 android:exported="false" />
         <activity
                 android:name=".SplashActivity"
@@ -45,19 +45,19 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".SignUpActivity"
+                android:name=".User.SignUpActivity"
                 android:exported="false" />
         <activity
-                android:name=".SignInActivity"
+                android:name=".User.SignInActivity"
                 android:exported="false" />
         <activity
-                android:name=".MainActivity"
+                android:name=".Main.MainActivity"
                 android:exported="false" />
         <activity
-                android:name=".MyClosetActivity"
+                android:name=".MyCloset.MyClosetActivity"
                 android:exported="false" />
         <activity
-                android:name=".ClothesActivity"
+                android:name=".MyCloset.ClothesActivity"
                 android:exported="false">\
         </activity>
     </application>

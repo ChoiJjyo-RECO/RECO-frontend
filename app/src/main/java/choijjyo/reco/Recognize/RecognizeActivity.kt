@@ -1,4 +1,4 @@
-package choijjyo.reco
+package choijjyo.reco.Recognize
 
 import android.Manifest
 import android.content.Intent
@@ -18,13 +18,11 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import choijjyo.reco.FirestoreHelper
+import choijjyo.reco.R
 import choijjyo.reco.databinding.ActivityRecognizeBinding
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.Timestamp
 import com.google.firebase.storage.FirebaseStorage
 import com.gun0912.tedpermission.PermissionListener
@@ -42,47 +40,8 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.Date
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Query
-
-interface GoogleCustomSearchAPI {
-    @GET("customsearch/v1")
-    fun searchImages(
-        @Query("key") apiKey: String,
-        @Query("cx") searchEngineId: String,
-        @Query("q") query: String,
-        @Query("searchType") searchType: String = "image",
-        @Query("num") num: Int = 6
-    ): Call<SearchResponse>
-}
-interface DocIdCallback {
-    fun onDocIdReceived(docId: String)
-}
-
-data class SearchResponse(
-    val items: List<SearchItem>
-)
-
-data class SearchItem(
-    val link: String, // 이미지 URL
-    val image: Image
-)
-
-data class Image(
-    val contextLink: String // 클릭 시 이동할 URL
-)
-data class SearchResultItem(
-    val imageUrl: String,
-    val clickUrl: String
-)
 
 class RecognizeActivity : AppCompatActivity() {
-
 
     companion object {
         init{
@@ -337,13 +296,15 @@ class RecognizeActivity : AppCompatActivity() {
 
             imagesRef.downloadUrl.addOnSuccessListener { downloadUri ->
                 val imageUrl = downloadUri.toString()
-                FirestoreHelper.saveImageUrlToCloset(this, uid, imageName, ClosetData(
-                    closetColorRGB = emptyList(),
-                    closetColorCategory = "",
-                    clothes = "",
-                    imgURL = imageUrl,
-                    timestamp = Timestamp.now()
-                ))
+                FirestoreHelper.saveImageUrlToCloset(
+                    this, uid, imageName, ClosetData(
+                        closetColorRGB = emptyList(),
+                        closetColorCategory = "",
+                        clothes = "",
+                        imgURL = imageUrl,
+                        timestamp = Timestamp.now()
+                    )
+                )
             }.addOnFailureListener {
                 Log.d("RecognizeActivity", "이미지 URL을 가져오는 데 실패했습니다.")
             }
