@@ -161,6 +161,8 @@ object FirestoreHelper {
             .document(userId)
             .collection("closet")
             .document(docId)
+            .collection("search")
+            .document("similarClothes")
             .set(imageData, SetOptions.merge())
             .addOnSuccessListener {
                 Log.d("FirestoreHelper", "Image URL saved to closet successfully!")
