@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import choijjyo.reco.FirestoreHelper
+import choijjyo.reco.Like.LikeActivity
 import choijjyo.reco.MyCloset.MyClosetActivity
 import choijjyo.reco.R
 import choijjyo.reco.databinding.ActivityMainBinding
@@ -63,6 +64,8 @@ class MainActivity : AppCompatActivity(), RecentImageAdapter.OnItemClickListener
             startActivity(intent)
         }
         binding.preference.setOnClickListener {
+            val likeIntent = Intent(this, LikeActivity::class.java)
+            startActivity(likeIntent)
         }
     }
 

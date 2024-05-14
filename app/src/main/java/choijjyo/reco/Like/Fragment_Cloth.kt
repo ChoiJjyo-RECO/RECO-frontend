@@ -1,10 +1,11 @@
-package choijjyo.reco
+package choijjyo.reco.Like
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import choijjyo.reco.R
 
 class Fragment_Cloth : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

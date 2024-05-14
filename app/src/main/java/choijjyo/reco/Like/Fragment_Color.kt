@@ -1,4 +1,4 @@
-package choijjyo.reco
+package choijjyo.reco.Like
 
 import android.graphics.Color
 import android.os.Bundle

@@ -1,10 +1,12 @@
-package choijjyo.reco
+package choijjyo.reco.Like
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import choijjyo.reco.Main.MainActivity
+import choijjyo.reco.R
 import com.google.android.material.tabs.TabLayout
 
 class LikeActivity : AppCompatActivity() {
