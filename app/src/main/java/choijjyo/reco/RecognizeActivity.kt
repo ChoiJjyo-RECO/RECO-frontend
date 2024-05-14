@@ -60,6 +60,9 @@ interface GoogleCustomSearchAPI {
         @Query("num") num: Int = 6
     ): Call<SearchResponse>
 }
+interface DocIdCallback {
+    fun onDocIdReceived(docId: String)
+}
 
 data class SearchResponse(
     val items: List<SearchItem>
@@ -384,7 +387,9 @@ class RecognizeActivity : AppCompatActivity() {
                 binding.resultText.text = "색상: $closestColorCategory\n종류: $objectClass"
                 val googleSearchKeyword = "$closestColorCategory $objectClass 제품 사진"
                 Log.d("googleSearch keyword",googleSearchKeyword)
-                sendKeywordtoFragment(googleSearchKeyword)
+                if (docId != null) {
+                    sendToSimilarFragment(googleSearchKeyword, docId)
+                }
             }
 
 
@@ -420,14 +425,14 @@ class RecognizeActivity : AppCompatActivity() {
     fun showOriginal() {
         binding.cameraIV.setImageBitmap(originalBitmap)
     }
-    private fun sendKeywordtoFragment(googleSearchKeyword: String) {
+    private fun sendToSimilarFragment(googleSearchKeyword: String, docid: String) {
         binding.tabLayoutSearch.getTabAt(1)?.select()
         val fragment = supportFragmentManager.findFragmentByTag("FragmentTag1") as? Fragment_SimilarClothes
         if (fragment != null) {
-            fragment.setSearchKeyword(googleSearchKeyword)
+            fragment.setSearchKeyword(googleSearchKeyword,docid)
         } else {
             val similar_Fragment = Fragment_SimilarClothes().apply {
-                setSearchKeyword(googleSearchKeyword)
+                setSearchKeyword(googleSearchKeyword,docid)
             }
             supportFragmentManager.beginTransaction().apply {
                 replace(R.id.searchfragment_container, similar_Fragment, "FragmentTag1")
