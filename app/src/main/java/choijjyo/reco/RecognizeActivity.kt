@@ -382,10 +382,11 @@ class RecognizeActivity : AppCompatActivity() {
             // 결과 표시
             runOnUiThread {
                 binding.resultText.text = "색상: $closestColorCategory\n종류: $objectClass"
+                val googleSearchKeyword = "$closestColorCategory $objectClass 제품 사진"
+                Log.d("googleSearch keyword",googleSearchKeyword)
+                sendKeywordtoFragment(googleSearchKeyword)
             }
-            val googleSearchKeyword = "$closestColorCategory $objectClass 제품 사진"
-            Log.d("googleSearch keyword",googleSearchKeyword)
-            sendKeywordtoFragment(googleSearchKeyword)
+
 
         } catch (ex: Exception) {
             println("예외 발생함: ${ex.toString()}")
