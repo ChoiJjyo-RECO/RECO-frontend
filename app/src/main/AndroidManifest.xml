@@ -53,8 +53,11 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-                android:name=".MyClosetActivity"
-                android:exported="false" />
+            android:name=".MyClosetActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LikeActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

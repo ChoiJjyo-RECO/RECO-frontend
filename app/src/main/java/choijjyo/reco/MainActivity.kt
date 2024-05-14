@@ -52,6 +52,8 @@ class MainActivity : AppCompatActivity() {
 
         }
         binding.preference.setOnClickListener {
+            val likeIntent = Intent(this, LikeActivity::class.java)
+            startActivity(likeIntent)
         }
     }
 }
