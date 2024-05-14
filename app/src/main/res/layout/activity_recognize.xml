@@ -122,5 +122,21 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.995" />
 
+        <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayoutSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="#000000"
+                app:tabRippleColor="#0000FF"
+                app:tabGravity="fill"
+                app:tabTextColor="#FFFFFF"
+
+                app:tabIndicatorHeight="5dp"
+                app:tabIndicatorGravity="top"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteY="381dp"
+                tools:layout_editor_absoluteX="-42dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
