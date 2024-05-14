@@ -54,7 +54,7 @@ interface GoogleCustomSearchAPI {
         @Query("cx") searchEngineId: String,
         @Query("q") query: String,
         @Query("searchType") searchType: String = "image",
-        @Query("num") num: Int = 4
+        @Query("num") num: Int = 6
     ): Call<SearchResponse>
 }
 
