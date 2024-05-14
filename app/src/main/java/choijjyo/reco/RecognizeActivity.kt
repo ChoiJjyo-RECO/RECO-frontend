@@ -19,6 +19,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import choijjyo.reco.databinding.ActivityRecognizeBinding
@@ -147,29 +148,29 @@ class RecognizeActivity : AppCompatActivity() {
         binding.originalImgButton.setOnClickListener {
             showOriginal()
         }
-        val fragmentList = ArrayList<Fragment?>(2).apply {
-            add(null)
-            add(null)
-        }
 
         binding.tabLayoutSearch.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 val position = tab.position
-                var fragment = fragmentList[tab.position]
+                val tag = "FragmentTag$position"
+                var fragment = supportFragmentManager.findFragmentByTag(tag)
+
                 if (fragment == null) {
-                    // Fragment 인스턴스가 없으면 새로 생성하고 리스트에 추가
                     fragment = when (position) {
                         0 -> Fragment_RecommendClothes()
                         1 -> Fragment_SimilarClothes()
                         else -> null
                     }
-                    fragmentList[position] = fragment
                 }
-                // 선택된 Fragment 표시
+
+                // 선택된 프래그먼트를 표시
                 fragment?.let {
                     val transaction = supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.searchfragment_container, it)
-                    transaction.commit()
+                    if (!it.isAdded) {
+                        transaction.add(R.id.searchfragment_container, it, tag)
+                    }
+                    hideOtherFragments(transaction, tag)
+                    transaction.show(it).commit()
                 }
             }
 
@@ -181,6 +182,13 @@ class RecognizeActivity : AppCompatActivity() {
         })
         binding.tabLayoutSearch.selectTab(binding.tabLayoutSearch.getTabAt(0))
 
+    }
+    private fun hideOtherFragments(transaction: FragmentTransaction, exceptTag: String) {
+        supportFragmentManager.fragments.forEach {
+            if (it.tag != exceptTag) {
+                transaction.hide(it)
+            }
+        }
     }
 
     fun setGallery(uri : Uri?) {
@@ -348,7 +356,7 @@ class RecognizeActivity : AppCompatActivity() {
             val docId = uri?.lastPathSegment
 
             // 요청 URL에 쿼리 매개변수 추가
-            val url = URL("https://21fa-61-98-10-215.ngrok-free.app/detect_and_analyze?uid=$uid&doc_id=$docId")
+            val url = URL("https://f6df-121-166-22-33.ngrok-free.app/detect_and_analyze?uid=$uid&doc_id=$docId")
             val conn = url.openConnection() as HttpURLConnection
             conn.connectTimeout = 10000
             conn.requestMethod = "GET"
@@ -411,24 +419,19 @@ class RecognizeActivity : AppCompatActivity() {
     fun showOriginal() {
         binding.cameraIV.setImageBitmap(originalBitmap)
     }
-    fun sendKeywordtoFragment(googleSearchKeyword: String) {
-        var similarFragment = supportFragmentManager.findFragmentByTag("Fragment_SimilarClothes") as? Fragment_SimilarClothes
-
-        if (similarFragment == null) {
-            similarFragment = Fragment_SimilarClothes().apply {
-                arguments = Bundle().apply {
-                    putString("similarquery", googleSearchKeyword)
-                }
+    private fun sendKeywordtoFragment(googleSearchKeyword: String) {
+        binding.tabLayoutSearch.getTabAt(1)?.select()
+        val fragment = supportFragmentManager.findFragmentByTag("FragmentTag1") as? Fragment_SimilarClothes
+        if (fragment != null) {
+            fragment.setSearchKeyword(googleSearchKeyword)
+        } else {
+            val similar_Fragment = Fragment_SimilarClothes().apply {
+                setSearchKeyword(googleSearchKeyword)
             }
             supportFragmentManager.beginTransaction().apply {
-                replace(R.id.searchfragment_container, similarFragment, "Fragment_SimilarClothes")
+                replace(R.id.searchfragment_container, similar_Fragment, "FragmentTag1")
                 commit()
             }
-        } else {
-            // 새 키워드로 arguments를 업데이트하고 UI를 즉시 갱신
-            similarFragment.arguments?.putString("similarquery", googleSearchKeyword)
-            similarFragment.updateUIWithNewKeyword(googleSearchKeyword)
-
         }
     }
 

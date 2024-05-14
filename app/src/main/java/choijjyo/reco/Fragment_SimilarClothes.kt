@@ -17,28 +17,30 @@ import retrofit2.converter.gson.GsonConverterFactory
 class Fragment_SimilarClothes : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: SearchImageAdapter
+    private var searchKeyword: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.similar_clothes, container, false)
-        return view
+        return inflater.inflate(R.layout.similar_clothes, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView = requireView().findViewById(R.id.similarRecyclerView)
+        recyclerView = view.findViewById(R.id.similarRecyclerView)
         adapter = SearchImageAdapter(listOf())
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
     }
-    fun updateUIWithNewKeyword(newKeyword: String){
-        // Bundle에서 데이터 받기
-        //val similarQuery = arguments?.getString("similarquery")
+    fun setSearchKeyword(keyword: String) {
+        searchKeyword = keyword
+        searchImages(keyword) // 검색 키워드가 설정되면 즉시 검색을 시작합니다.
+    }
 
-
-        // Retrofit 객체 생성 및 ApiService 인터페이스 초기화
+    private fun searchImages(googleSearchKeyword: String) {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://www.googleapis.com/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -46,31 +48,30 @@ class Fragment_SimilarClothes : Fragment() {
 
         val apiService = retrofit.create(GoogleCustomSearchAPI::class.java)
 
-        // API 호출
-        val call = newKeyword.let { apiService.searchImages(query = it, apiKey = BuildConfig.GOOGLESEARCH_APIKEY, searchEngineId = BuildConfig.GOOGLESEARCH_SEARCHID) }
+        val call = apiService.searchImages(
+            query = googleSearchKeyword,
+            apiKey = BuildConfig.GOOGLESEARCH_APIKEY,
+            searchEngineId = BuildConfig.GOOGLESEARCH_SEARCHID
+        )
+
         call.enqueue(object : Callback<SearchResponse> {
             override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
                 if (response.isSuccessful) {
-                    // API 응답으로부터 이미지 목록을 초기화
                     val imageList: List<SearchResultItem> = response.body()?.items?.map { apiItem ->
                         SearchResultItem(
                             imageUrl = apiItem.link,
                             clickUrl = apiItem.image.contextLink
                         )
                     } ?: listOf()
-
                     adapter.updateData(imageList)
                 } else {
-                    // 에러 처리
                     Log.e("API Error", "Response Code: ${response.code()}")
                 }
             }
 
             override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
-                // 네트워크 에러 처리
                 Log.e("API Error", "Network Error: ${t.message}")
             }
         })
     }
-
 }
