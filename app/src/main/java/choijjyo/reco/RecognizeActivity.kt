@@ -18,6 +18,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import choijjyo.reco.databinding.ActivityRecognizeBinding
@@ -146,15 +147,30 @@ class RecognizeActivity : AppCompatActivity() {
         binding.originalImgButton.setOnClickListener {
             showOriginal()
         }
-
-        val fragmentList = listOf(Fragment_RecommendClothes(),Fragment_SimilarClothes())
+        val fragmentList = ArrayList<Fragment?>(2).apply {
+            add(null)
+            add(null)
+        }
 
         binding.tabLayoutSearch.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                val fragment = fragmentList[tab.position]
-                val transaction = supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.searchfragment_container, fragment)
-                transaction.commit()
+                val position = tab.position
+                var fragment = fragmentList[tab.position]
+                if (fragment == null) {
+                    // Fragment 인스턴스가 없으면 새로 생성하고 리스트에 추가
+                    fragment = when (position) {
+                        0 -> Fragment_RecommendClothes()
+                        1 -> Fragment_SimilarClothes()
+                        else -> null
+                    }
+                    fragmentList[position] = fragment
+                }
+                // 선택된 Fragment 표시
+                fragment?.let {
+                    val transaction = supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.searchfragment_container, it)
+                    transaction.commit()
+                }
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -396,14 +412,23 @@ class RecognizeActivity : AppCompatActivity() {
         binding.cameraIV.setImageBitmap(originalBitmap)
     }
     fun sendKeywordtoFragment(googleSearchKeyword: String) {
-        val similarFragment = Fragment_SimilarClothes()
-        val args = Bundle().apply {
-            putString("similarquery", googleSearchKeyword)
-        }
-        similarFragment.arguments = args
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.searchfragment_container, similarFragment)
-            commit()
+        var similarFragment = supportFragmentManager.findFragmentByTag("Fragment_SimilarClothes") as? Fragment_SimilarClothes
+
+        if (similarFragment == null) {
+            similarFragment = Fragment_SimilarClothes().apply {
+                arguments = Bundle().apply {
+                    putString("similarquery", googleSearchKeyword)
+                }
+            }
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.searchfragment_container, similarFragment, "Fragment_SimilarClothes")
+                commit()
+            }
+        } else {
+            // 새 키워드로 arguments를 업데이트하고 UI를 즉시 갱신
+            similarFragment.arguments?.putString("similarquery", googleSearchKeyword)
+            similarFragment.updateUIWithNewKeyword(googleSearchKeyword)
+
         }
     }
 
