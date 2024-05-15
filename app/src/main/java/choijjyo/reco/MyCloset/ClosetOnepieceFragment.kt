@@ -10,12 +10,12 @@ import choijjyo.reco.FirestoreHelper
 import choijjyo.reco.R
 import com.google.firebase.auth.FirebaseAuth
 
-class Fragment_onepiece : Fragment(), ClosetImageAdapter.OnItemClickListener {
+class ClosetOnepieceFragment : Fragment(), ClosetImageAdapter.OnItemClickListener {
     private lateinit var auth: FirebaseAuth
     private lateinit var uid: String
     private lateinit var recyclerView: RecyclerView
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.mycloset_onepiece, container, false)
+        return inflater.inflate(R.layout.fragment_closet_onepiece, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
