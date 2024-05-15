@@ -352,8 +352,8 @@ class RecognizeActivity : AppCompatActivity() {
                 Log.d("googleSearch keyword",googleSearchKeyword)
                 if (docId != null) {
                     lifecycleScope.launch {
-                        sendToRecommendFragment(modelResult, docId)
                         sendToSimilarFragment(googleSearchKeyword, docId)
+                        sendToRecommendFragment(modelResult, docId)
                     }
                 }
             }
@@ -409,6 +409,7 @@ class RecognizeActivity : AppCompatActivity() {
     }
 
     private fun sendToRecommendFragment(modelResult: String, docid: String) {
+        binding.tabLayoutSearch.getTabAt(0)?.select()
         val fragment = supportFragmentManager.findFragmentByTag("FragmentTag0") as? Fragment_RecommendClothes
         if (fragment != null) {
             fragment.setSearchKeyword(modelResult, docid)
