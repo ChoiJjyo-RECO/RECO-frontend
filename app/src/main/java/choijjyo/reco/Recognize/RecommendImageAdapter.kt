@@ -19,13 +19,11 @@ class RecommendImageAdapter(private var imageList: List<SearchResultItem>) : Rec
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.recommend_image_xml, parent, false)
-        Log.d("imageList", imageList.toString())
         return ImageViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
         val currentItem = imageList[position]
-        Log.d("recommnedImage", "onBindViewBinder")
         Glide.with(holder.imageView.context).load(currentItem.imageUrl).into(holder.imageView)
         // ImageView에 클릭 리스너 설정
         holder.imageView.setOnClickListener {

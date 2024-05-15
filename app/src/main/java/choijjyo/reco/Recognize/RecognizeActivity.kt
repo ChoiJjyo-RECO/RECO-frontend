@@ -392,31 +392,34 @@ class RecognizeActivity : AppCompatActivity() {
         binding.cameraIV.setImageBitmap(originalBitmap)
     }
     private fun sendToSimilarFragment(googleSearchKeyword: String, docid: String) {
-        //binding.tabLayoutSearch.getTabAt(1)?.select()
         val fragment = supportFragmentManager.findFragmentByTag("FragmentTag1") as? Fragment_SimilarClothes
         if (fragment != null) {
-            fragment.setSearchKeyword(googleSearchKeyword,docid)
+            fragment.setSearchKeyword(googleSearchKeyword, docid)
+            supportFragmentManager.beginTransaction().show(fragment).commit()
         } else {
             val similar_Fragment = Fragment_SimilarClothes().apply {
-                setSearchKeyword(googleSearchKeyword,docid)
+                setSearchKeyword(googleSearchKeyword, docid)
             }
             supportFragmentManager.beginTransaction().apply {
-                replace(R.id.searchfragment_container, similar_Fragment, "FragmentTag1")
+                add(R.id.searchfragment_container, similar_Fragment, "FragmentTag1")
+                hideOtherFragments(this, "FragmentTag1") // 다른 프래그먼트는 숨기기
                 commitNow()
             }
         }
     }
+
     private fun sendToRecommendFragment(modelResult: String, docid: String) {
-        //binding.tabLayoutSearch.getTabAt(0)?.select()
         val fragment = supportFragmentManager.findFragmentByTag("FragmentTag0") as? Fragment_RecommendClothes
         if (fragment != null) {
-            fragment.setSearchKeyword(modelResult,docid)
+            fragment.setSearchKeyword(modelResult, docid)
+            supportFragmentManager.beginTransaction().show(fragment).commit()
         } else {
             val recommend_Fragment = Fragment_RecommendClothes().apply {
-                setSearchKeyword(modelResult,docid)
+                setSearchKeyword(modelResult, docid)
             }
             supportFragmentManager.beginTransaction().apply {
-                replace(R.id.searchfragment_container, recommend_Fragment, "FragmentTag0")
+                add(R.id.searchfragment_container, recommend_Fragment, "FragmentTag0")
+                hideOtherFragments(this, "FragmentTag0") // 다른 프래그먼트는 숨기기
                 commitNow()
             }
         }
