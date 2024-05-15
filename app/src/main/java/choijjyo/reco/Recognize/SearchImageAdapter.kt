@@ -34,7 +34,6 @@ class SearchImageAdapter (private var imageList: List<SearchResultItem>) : Recyc
         }
     }
     fun updateData(newData: List<SearchResultItem>) {
-        Log.d("update", "oo")
         this.imageList = newData
         notifyDataSetChanged()
     }
