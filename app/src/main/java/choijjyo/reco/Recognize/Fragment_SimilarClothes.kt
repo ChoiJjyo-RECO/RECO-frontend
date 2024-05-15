@@ -74,14 +74,17 @@ class Fragment_SimilarClothes : Fragment() {
                         )
                     } ?: listOf()
                     adapter.updateData(imageList)
-                    val imageData = hashMapOf<String, Any>()
-                    imageList.forEachIndexed { index, searchResultItem ->
-                        imageData["similarImageUrl${index + 1}"] = searchResultItem.imageUrl ?: ""
-                        imageData["similarClickUrl${index + 1}"] = searchResultItem.clickUrl ?: ""
-                    }
                     if (currentUser != null) {
                         uid = currentUser.uid
-                        FirestoreHelper.saveSimilarUrlToCloset(activity, uid, docId, imageData)
+                        imageList.forEachIndexed { index, searchResultItem ->
+                            FirestoreHelper.saveSimilarUrlToCloset(
+                                activity,
+                                uid,
+                                docId,
+                                searchResultItem,
+                                index + 1
+                            )
+                        }
                     }
                 } else {
                     Log.e("API Error", "Response Code: ${response.code()}")
