@@ -77,11 +77,11 @@ class Fragment_RecommendClothes: Fragment() {
             messages = listOf(
                 ChatMessage(
                     role = ChatRole.System,
-                    content = " 답변 형태: \"검은색 티셔츠\" OR \"주황색 바지\" OR \"초록색 자켓\"  OR \"검은색 바지\" OR \"파란색 바지\" OR \"핑크색 치마\" "
+                    content = ""
                 ),
                 ChatMessage(
                     role = ChatRole.User,
-                    content = "$keyword 에 어울릴 만한 옷을 6가지  추천해줘."
+                    content = "$keyword 에 어울릴 만한 옷을 6가지  추천해줘. \\n답변 예시는 다음과 같습니다: \"검은색 치마\" OR \"하늘색 바지\" OR \"핑크색 셔츠\" OR \"주황색 티셔츠\" OR \"파란색 셔츠\" OR \"검은색 자켓\". \\n이 형식을 따라 답변해주세요. "
                 )
             )
         )
