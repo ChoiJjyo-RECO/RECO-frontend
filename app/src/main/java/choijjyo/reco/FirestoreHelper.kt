@@ -14,10 +14,10 @@ import choijjyo.reco.Main.RecentImageAdapter
 import choijjyo.reco.MyCloset.ClosetImageAdapter
 import choijjyo.reco.MyCloset.ClothesActivity
 import choijjyo.reco.Recognize.ClosetData
+import choijjyo.reco.Recognize.SearchResultItem
 import choijjyo.reco.User.UsersData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.SetOptions
 
 object FirestoreHelper {
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -155,13 +155,15 @@ object FirestoreHelper {
                 Log.e("LoadImages", "Error getting documents: ", exception)
             }
     }
-    fun saveSimilarUrlToCloset(activity: FragmentActivity?, userId: String, docId:String, imageData: HashMap<String, Any>) {
+    fun saveSimilarUrlToCloset(activity: FragmentActivity?, userId: String, docId:String, searchData: SearchResultItem, index: Int) {
         FirebaseFirestore.getInstance()
             .collection("users")
             .document(userId)
             .collection("closet")
             .document(docId)
-            .set(imageData, SetOptions.merge())
+            .collection("similarClothes")
+            .document(index.toString())
+            .set(searchData)
             .addOnSuccessListener {
                 Log.d("FirestoreHelper", "Image URL saved to closet successfully!")
             }
