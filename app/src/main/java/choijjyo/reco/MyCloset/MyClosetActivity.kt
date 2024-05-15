@@ -20,11 +20,11 @@ class MyClosetActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mycloset)
 
-        fragment1 = Fragment_all()
-        fragment2 = Fragment_top()
-        fragment3 = Fragment_bottom()
-        fragment4 = Fragment_outer()
-        fragment5 = Fragment_onepiece()
+        fragment1 = ClosetAllFragment()
+        fragment2 = ClosetTopFragment()
+        fragment3 = ClosetBottomFragment()
+        fragment4 = ClosetOuterFragment()
+        fragment5 = ClosetOnepieceFragment()
 
         supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment1).commit()
         val tabLayout = findViewById<TabLayout>(R.id.mycloset_tab)
