@@ -15,9 +15,11 @@ import choijjyo.reco.MyCloset.ClosetImageAdapter
 import choijjyo.reco.MyCloset.ClothesActivity
 import choijjyo.reco.Recognize.ClosetData
 import choijjyo.reco.User.UsersData
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
+import kotlinx.coroutines.tasks.await
 
 object FirestoreHelper {
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -169,4 +171,32 @@ object FirestoreHelper {
                 Log.e("FirestoreHelper", "Error saving image URL to closet", e)
             }
     }
+
+    fun saveUserColors(
+        likeSelectedbuttons: MutableList<String>,
+        dislikeSelectedbuttons: MutableList<String>
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    object FirestoreHelper {
+        private val firestore = FirebaseFirestore.getInstance()
+        private val auth = FirebaseAuth.getInstance()
+
+        // 사용자의 취향을 Firestore에 저장하는 함수
+        suspend fun saveUserColors(likeColors: List<String>, dislikeColors: List<String>) {
+            val user = auth.currentUser
+            if (user != null) {
+                val userId = user.uid
+                val userData = hashMapOf(
+                    "like_colors" to likeColors,
+                    "dislike_colors" to dislikeColors
+                )
+                firestore.collection("users").document(userId).set(userData).await()
+            } else {
+                throw Exception("User not logged in")
+            }
+        }
+    }
+
 }

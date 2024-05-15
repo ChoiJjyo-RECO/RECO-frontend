@@ -93,6 +93,7 @@ dependencies {
     // tedpermission
     implementation("io.github.ParkSangGwon:tedpermission-normal:3.3.0")
     implementation(project(":opencv"))
+    implementation("com.google.firebase:firebase-database-ktx:21.0.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

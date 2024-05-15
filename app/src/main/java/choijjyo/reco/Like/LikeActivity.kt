@@ -1,5 +1,6 @@
 package choijjyo.reco.Like
-
+//
+//import Fragment_Color
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
