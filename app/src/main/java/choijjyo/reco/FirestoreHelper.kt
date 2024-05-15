@@ -191,6 +191,30 @@ object FirestoreHelper {
                 Log.e("LoadImages", "Error getting documents: ", exception)
             }
     }
+    fun loadRecommendImages(fragment: Fragment, userId: String, imageName: String, recyclerView: RecyclerView) {
+        val imageUrlList = mutableListOf<String>()
+        val clickUrlList = mutableListOf<String>()
+
+        firestore.collection("users").document(userId).collection("closet")
+            .document(imageName).collection("recommendClothes")
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val imageUrl = document.getString("imageUrl")
+                    val clickUrl = document.getString("clickUrl")
+                    if (imageUrl != null && clickUrl != null) {
+                        imageUrlList.add(imageUrl)
+                        clickUrlList.add(clickUrl)
+                    }
+                }
+                val adapter = ClosetSearchImageAdapter(imageUrlList, clickUrlList)
+                recyclerView.adapter = adapter
+                recyclerView.layoutManager = GridLayoutManager(fragment.requireContext(), 3)
+            }
+            .addOnFailureListener { exception ->
+                Log.e("LoadImages", "Error getting documents: ", exception)
+            }
+    }
     fun saveSimilarUrlToCloset(activity: FragmentActivity?, userId: String, docId:String, searchData: SearchResultItem, index: Int) {
         FirebaseFirestore.getInstance()
             .collection("users")
