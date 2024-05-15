@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- 선택되었을 때의 배경색 -->
-    <item android:state_selected="true" android:drawable="@color/tab_selected_color" />
-    <!-- 선택되지 않았을 때의 배경색 -->
-    <item android:drawable="@android:color/black"/>
-
-
-</selector>
