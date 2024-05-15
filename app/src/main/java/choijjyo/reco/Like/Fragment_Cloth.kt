@@ -61,6 +61,8 @@ class Fragment_Cloth : Fragment() {
         saveButton.setOnClickListener {
             saveSelectedButtonsToFirestore()
         }
+
+        loadPreferenceFromFirestore()
     }
 
     // TableLayout에 버튼 설정하는 함수
@@ -106,5 +108,27 @@ class Fragment_Cloth : Fragment() {
             clothTypeDislikeList = dislike_selectedButtons
         )
         FirestoreHelper.savePreferenceClothType(activity, uid, preferenceClothTypeData)
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(), "선택한 선호 옷 유형이 저장되었습니다.", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(requireContext(), "선택한 선호 옷 유형을 저장하는 중에 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun loadPreferenceFromFirestore() {
+        FirestoreHelper.loadPreferenceClothType(activity, uid, object : FirestoreHelper.OnPreferenceClothTypeDataLoadedListener {
+            override fun onDataLoaded(preferenceClothTypeData: PreferenceClothTypeData?) {
+                preferenceClothTypeData?.let { data ->
+                    like_selectedButtons.clear()
+                    like_selectedButtons.addAll(data.clothTypeLikeList)
+
+                    dislike_selectedButtons.clear()
+                    dislike_selectedButtons.addAll(data.clothTypeDislikeList)
+
+                    updateSelectedButtonsText()
+                }
+            }
+        })
     }
 }

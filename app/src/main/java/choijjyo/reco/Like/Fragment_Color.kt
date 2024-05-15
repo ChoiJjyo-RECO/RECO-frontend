@@ -1,6 +1,5 @@
 package choijjyo.reco.Like
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,6 +67,8 @@ class Fragment_Color : Fragment() {
         saveButton.setOnClickListener {
             saveSelectedButtonsToFirestore()
         }
+
+        loadPreferenceFromFirestore()
     }
 
     // TableLayout에 버튼 설정하는 함수
@@ -113,5 +114,27 @@ class Fragment_Color : Fragment() {
             colorDislikeList = dislike_selectedButtons
         )
         FirestoreHelper.savePreferenceColor(activity, uid, preferenceColorData)
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(), "선택한 선호 색상이 저장되었습니다.", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(requireContext(), "선택한 선호 색상을 저장하는 중에 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun loadPreferenceFromFirestore() {
+        FirestoreHelper.loadPreferenceColor(activity, uid, object : FirestoreHelper.OnPreferenceColorDataLoadedListener {
+            override fun onDataLoaded(preferenceColorData: PreferenceColorData?) {
+                preferenceColorData?.let { data ->
+                    like_selectedButtons.clear()
+                    like_selectedButtons.addAll(data.colorLikeList)
+
+                    dislike_selectedButtons.clear()
+                    dislike_selectedButtons.addAll(data.colorDislikeList)
+
+                    updateSelectedButtonsText()
+                }
+            }
+        })
     }
 }
