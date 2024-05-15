@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "948821674569",
+    "project_id": "reco-b84b6",
+    "storage_bucket": "reco-b84b6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948821674569:android:972db65baec14848a94d98",
+        "android_client_info": {
+          "package_name": "choijjyo.reco"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948821674569-2nv0crt910ju98qt97vf2lp7tvlglaou.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwc_LnDfmnQ84f_zAyCpb5SuyxM0eIo60"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948821674569-2nv0crt910ju98qt97vf2lp7tvlglaou.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
