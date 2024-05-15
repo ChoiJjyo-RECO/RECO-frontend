@@ -11,20 +11,21 @@ import androidx.recyclerview.widget.RecyclerView
 import choijjyo.reco.R
 import com.bumptech.glide.Glide
 
-class SearchImageAdapter (private var imageList: List<SearchResultItem>) : RecyclerView.Adapter<SearchImageAdapter.ImageViewHolder>() {
+class RecommendImageAdapter(private var imageList: List<SearchResultItem>) : RecyclerView.Adapter<RecommendImageAdapter.ImageViewHolder>() {
 
     class ImageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imageView: ImageView = view.findViewById(R.id.similarImage)
-        //val imageUrlText: TextView = view.findViewById(R.id.recoImageUrlText1)
+        val imageView: ImageView = view.findViewById(R.id.recommendImage)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.similar_image_xml, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.recommend_image_xml, parent, false)
+        Log.d("imageList", imageList.toString())
         return ImageViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
         val currentItem = imageList[position]
+        Log.d("recommnedImage", "onBindViewBinder")
         Glide.with(holder.imageView.context).load(currentItem.imageUrl).into(holder.imageView)
         // ImageView에 클릭 리스너 설정
         holder.imageView.setOnClickListener {
