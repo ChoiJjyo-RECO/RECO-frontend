@@ -26,8 +26,6 @@ import choijjyo.reco.databinding.ActivityRecognizeBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.Timestamp
 import com.google.firebase.storage.FirebaseStorage
-import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.normal.TedPermission
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -44,42 +42,13 @@ import java.util.Date
 
 class RecognizeActivity : AppCompatActivity() {
 
-    companion object {
-        init{
-            System.loadLibrary("opencv_java4")
-        }
-    }
-
     private lateinit var binding: ActivityRecognizeBinding
-    private lateinit var curPhotoPath : String
+    private lateinit var curPhotoPath: String
     private lateinit var progressBar: ProgressBar
     private lateinit var uid: String
     private var uri: Uri? = null
-    private var galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) {
-            uri -> setGallery(uri)
-        progressBar.visibility = View.VISIBLE
-    }
     private lateinit var originalBitmap: Bitmap
     private val colorFilterHelper = ColorFilterHelper()
-
-    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val bitmap: Bitmap
-            val file = File(curPhotoPath)
-            if (Build.VERSION.SDK_INT < 28) {
-                bitmap = MediaStore.Images.Media.getBitmap(contentResolver, Uri.fromFile(file))
-                binding.cameraIV.setImageBitmap(bitmap)
-            } else {
-                val decode = ImageDecoder.createSource(
-                    this.contentResolver,
-                    Uri.fromFile(file)
-                )
-                bitmap = ImageDecoder.decodeBitmap(decode)
-                binding.cameraIV.setImageBitmap(bitmap)
-            }
-            savePhoto(bitmap)
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,16 +57,6 @@ class RecognizeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         progressBar = findViewById(R.id.progressBar)
-
-        setPermission()
-
-        binding.cameraBtn.setOnClickListener {
-            takeCapture()
-        }
-
-        binding.galleryBtn.setOnClickListener {
-            galleryLauncher.launch("image/*")
-        }
 
         binding.deuteranopiaButton.setOnClickListener {
             applyDeuteranopia()
@@ -137,126 +96,46 @@ class RecognizeActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
         binding.tabLayoutSearch.selectTab(binding.tabLayoutSearch.getTabAt(0))
 
-    }
-    private fun hideOtherFragments(transaction: FragmentTransaction, exceptTag: String) {
-        supportFragmentManager.fragments.forEach {
-            if (it.tag != exceptTag) {
-                transaction.hide(it)
-            }
-        }
-    }
-
-    fun setGallery(uri : Uri?) {
-        binding.cameraIV.setImageURI(uri)
-        originalBitmap = (binding.cameraIV.drawable as BitmapDrawable).bitmap
-        binding.resultText.text = ""
-        uri?.let { uploadImageToFirestore(it) }
-    }
-
-    // 테드 퍼미션 설정
-    private fun setPermission() {
-        val readPermission = object : PermissionListener {
-            override fun onPermissionGranted() {
-                setGalleryButton()
-            }
-
-            override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
-                binding.galleryBtn.isEnabled = false
-                Toast.makeText(this@RecognizeActivity, "갤러리를 사용하려면 읽기 권한을 허용해주세요.", Toast.LENGTH_LONG).show()
+        // 갤러리에서 이미지 선택하기
+        val galleryLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            uri?.let {
+                startRecognizeActivity(it)
             }
         }
 
-        val cameraPermission = object : PermissionListener {
-            override fun onPermissionGranted() {
-                setCameraButton()
-            }
-
-            override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
-                binding.cameraBtn.isEnabled = false
-                Toast.makeText(this@RecognizeActivity, "카메라를 사용하려면 쓰기 권한을 허용해주세요.2", Toast.LENGTH_LONG).show()
-            }
+        binding.cameraIV.setOnClickListener {
+            galleryLauncher.launch("image/*")
         }
 
-        TedPermission.create()
-            .setPermissionListener(readPermission)
-            .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
-            .check()
-
-        TedPermission.create()
-            .setPermissionListener(cameraPermission)
-            .setPermissions(Manifest.permission.CAMERA)
-            .check()
     }
-    private fun setGalleryButton() {
-        binding.galleryBtn.setOnClickListener {
-            if (hasReadStoragePermission()) {
-                galleryLauncher.launch("image/*")
-            } else {
-                Toast.makeText(this, "갤러리를 사용하려면 읽기 권한을 허용해주세요.", Toast.LENGTH_LONG).show()
-            }
+
+    // ChoiceActivity로부터 받아온 URI를 RecognizeActivity로 전달
+    private fun startRecognizeActivity(photoUri: Uri) {
+        val intent = Intent(this, RecognizeActivity::class.java)
+        intent.putExtra("photoUri", photoUri.toString())
+        startActivity(intent)
+
+        // 이미지를 Firebase에 업로드하고 모델 실행
+        savePhoto(getBitmapFromUri(photoUri))
+    }
+
+    // Uri로부터 Bitmap 가져오기
+    private fun getBitmapFromUri(uri: Uri): Bitmap {
+        return if (Build.VERSION.SDK_INT < 28) {
+            MediaStore.Images.Media.getBitmap(contentResolver, uri)
+        } else {
+            val source = ImageDecoder.createSource(contentResolver, uri)
+            ImageDecoder.decodeBitmap(source)
         }
     }
 
-    private fun setCameraButton() {
-        binding.cameraBtn.setOnClickListener {
-            if (hasWriteStoragePermission()) {
-                takeCapture()
-            } else {
-                Toast.makeText(this, "카메라를 사용하려면 쓰기 권한을 허용해주세요.", Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-    private fun hasReadStoragePermission(): Boolean {
-        return (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
-    }
-
-    private fun hasWriteStoragePermission(): Boolean {
-        return (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
-    }
-
-    // 카메라 촬영
-    private fun takeCapture() {
-        // 기본 카메라 앱 실행
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            takePictureIntent.resolveActivity(packageManager)?.also {
-                val photoFile: File? = try {
-                    createImageFile()
-                } catch (ex: IOException) {
-                    null
-                }
-
-                photoFile?.also {
-                    val photoURI: Uri = FileProvider.getUriForFile(
-                        this,
-                        "choijjyo.reco.fileprovider",
-                        it
-                    )
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    cameraLauncher.launch(takePictureIntent)
-                }
-            }
-        }
-    }
-
-    // 이미지 파일 생성
-    private fun createImageFile(): File? {
-        val timestamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile("JPEG_${timestamp}_", ".jpg", storageDir)
-            .apply {  curPhotoPath = absolutePath}
-    }
-
+    // 이미지 저장 및 업로드
     private fun savePhoto(bitmap: Bitmap) {
-
         val folderPath = Environment.getExternalStorageDirectory().absolutePath + "/Pictures/"
         val timestamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val fileName = "${timestamp}.jpeg"
@@ -268,37 +147,36 @@ class RecognizeActivity : AppCompatActivity() {
         val out = FileOutputStream(folderPath + fileName)
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
         Toast.makeText(this, "사진이 앨범에 저장되었습니다.", Toast.LENGTH_LONG).show()
-        // 이미지를 Firebase에 업로드
+
+        // 이미지를 Firebase에 업로드하고 모델 실행
         uploadImageToFirestore(Uri.fromFile(File(curPhotoPath)))
         // 이미지를 저장하고 나서 originalBitmap을 초기화
-        binding.cameraIV.setImageBitmap(bitmap)
         originalBitmap = bitmap
         progressBar.visibility = View.VISIBLE
     }
 
-
-
-    // Firebase Storage에 이미지 업로드
+    // ChoiceActivity에서 받아온 URI를 사용하여 사진을 Firebase Storage에 업로드하는 함수
     private fun uploadImageToFirestore(uri: Uri) {
-        this.uri = uri
         val storageRef = FirebaseStorage.getInstance().reference
         val imageName = uri.lastPathSegment ?: "default_filename"
         val imagesRef = storageRef.child("users/${uid}/closet/$imageName")
 
         val uploadTask = imagesRef.putFile(uri)
 
-        uploadTask.addOnSuccessListener {
+        uploadTask.addOnSuccessListener { _ ->
             Log.d("RecognizeActivity", "이미지가 업로드되었습니다.")
 
-            // 자동으로 모델 실행
-            GlobalScope.launch(Dispatchers.IO){
+            // 이미지가 업로드되면 모델 실행
+            GlobalScope.launch(Dispatchers.IO) {
                 request()
             }
 
+            // 이미지 다운로드 URL 가져오기
             imagesRef.downloadUrl.addOnSuccessListener { downloadUri ->
                 val imageUrl = downloadUri.toString()
+                // Firestore에 이미지 URL 저장
                 FirestoreHelper.saveImageUrlToCloset(
-                    this, uid, imageName, ClosetData(
+                    this@RecognizeActivity, uid, imageName, ClosetData(
                         closetColorRGB = emptyList(),
                         closetColorCategory = "",
                         clothes = "",
@@ -306,120 +184,52 @@ class RecognizeActivity : AppCompatActivity() {
                         timestamp = Timestamp.now()
                     )
                 )
+                Log.d("RecognizeActivity", "이미지 다운로드 URL: $imageUrl")
             }.addOnFailureListener {
                 Log.d("RecognizeActivity", "이미지 URL을 가져오는 데 실패했습니다.")
             }
-        }.addOnFailureListener {
+        }.addOnFailureListener { exception ->
             progressBar.visibility = View.GONE
-            Log.d("RecognizeActivity", "이미지 업로드에 실패했습니다.")
+            Log.d("RecognizeActivity", "이미지 업로드에 실패했습니다.", exception)
         }
     }
+
+
+
+
+    // 모델 실행 요청
     private fun request() {
-        try {
-            Log.d("uid", "uid: $uid")
-            Log.d("uri", "uri: "+ uri?.lastPathSegment)
-            val docId = uri?.lastPathSegment
-
-            // 요청 URL에 쿼리 매개변수 추가
-            val url = URL("https://3e53-121-166-22-33.ngrok-free.app/detect_and_analyze?uid=$uid&doc_id=$docId")
-            val conn = url.openConnection() as HttpURLConnection
-            conn.connectTimeout = 10000
-            conn.requestMethod = "GET"
-            conn.doInput = true
-
-            val resCode = conn.responseCode
-            val reader = BufferedReader(InputStreamReader(conn.inputStream))
-            val response = StringBuilder()
-            var line: String?
-
-            while (reader.readLine().also { line = it } != null) {
-                response.append(line).append("\n")
-            }
-            reader.close()
-            conn.disconnect()
-
-            // JSON 파싱
-            val jsonResponse = JSONObject(response.toString())
-            val objectClass = jsonResponse.getString("object_class")
-            val closestColorCategory = jsonResponse.getString("closest_color_category")
-            val imgURL = jsonResponse.getString("image_URL")
-
-            // 결과 표시
-            runOnUiThread {
-                binding.resultText.text = "색상: $closestColorCategory\n종류: $objectClass"
-                val googleSearchKeyword = "$closestColorCategory $objectClass 제품 사진"
-                val modelResult = "$closestColorCategory $objectClass"
-                Log.d("googleSearch keyword",googleSearchKeyword)
-                if (docId != null) {
-                    lifecycleScope.launch {
-                        sendToRecommendFragment(modelResult, docId)
-                        sendToSimilarFragment(googleSearchKeyword, docId)
-                    }
-                }
-            }
-
-
-        } catch (ex: Exception) {
-            println("예외 발생함: ${ex.toString()}")
-            runOnUiThread {
-                val docId = uri?.lastPathSegment
-                Toast.makeText(this@RecognizeActivity, "의류를 인식할 수 없습니다. 다시 촬영해주세요.", Toast.LENGTH_SHORT).show()
-                if (docId != null) {
-                    FirestoreHelper.deleteClothesDocFromFirestore(this, uid, docId)
-                }
-            }
-        } finally {
-            runOnUiThread {
-                progressBar.visibility = View.GONE
-            }
-        }
+        // 모델 실행 및 결과 처리
     }
-    fun applyDeuteranopia() {
+
+    private fun applyDeuteranopia() {
         val correctedBitmap = colorFilterHelper.applyDeuteranopia(originalBitmap)
         binding.cameraIV.setImageBitmap(correctedBitmap)
     }
 
-    fun applyProtanopia() {
+    private fun applyProtanopia() {
         val correctedBitmap = colorFilterHelper.applyProtanopia(originalBitmap)
         binding.cameraIV.setImageBitmap(correctedBitmap)
     }
 
-    fun applyTritanopia() {
+    private fun applyTritanopia() {
         val correctedBitmap = colorFilterHelper.applyTritanopia(originalBitmap)
         binding.cameraIV.setImageBitmap(correctedBitmap)
     }
-    fun showOriginal() {
+
+    private fun showOriginal() {
         binding.cameraIV.setImageBitmap(originalBitmap)
     }
-    private fun sendToSimilarFragment(googleSearchKeyword: String, docid: String) {
-        //binding.tabLayoutSearch.getTabAt(1)?.select()
-        val fragment = supportFragmentManager.findFragmentByTag("FragmentTag1") as? Fragment_SimilarClothes
-        if (fragment != null) {
-            fragment.setSearchKeyword(googleSearchKeyword,docid)
-        } else {
-            val similar_Fragment = Fragment_SimilarClothes().apply {
-                setSearchKeyword(googleSearchKeyword,docid)
-            }
-            supportFragmentManager.beginTransaction().apply {
-                replace(R.id.searchfragment_container, similar_Fragment, "FragmentTag1")
-                commitNow()
-            }
-        }
-    }
-    private fun sendToRecommendFragment(modelResult: String, docid: String) {
-        //binding.tabLayoutSearch.getTabAt(0)?.select()
-        val fragment = supportFragmentManager.findFragmentByTag("FragmentTag0") as? Fragment_RecommendClothes
-        if (fragment != null) {
-            fragment.setSearchKeyword(modelResult,docid)
-        } else {
-            val recommend_Fragment = Fragment_RecommendClothes().apply {
-                setSearchKeyword(modelResult,docid)
-            }
-            supportFragmentManager.beginTransaction().apply {
-                replace(R.id.searchfragment_container, recommend_Fragment, "FragmentTag0")
-                commitNow()
+
+    private fun hideOtherFragments(transaction: FragmentTransaction, exceptTag: String) {
+        supportFragmentManager.fragments.forEach {
+            if (it.tag != exceptTag) {
+                transaction.hide(it)
             }
         }
     }
 
+    companion object {
+        private const val REQUEST_IMAGE_CAPTURE = 1
+    }
 }
