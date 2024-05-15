@@ -10,19 +10,20 @@ import choijjyo.reco.FirestoreHelper
 import choijjyo.reco.R
 import com.google.firebase.auth.FirebaseAuth
 
-class Fragment_outer : Fragment(), ClosetImageAdapter.OnItemClickListener {
+class ClosetAllFragment : Fragment(), ClosetImageAdapter.OnItemClickListener {
+
     private lateinit var auth: FirebaseAuth
     private lateinit var uid: String
     private lateinit var recyclerView: RecyclerView
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.mycloset_outer, container, false)
+        return inflater.inflate(R.layout.fragment_closet_all, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         auth = FirebaseAuth.getInstance()
-        recyclerView = view.findViewById(R.id.closet_outer_view)
+        recyclerView = view.findViewById(R.id.closet_all_view)
 
         val currentUser = auth.currentUser
         if (currentUser != null) {
@@ -31,7 +32,7 @@ class Fragment_outer : Fragment(), ClosetImageAdapter.OnItemClickListener {
                 this,
                 uid,
                 recyclerView,
-                mutableListOf("자켓")
+                mutableListOf("티셔츠", "원피스", "자켓", "바지", "셔츠", "반바지", "치마", "긴팔", "긴소매")
             )
         }
     }
