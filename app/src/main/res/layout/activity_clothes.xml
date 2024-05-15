@@ -42,7 +42,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_gravity="center">
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp">
 
                 <androidx.cardview.widget.CardView
                         android:layout_width="200dp"
@@ -50,7 +51,8 @@
                         app:cardCornerRadius="10dp"
                         app:cardBackgroundColor="#909090"
                         app:cardElevation="4dp"
-                        android:layout_gravity="center">
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp">
 
                     <ImageView
                             android:id="@+id/itemImageView"
@@ -60,8 +62,6 @@
                             android:adjustViewBounds="true"
                             android:src="#505050" />
                 </androidx.cardview.widget.CardView>
-
-
 
                 <TextView
                         android:id="@+id/itemColorCategory"
@@ -80,11 +80,35 @@
             </LinearLayout>
         </FrameLayout>
 
+        <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayoutClothes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#000000"
+                app:tabRippleColor="#0000FF"
+                app:tabGravity="fill"
+                app:tabTextColor="#FFFFFF"
+                app:tabIndicatorHeight="5dp" >
+
+            <com.google.android.material.tabs.TabItem
+                    android:id="@+id/recommendClothesItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Recommend Clothes"
+                    tools:layout_editor_absoluteY="400dp"
+                    tools:layout_editor_absoluteX="-5dp" />
+            <com.google.android.material.tabs.TabItem
+                    android:id="@+id/silmilarClothesItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Similar Clothes" />
+        </com.google.android.material.tabs.TabLayout>
 
         <FrameLayout
-                android:id="@+id/recommendFrame"
-                android:layout_below="@+id/showitem"
+                android:id="@+id/searchRecord_container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toBottomOf = "@+id/tabLayoutClothes"
+                android:layout_marginHorizontal="25dp" />
     </LinearLayout>
 </layout>

@@ -1,10 +1,12 @@
 package choijjyo.reco
 
 import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import choijjyo.reco.Main.Constants
 import choijjyo.reco.Main.RecentImageAdapter
 import choijjyo.reco.MyCloset.ClosetImageAdapter
+import choijjyo.reco.MyCloset.ClosetSearchImageAdapter
 import choijjyo.reco.MyCloset.ClothesActivity
 import choijjyo.reco.Recognize.ClosetData
 import choijjyo.reco.Recognize.SearchResultItem
@@ -65,7 +68,8 @@ object FirestoreHelper {
     }
 
     fun loadImagesFromFirestoreForActivity(activity: AppCompatActivity, userId: String, recyclerView: RecyclerView) {
-        val imageList = mutableListOf<String>()
+        val imageNameList = mutableListOf<String>()
+        val imageUrlList = mutableListOf<String>()
         val colorCategoryList = mutableListOf<String>()
         val clothesList = mutableListOf<String>()
 
@@ -74,28 +78,31 @@ object FirestoreHelper {
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
+                    val imageName = document.reference.path.split("/").last()
                     val imageUrl = document.getString("imgURL")
                     val colorCategory = document.getString("closetColorCategory")
                     val clothes = document.getString("clothes")
                     if (imageUrl != null && colorCategory != null && clothes != null) {
-                        imageList.add(imageUrl)
+                        imageNameList.add(imageName)
+                        imageUrlList.add(imageUrl)
                         colorCategoryList.add(colorCategory)
                         clothesList.add(clothes)
                     }
                 }
-                if (imageList.isEmpty()) {
+                if (imageUrlList.isEmpty()) {
                     recyclerView.visibility = View.GONE
                     val noImagesTextView = activity.findViewById<TextView>(R.id.noImagesTextView)
                     noImagesTextView.visibility = View.VISIBLE
                 } else {
                     recyclerView.visibility = View.VISIBLE
-                    val adapter = RecentImageAdapter(imageList, object : RecentImageAdapter.OnItemClickListener {
+                    val adapter = RecentImageAdapter(imageUrlList, object : RecentImageAdapter.OnItemClickListener {
                         override fun onItemClick(position: Int) {
-                            val imageUrl = imageList[position]
+                            val imageName = imageNameList[position]
+                            val imageUrl = imageUrlList[position]
                             val colorCategory = colorCategoryList[position]
                             val clothes = clothesList[position]
-                            Log.d("FirestoreHelper", position.toString())
                             val intent = Intent(activity, ClothesActivity::class.java).apply {
+                                putExtra("imageName", imageName)
                                 putExtra("imageUrl", imageUrl)
                                 putExtra("colorCategory", colorCategory)
                                 putExtra("clothes", clothes)
@@ -114,7 +121,8 @@ object FirestoreHelper {
     }
 
     fun loadImagesFromFirestoreForFragment(fragment: Fragment, userId: String, recyclerView: RecyclerView, categories: List<String>) {
-        val imageList = mutableListOf<String>()
+        val imageNameList = mutableListOf<String>()
+        val imageUrlList = mutableListOf<String>()
         val colorCategoryList = mutableListOf<String>()
         val clothesList = mutableListOf<String>()
 
@@ -124,23 +132,26 @@ object FirestoreHelper {
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
+                    val imageName = document.reference.path.split("/").last()
                     val imageUrl = document.getString("imgURL")
                     val colorCategory = document.getString("closetColorCategory")
                     val clothes = document.getString("clothes")
 
                     if (imageUrl != null && colorCategory != null && clothes != null) {
-                        imageList.add(imageUrl)
+                        imageNameList.add(imageName)
+                        imageUrlList.add(imageUrl)
                         colorCategoryList.add(colorCategory)
                         clothesList.add(clothes)
                     }
                 }
-                val adapter = ClosetImageAdapter(imageList, colorCategoryList, clothesList, object : ClosetImageAdapter.OnItemClickListener {
+                val adapter = ClosetImageAdapter(imageUrlList, colorCategoryList, clothesList, object : ClosetImageAdapter.OnItemClickListener {
                     override fun onItemClick(position: Int) {
-                        val imageUrl = imageList[position]
+                        val imageName = imageNameList[position]
+                        val imageUrl = imageUrlList[position]
                         val colorCategory = colorCategoryList[position]
                         val clothes = clothesList[position]
-                        Log.d("FirestoreHelper", position.toString())
                         val intent = Intent(fragment.requireContext(), ClothesActivity::class.java).apply {
+                            putExtra("imageName", imageName)
                             putExtra("imageUrl", imageUrl)
                             putExtra("colorCategory", colorCategory)
                             putExtra("clothes", clothes)
@@ -148,6 +159,31 @@ object FirestoreHelper {
                         fragment.startActivity(intent)
                     }
                 })
+                recyclerView.adapter = adapter
+                recyclerView.layoutManager = GridLayoutManager(fragment.requireContext(), 3)
+            }
+            .addOnFailureListener { exception ->
+                Log.e("LoadImages", "Error getting documents: ", exception)
+            }
+    }
+
+    fun loadSimilarImages(fragment: Fragment, userId: String, imageName: String, recyclerView: RecyclerView) {
+        val imageUrlList = mutableListOf<String>()
+        val clickUrlList = mutableListOf<String>()
+
+        firestore.collection("users").document(userId).collection("closet")
+            .document(imageName).collection("similarClothes")
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val imageUrl = document.getString("imageUrl")
+                    val clickUrl = document.getString("clickUrl")
+                    if (imageUrl != null && clickUrl != null) {
+                        imageUrlList.add(imageUrl)
+                        clickUrlList.add(clickUrl)
+                    }
+                }
+                val adapter = ClosetSearchImageAdapter(imageUrlList, clickUrlList)
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = GridLayoutManager(fragment.requireContext(), 3)
             }
