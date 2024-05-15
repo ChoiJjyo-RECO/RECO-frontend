@@ -29,6 +29,7 @@ android {
         }
         buildConfigField("String","GOOGLESEARCH_APIKEY", getApiKey("GOOGLESEARCH_APIKEY"))
         buildConfigField("String","GOOGLESEARCH_SEARCHID", getApiKey("GOOGLESEARCH_SEARCHID"))
+        buildConfigField("String","OPENAI_APIKEY", getApiKey("OPENAI_APIKEY"))
     }
 
     buildTypes {
@@ -112,5 +113,8 @@ dependencies {
 
     //tabLayout
     implementation ("com.google.android.material:material:1.12.0")
+
+    //openai api
+    implementation ("com.squareup.okhttp3:okhttp:4.10.0")
 
 }
