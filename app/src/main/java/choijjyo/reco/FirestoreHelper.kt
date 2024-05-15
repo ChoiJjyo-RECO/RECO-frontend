@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import choijjyo.reco.Like.PreferenceClothTypeData
+import choijjyo.reco.Like.PreferenceColorData
 import choijjyo.reco.Main.Constants
 import choijjyo.reco.Main.RecentImageAdapter
 import choijjyo.reco.MyCloset.ClosetImageAdapter
@@ -245,6 +247,34 @@ object FirestoreHelper {
             }
             .addOnFailureListener { e ->
                 Log.e("FirestoreHelper", "Error saving image URL to closet", e)
+            }
+    }
+
+    fun savePreferenceColor(activity: FragmentActivity?, userId: String, preferenceColorData: PreferenceColorData) {
+        firestore.collection("users")
+            .document(userId)
+            .collection("preference")
+            .document("color")
+            .set(preferenceColorData)
+            .addOnSuccessListener {
+                Log.d("FirestoreHelper", "Color selections saved successfully!")
+            }
+            .addOnFailureListener { e ->
+                Log.e("FirestoreHelper", "Error saving color selections", e)
+            }
+    }
+
+    fun savePreferenceClothType(activity: FragmentActivity?, userId: String, preferenceClothTypeData: PreferenceClothTypeData) {
+        firestore.collection("users")
+            .document(userId)
+            .collection("preference")
+            .document("clothType")
+            .set(preferenceClothTypeData)
+            .addOnSuccessListener {
+                Log.d("FirestoreHelper", "Color selections saved successfully!")
+            }
+            .addOnFailureListener { e ->
+                Log.e("FirestoreHelper", "Error saving color selections", e)
             }
     }
 }
