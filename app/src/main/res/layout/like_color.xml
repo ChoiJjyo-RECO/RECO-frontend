@@ -5,7 +5,7 @@
         android:orientation="vertical">
 
     <TextView
-            android:text="선호하는 색상을 선택해주세요 (0~5개)"
+            android:text="선호하는 색상을 선택해주세요 (0 ~ 5개)"
             android:background="@drawable/welcome_rectangle"
             android:textColor="@color/white"
             android:paddingHorizontal="15dp"
@@ -219,7 +219,7 @@
 
     <TextView
             android:id="@+id/dislike_selectedButtonsTextView"
-            android:text="기피하는 색상을 선택해주세요 (0~5개)"
+            android:text="기피하는 색상을 선택해주세요 (0 ~ 5개)"
             android:background="@drawable/main_button"
             android:paddingHorizontal="15dp"
             android:paddingVertical="7dp"
