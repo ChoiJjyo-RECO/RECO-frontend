@@ -22,7 +22,7 @@ class Fragment_SimilarClothes : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var uid: String
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: SearchImageAdapter
+    private lateinit var adapter: SimilarImageAdapter
     private var searchKeyword: String? = null
     private var docId: String? = null
 
@@ -37,7 +37,7 @@ class Fragment_SimilarClothes : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recyclerView = view.findViewById(R.id.similarRecyclerView)
-        adapter = SearchImageAdapter(listOf())
+        adapter = SimilarImageAdapter(listOf())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 

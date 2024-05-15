@@ -1,6 +1,7 @@
 package choijjyo.reco.Recognize
 
 import android.Manifest
+import androidx.lifecycle.lifecycleScope
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -347,9 +348,13 @@ class RecognizeActivity : AppCompatActivity() {
             runOnUiThread {
                 binding.resultText.text = "색상: $closestColorCategory\n종류: $objectClass"
                 val googleSearchKeyword = "$closestColorCategory $objectClass 제품 사진"
+                val modelResult = "$closestColorCategory $objectClass"
                 Log.d("googleSearch keyword",googleSearchKeyword)
                 if (docId != null) {
-                    sendToSimilarFragment(googleSearchKeyword, docId)
+                    lifecycleScope.launch {
+                        sendToRecommendFragment(modelResult, docId)
+                        sendToSimilarFragment(googleSearchKeyword, docId)
+                    }
                 }
             }
 
@@ -387,7 +392,7 @@ class RecognizeActivity : AppCompatActivity() {
         binding.cameraIV.setImageBitmap(originalBitmap)
     }
     private fun sendToSimilarFragment(googleSearchKeyword: String, docid: String) {
-        binding.tabLayoutSearch.getTabAt(1)?.select()
+        //binding.tabLayoutSearch.getTabAt(1)?.select()
         val fragment = supportFragmentManager.findFragmentByTag("FragmentTag1") as? Fragment_SimilarClothes
         if (fragment != null) {
             fragment.setSearchKeyword(googleSearchKeyword,docid)
@@ -397,7 +402,22 @@ class RecognizeActivity : AppCompatActivity() {
             }
             supportFragmentManager.beginTransaction().apply {
                 replace(R.id.searchfragment_container, similar_Fragment, "FragmentTag1")
-                commit()
+                commitNow()
+            }
+        }
+    }
+    private fun sendToRecommendFragment(modelResult: String, docid: String) {
+        //binding.tabLayoutSearch.getTabAt(0)?.select()
+        val fragment = supportFragmentManager.findFragmentByTag("FragmentTag0") as? Fragment_RecommendClothes
+        if (fragment != null) {
+            fragment.setSearchKeyword(modelResult,docid)
+        } else {
+            val recommend_Fragment = Fragment_RecommendClothes().apply {
+                setSearchKeyword(modelResult,docid)
+            }
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.searchfragment_container, recommend_Fragment, "FragmentTag0")
+                commitNow()
             }
         }
     }

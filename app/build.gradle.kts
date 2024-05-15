@@ -118,9 +118,6 @@ dependencies {
     //okhttp
     implementation ("com.squareup.okhttp3:okhttp:4.12.0")
     implementation ("io.ktor:ktor-client-okhttp:2.3.11")
-    //moshi
-    implementation ("com.squareup.moshi:moshi:1.15.1")
-    implementation ("com.squareup.moshi:moshi-kotlin:1.15.1")
 
     implementation ("com.aallam.openai:openai-client:3.7.2")
 

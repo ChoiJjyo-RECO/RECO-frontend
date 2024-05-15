@@ -171,4 +171,20 @@ object FirestoreHelper {
                 Log.e("FirestoreHelper", "Error saving image URL to closet", e)
             }
     }
+    fun saveRecommendUrlToCloset(activity: FragmentActivity?, userId: String, docId:String, searchData: SearchResultItem, index: Int) {
+        FirebaseFirestore.getInstance()
+            .collection("users")
+            .document(userId)
+            .collection("closet")
+            .document(docId)
+            .collection("recommendClothes")
+            .document(index.toString())
+            .set(searchData)
+            .addOnSuccessListener {
+                Log.d("FirestoreHelper", "Image URL saved to closet successfully!")
+            }
+            .addOnFailureListener { e ->
+                Log.e("FirestoreHelper", "Error saving image URL to closet", e)
+            }
+    }
 }
