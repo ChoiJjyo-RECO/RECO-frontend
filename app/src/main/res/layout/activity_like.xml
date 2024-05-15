@@ -69,8 +69,8 @@
             <FrameLayout
                     android:id="@+id/frameLayout"
                     android:layout_below="@+id/show_like"
-                    android:layout_width="439dp"
-                    android:layout_height="658dp" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
         </LinearLayout>
 
