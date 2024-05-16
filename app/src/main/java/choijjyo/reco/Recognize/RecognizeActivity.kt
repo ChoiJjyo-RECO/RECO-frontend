@@ -1,6 +1,7 @@
 package choijjyo.reco.Recognize
 
 import android.Manifest
+import androidx.lifecycle.lifecycleScope
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -320,7 +321,7 @@ class RecognizeActivity : AppCompatActivity() {
             val docId = uri?.lastPathSegment
 
             // 요청 URL에 쿼리 매개변수 추가
-            val url = URL("https://3e53-121-166-22-33.ngrok-free.app/detect_and_analyze?uid=$uid&doc_id=$docId")
+            val url = URL("https://db3b-211-243-48-67.ngrok-free.app/detect_and_analyze?uid=$uid&doc_id=$docId")
             val conn = url.openConnection() as HttpURLConnection
             conn.connectTimeout = 10000
             conn.requestMethod = "GET"
@@ -347,9 +348,13 @@ class RecognizeActivity : AppCompatActivity() {
             runOnUiThread {
                 binding.resultText.text = "색상: $closestColorCategory\n종류: $objectClass"
                 val googleSearchKeyword = "$closestColorCategory $objectClass 제품 사진"
+                val modelResult = "$closestColorCategory $objectClass"
                 Log.d("googleSearch keyword",googleSearchKeyword)
                 if (docId != null) {
-                    sendToSimilarFragment(googleSearchKeyword, docId)
+                    lifecycleScope.launch {
+                        sendToSimilarFragment(googleSearchKeyword, docId)
+                        sendToRecommendFragment(modelResult, docId)
+                    }
                 }
             }
 
@@ -387,17 +392,36 @@ class RecognizeActivity : AppCompatActivity() {
         binding.cameraIV.setImageBitmap(originalBitmap)
     }
     private fun sendToSimilarFragment(googleSearchKeyword: String, docid: String) {
-        binding.tabLayoutSearch.getTabAt(1)?.select()
         val fragment = supportFragmentManager.findFragmentByTag("FragmentTag1") as? Fragment_SimilarClothes
         if (fragment != null) {
-            fragment.setSearchKeyword(googleSearchKeyword,docid)
+            fragment.setSearchKeyword(googleSearchKeyword, docid)
+            supportFragmentManager.beginTransaction().show(fragment).commit()
         } else {
             val similar_Fragment = Fragment_SimilarClothes().apply {
-                setSearchKeyword(googleSearchKeyword,docid)
+                setSearchKeyword(googleSearchKeyword, docid)
             }
             supportFragmentManager.beginTransaction().apply {
-                replace(R.id.searchfragment_container, similar_Fragment, "FragmentTag1")
-                commit()
+                add(R.id.searchfragment_container, similar_Fragment, "FragmentTag1")
+                hideOtherFragments(this, "FragmentTag1") // 다른 프래그먼트는 숨기기
+                commitNow()
+            }
+        }
+    }
+
+    private fun sendToRecommendFragment(modelResult: String, docid: String) {
+        binding.tabLayoutSearch.getTabAt(0)?.select()
+        val fragment = supportFragmentManager.findFragmentByTag("FragmentTag0") as? Fragment_RecommendClothes
+        if (fragment != null) {
+            fragment.setSearchKeyword(modelResult, docid)
+            supportFragmentManager.beginTransaction().show(fragment).commit()
+        } else {
+            val recommend_Fragment = Fragment_RecommendClothes().apply {
+                setSearchKeyword(modelResult, docid)
+            }
+            supportFragmentManager.beginTransaction().apply {
+                add(R.id.searchfragment_container, recommend_Fragment, "FragmentTag0")
+                hideOtherFragments(this, "FragmentTag0") // 다른 프래그먼트는 숨기기
+                commitNow()
             }
         }
     }

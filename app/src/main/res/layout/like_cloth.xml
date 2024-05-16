@@ -1,17 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/frame1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#236231">
+        android:orientation="vertical">
+
     <TextView
-            android:id="@+id/textView1"
+            android:text="선호하는 옷 종류를 선택해주세요 (0 ~ 3개)"
+            android:background="@drawable/welcome_rectangle"
+            android:textColor="@color/white"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="7dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginHorizontal="10dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="50px"
-            android:textColor="@color/black"
-            android:text="2" />
+            android:layout_height="wrap_content"
+            android:id="@+id/select_dislikecolor" />
+
+    <TextView
+            android:id="@+id/like_selectedButtonsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/main_button"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="7dp"
+            android:text="선호하는 색상을 선택해주세요 (0~5개)"
+            android:textColor="@color/black" />
+
+
+    <TableLayout
+            android:id="@+id/like_cloth_buttonlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:stretchColumns="*">
+
+        <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <Button
+                    android:id="@+id/like_clothButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="티셔츠"
+                    android:onClick="selectCloth" />
+
+            <Button
+                    android:id="@+id/like_clothButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="원피스"
+                    android:onClick="selectCloth" />
+
+            <Button
+                    android:id="@+id/like_clothButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="자켓"
+                    android:onClick="selectCloth" />
+
+            <Button
+                    android:id="@+id/like_clothButton4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="바지"
+                    android:onClick="selectCloth" />
+        </TableRow>
+
+        <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <Button
+                    android:id="@+id/like_clothButton5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="셔츠"
+                    android:onClick="selectCloth" />
+
+            <Button
+                    android:id="@+id/like_clothButton6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="반바지"
+                    android:onClick="selectCloth" />
+
+            <Button
+                    android:id="@+id/like_clothButton7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="치마"
+                    android:onClick="selectCloth" />
+
+
+            <Button
+                    android:id="@+id/like_clothButton8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="긴소매"
+                    android:onClick="selectCloth" />
+        </TableRow>
+    </TableLayout>
+
+    <TextView
+            android:text="기피하는 옷 종류를 선택해주세요 (0 ~ 3개)"
+            android:background="@drawable/welcome_rectangle"
+            android:textColor="@color/white"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="7dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/select_likecolor" />
+
+    <TextView
+            android:id="@+id/dislike_selectedButtonsTextView"
+            android:text="기피하는 색상을 선택해주세요 (0 ~ 5개)"
+            android:background="@drawable/main_button"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="7dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/black"
+            android:textColor="@color/black" />
+
+    <TableLayout
+            android:id="@+id/dislike_cloth_buttonlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:stretchColumns="*" >
+
+        <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+            <Button
+                    android:id="@+id/dislike_clothButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:layout_weight="1"
+                    android:text="티셔츠"
+                    android:onClick="selectCloth" />
+
+            <Button
+                    android:id="@+id/dislike_clothButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="원피스"
+                    android:onClick="selectCloth" />
+
+            <Button
+                    android:id="@+id/dislike_clothButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="자켓"
+                    android:onClick="selectCloth" />
+
+            <Button
+                    android:id="@+id/dislike_clothButton4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="바지"
+                    android:onClick="selectCloth" />
+        </TableRow>
+        <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <Button
+                    android:id="@+id/dislike_clothButton5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="셔츠"
+                    android:onClick="selectCloth" />
+
+            <Button
+                    android:id="@+id/dislike_clothButton6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="반바지"
+                    android:onClick="selectCloth" />
+
+            <Button
+                    android:id="@+id/dislike_clothButton7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="치마"
+                    android:onClick="selectCloth" />
+
+
+            <Button
+                    android:id="@+id/dislike_clothButton8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="긴소매"
+                    android:onClick="selectCloth" />
+        </TableRow>
+
+    </TableLayout>
+    <Button
+            android:id="@+id/save_clothlike"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_alignParentTop="true"
+            android:text="취향 저장하기" />
 </LinearLayout>

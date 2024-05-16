@@ -1,127 +1,140 @@
 package choijjyo.reco.Like
-
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TableLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import choijjyo.reco.FirestoreHelper
+
 import choijjyo.reco.R
+import com.google.firebase.auth.FirebaseAuth
 
 class Fragment_Color : Fragment() {
 
-    private val colors = mutableListOf<Pair<String, Int>>()
-    private val selectedColors = mutableListOf<Pair<String, Int>>()
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: ColorAdapter
+    private lateinit var auth: FirebaseAuth
+    private lateinit var uid: String
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.like_color, container, false)
+    private val like_colorButtonIds = arrayOf(
+        R.id.like_colorButton1, R.id.like_colorButton2, R.id.like_colorButton3, R.id.like_colorButton4,
+        R.id.like_colorButton5, R.id.like_colorButton6, R.id.like_colorButton7, R.id.like_colorButton8,
+        R.id.like_colorButton9, R.id.like_colorButton10, R.id.like_colorButton11, R.id.like_colorButton12,
+        R.id.like_colorButton13, R.id.like_colorButton14, R.id.like_colorButton15, R.id.like_colorButton16,
+        R.id.like_colorButton17, R.id.like_colorButton18, R.id.like_colorButton19, R.id.like_colorButton20
+    )
 
-        // RecyclerView 초기화
-        recyclerView = view.findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(context)
+    private val dislike_colorButtonIds = arrayOf(
+        R.id.dislike_colorButton1, R.id.dislike_colorButton2, R.id.dislike_colorButton3, R.id.dislike_colorButton4,
+        R.id.dislike_colorButton5, R.id.dislike_colorButton6, R.id.dislike_colorButton7, R.id.dislike_colorButton8,
+        R.id.dislike_colorButton9, R.id.dislike_colorButton10, R.id.dislike_colorButton11, R.id.dislike_colorButton12,
+        R.id.dislike_colorButton13, R.id.dislike_colorButton14, R.id.dislike_colorButton15, R.id.dislike_colorButton16,
+        R.id.dislike_colorButton17, R.id.dislike_colorButton18, R.id.dislike_colorButton19, R.id.dislike_colorButton20
+    )
 
-        // 색상 데이터 설정
-        setColors()
+    private val like_selectedButtons = mutableListOf<String>()
+    private val dislike_selectedButtons = mutableListOf<String>()
+    private lateinit var like_selectedButtonsTextView: TextView
+    private lateinit var dislike_selectedButtonsTextView: TextView
+    private lateinit var saveButton: Button
 
-        // RecyclerView 어댑터 설정
-        adapter = ColorAdapter(colors)
-        recyclerView.adapter = adapter
-
-        return view
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.like_color, container, false)
     }
 
-    // 색상 데이터 설정
-    private fun setColors() {
-        colors.add(Pair("검정색", Color.BLACK))
-        colors.add(Pair("흰색", Color.WHITE))
-        colors.add(Pair("회색", Color.GRAY))
-        colors.add(Pair("빨간색", Color.RED))
-        colors.add(Pair("자주색", Color.MAGENTA))
-        colors.add(Pair("주황색", Color.rgb(255, 165, 0))) // Orange
-        colors.add(Pair("베이지", Color.rgb(255, 228, 181))) // Beige
-        colors.add(Pair("갈색", Color.rgb(139, 69, 19))) // Brown
-        colors.add(Pair("노란색", Color.YELLOW))
-        colors.add(Pair("초록색", Color.GREEN))
-        colors.add(Pair("카키색", Color.rgb(189, 183, 107))) // Khaki
-        colors.add(Pair("연한 파란색", Color.rgb(173, 216, 230))) // Light blue
-        colors.add(Pair("파란색", Color.BLUE))
-        colors.add(Pair("보라색", Color.rgb(138, 43, 226))) // Blue violet
-        colors.add(Pair("연한 보라색", Color.rgb(100, 149, 237))) // Cornflower blue
-        colors.add(Pair("연한 분홍색", Color.rgb(255, 182, 193))) // Light pink
-        colors.add(Pair("라벤더", Color.rgb(204, 204, 255))) // Lavender
-        colors.add(Pair("진한 분홍색", Color.rgb(255, 105, 180))) // Hot pink
-        colors.add(Pair("청록색", Color.CYAN))
-        colors.add(Pair("금색", Color.rgb(255, 215, 0))) // Gold
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            uid = currentUser.uid
+        }
+
+        // 선택된 버튼을 표시할 TextView 초기화
+        like_selectedButtonsTextView = view.findViewById(R.id.like_selectedButtonsTextView)
+        dislike_selectedButtonsTextView = view.findViewById(R.id.dislike_selectedButtonsTextView)
+        saveButton = view.findViewById(R.id.save_colorlike)
+
+        // 첫 번째 TableLayout에 대한 버튼 설정
+        setupButtons(view.findViewById(R.id.like_color_buttonlayout), like_colorButtonIds, like_selectedButtons)
+
+        // 두 번째 TableLayout에 대한 버튼 설정
+        setupButtons(view.findViewById(R.id.dislike_color_buttonlayout), dislike_colorButtonIds, dislike_selectedButtons)
+
+        saveButton.setOnClickListener {
+            saveSelectedButtonsToFirestore()
+        }
+
+        loadPreferenceFromFirestore()
     }
 
-    // RecyclerView 어댑터
-    inner class ColorAdapter(private val colorList: List<Pair<String, Int>>) :
-        RecyclerView.Adapter<ColorAdapter.ColorViewHolder>() {
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ColorViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.color_item, parent, false)
-            return ColorViewHolder(view)
+    // TableLayout에 버튼 설정하는 함수
+    private fun setupButtons(tableLayout: TableLayout, buttonIds: Array<Int>, selectedButtons: MutableList<String>) {
+        for (buttonId in buttonIds) {
+            val button = tableLayout.findViewById<Button>(buttonId)
+            button.setOnClickListener { toggleButtonSelection(button, selectedButtons) }
         }
+    }
 
-        override fun onBindViewHolder(holder: ColorViewHolder, position: Int) {
-            val (colorName, colorCode) = colorList[position]
-            holder.bind(colorName, colorCode)
-        }
+    private fun toggleButtonSelection(button: Button, selectedButtons: MutableList<String>) {
+        val text = button.text.toString()
 
-        override fun getItemCount(): Int {
-            return colorList.size
-        }
-
-        inner class ColorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            private val button: Button = itemView.findViewById(R.id.colorButton)
-
-            init {
-                button.setOnClickListener {
-                    val position = adapterPosition
-                    val (colorName, colorCode) = colorList[position]
-                    if (selectedColors.any { it.second == colorCode }) {
-                        selectedColors.removeIf { it.second == colorCode }
-                        button.setTextColor(Color.BLACK)
-                    } else {
-                        if (selectedColors.size < 3) {
-                            selectedColors.add(Pair(colorName, colorCode))
-                            button.setTextColor(Color.WHITE)
-                        } else {
-                            Toast.makeText(
-                                context,
-                                "3가지 색상까지만 선택할 수 있습니다.",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-                }
-            }
-
-            fun bind(colorName: String, colorCode: Int) {
-                // 버튼의 배경색과 텍스트 설정
-                button.setBackgroundColor(colorCode)
-                button.text = colorName
-                // 선택된 색상이면 글자색을 흰색으로, 아니면 검정색으로 설정
-                if (selectedColors.any { it.second == colorCode }) {
-                    button.setTextColor(Color.WHITE)
-                } else {
-                    button.setTextColor(Color.BLACK)
-                }
+        if (selectedButtons.contains(text)) {
+            selectedButtons.remove(text)
+            button.isSelected = false
+        } else {
+            if (selectedButtons.size < 5) {
+                selectedButtons.add(text)
+                button.isSelected = true
+            } else {
+                // 5개를 초과하는 경우
+                Toast.makeText(requireContext(), "최대 5개까지 선택 가능합니다.", Toast.LENGTH_SHORT).show()
             }
         }
+
+        // 선택된 버튼을 표시하는 TextView 업데이트
+        updateSelectedButtonsText()
     }
 
-    fun getSelectedColors(): List<Pair<String, Int>> {
-        return selectedColors
+    // 선택된 버튼을 표시하는 TextView를 업데이트하는 함수
+    private fun updateSelectedButtonsText() {
+        val likeSelectedText = like_selectedButtons.joinToString(", ")
+        like_selectedButtonsTextView.text = "선택된 버튼(좋아하는 색상): $likeSelectedText"
+
+        val dislikeSelectedText = dislike_selectedButtons.joinToString(", ")
+        dislike_selectedButtonsTextView.text = "선택된 버튼(싫어하는 색상): $dislikeSelectedText"
+    }
+
+    private fun saveSelectedButtonsToFirestore() {
+        val preferenceColorData = PreferenceColorData(
+            colorLikeList = like_selectedButtons,
+            colorDislikeList = dislike_selectedButtons
+        )
+        FirestoreHelper.savePreferenceColor(activity, uid, preferenceColorData)
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(), "선택한 선호 색상이 저장되었습니다.", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(requireContext(), "선택한 선호 색상을 저장하는 중에 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun loadPreferenceFromFirestore() {
+        FirestoreHelper.loadPreferenceColor(activity, uid, object : FirestoreHelper.OnPreferenceColorDataLoadedListener {
+            override fun onDataLoaded(preferenceColorData: PreferenceColorData?) {
+                preferenceColorData?.let { data ->
+                    like_selectedButtons.clear()
+                    like_selectedButtons.addAll(data.colorLikeList)
+
+                    dislike_selectedButtons.clear()
+                    dislike_selectedButtons.addAll(data.colorDislikeList)
+
+                    updateSelectedButtonsText()
+                }
+            }
+        })
     }
 }

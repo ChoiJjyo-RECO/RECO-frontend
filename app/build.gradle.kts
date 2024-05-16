@@ -115,6 +115,11 @@ dependencies {
     implementation ("com.google.android.material:material:1.12.0")
 
     //openai api
-    implementation ("com.squareup.okhttp3:okhttp:4.10.0")
+    //okhttp
+    implementation ("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation ("io.ktor:ktor-client-okhttp:2.3.11")
+
+    implementation ("com.aallam.openai:openai-client:3.7.2")
+
 
 }
