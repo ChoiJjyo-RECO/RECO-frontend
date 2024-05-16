@@ -33,10 +33,10 @@
         </provider>
 
         <activity
-                android:name=".Recognize.RecognizeActivity"
+                android:name=".view.recognize.RecognizeActivity"
                 android:exported="false" />
         <activity
-                android:name=".SplashActivity"
+                android:name=".view.SplashActivity"
                 android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,25 +45,25 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".User.SignUpActivity"
+                android:name=".view.user.SignUpActivity"
                 android:exported="false" />
         <activity
-                android:name=".User.SignInActivity"
+                android:name=".view.user.SignInActivity"
                 android:exported="false" />
         <activity
-                android:name=".Main.MainActivity"
+                android:name=".view.MainActivity"
                 android:exported="false" />
         <activity
-                android:name=".Recognize.ChoiceActivity"
+                android:name=".view.recognize.ChoiceActivity"
                 android:exported="false" />
         <activity
-                android:name=".MyCloset.MyClosetActivity"
+                android:name=".view.myCloset.closet.ClosetActivity"
                 android:exported="false" />
         <activity
-                android:name=".MyCloset.ClothesActivity"
+                android:name=".view.myCloset.clothes.ClothesActivity"
                 android:exported="false" />
         <activity
-                android:name=".Like.LikeActivity"
+                android:name=".view.preference.PreferenceActivity"
                 android:exported="false" />
     </application>
 
