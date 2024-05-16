@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import choijjyo.reco.Like.PreferenceClothTypeData
+import choijjyo.reco.Like.PreferenceColorData
 import choijjyo.reco.Main.Constants
 import choijjyo.reco.Main.RecentImageAdapter
 import choijjyo.reco.MyCloset.ClosetImageAdapter
@@ -19,11 +21,21 @@ import choijjyo.reco.MyCloset.ClothesActivity
 import choijjyo.reco.Recognize.ClosetData
 import choijjyo.reco.Recognize.SearchResultItem
 import choijjyo.reco.User.UsersData
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.TaskCompletionSource
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
 object FirestoreHelper {
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+
+    interface OnPreferenceColorDataLoadedListener {
+        fun onDataLoaded(preferenceColorData: PreferenceColorData?)
+    }
+    interface OnPreferenceClothTypeDataLoadedListener {
+        fun onDataLoaded(preferenceClothTypeData: PreferenceClothTypeData?)
+    }
+
 
     fun setDocument(activity: AppCompatActivity, userId: String, data: UsersData) {
         FirebaseFirestore.getInstance()
@@ -215,6 +227,39 @@ object FirestoreHelper {
                 Log.e("LoadImages", "Error getting documents: ", exception)
             }
     }
+
+    fun loadPreferenceColor(activity: FragmentActivity?, userId: String, listener: OnPreferenceColorDataLoadedListener) {
+        firestore.collection("users")
+            .document(userId)
+            .collection("preference")
+            .document("color")
+            .get()
+            .addOnSuccessListener { document ->
+                val preferenceColorData = document.toObject(PreferenceColorData::class.java)
+                listener.onDataLoaded(preferenceColorData)
+            }
+            .addOnFailureListener { e ->
+                Log.e("FirestoreHelper", "선호 색 불러오기 실패", e)
+                listener.onDataLoaded(null)
+            }
+    }
+
+    fun loadPreferenceClothType(activity: FragmentActivity?, userId: String, listener: OnPreferenceClothTypeDataLoadedListener) {
+        firestore.collection("users")
+            .document(userId)
+            .collection("preference")
+            .document("clothType")
+            .get()
+            .addOnSuccessListener { document ->
+                val preferenceClothTypeData = document.toObject(PreferenceClothTypeData::class.java)
+                listener.onDataLoaded(preferenceClothTypeData)
+            }
+            .addOnFailureListener { e ->
+                Log.e("FirestoreHelper", "선호 옷 유형 불러오기 실패", e)
+                listener.onDataLoaded(null)
+            }
+    }
+
     fun saveSimilarUrlToCloset(activity: FragmentActivity?, userId: String, docId:String, searchData: SearchResultItem, index: Int) {
         FirebaseFirestore.getInstance()
             .collection("users")
@@ -246,5 +291,41 @@ object FirestoreHelper {
             .addOnFailureListener { e ->
                 Log.e("FirestoreHelper", "Error saving image URL to closet", e)
             }
+    }
+
+    fun savePreferenceColor(activity: FragmentActivity?, userId: String, preferenceColorData: PreferenceColorData): Task<Void> {
+        val taskCompletionSource = TaskCompletionSource<Void>()
+        firestore.collection("users")
+            .document(userId)
+            .collection("preference")
+            .document("color")
+            .set(preferenceColorData)
+            .addOnSuccessListener {
+                Log.d("FirestoreHelper", "Color selections saved successfully!")
+                taskCompletionSource.setResult(null)
+            }
+            .addOnFailureListener { e ->
+                Log.e("FirestoreHelper", "Error saving color selections", e)
+                taskCompletionSource.setException(e)
+            }
+        return taskCompletionSource.task
+    }
+
+    fun savePreferenceClothType(activity: FragmentActivity?, userId: String, preferenceClothTypeData: PreferenceClothTypeData): Task<Void> {
+        val taskCompletionSource = TaskCompletionSource<Void>()
+        firestore.collection("users")
+            .document(userId)
+            .collection("preference")
+            .document("clothType")
+            .set(preferenceClothTypeData)
+            .addOnSuccessListener {
+                Log.d("FirestoreHelper", "Color selections saved successfully!")
+                taskCompletionSource.setResult(null)
+            }
+            .addOnFailureListener { e ->
+                Log.e("FirestoreHelper", "Error saving color selections", e)
+                taskCompletionSource.setException(e)
+            }
+        return taskCompletionSource.task
     }
 }

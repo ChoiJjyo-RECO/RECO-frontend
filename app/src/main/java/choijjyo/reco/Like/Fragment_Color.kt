@@ -8,10 +8,15 @@ import android.widget.TableLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import choijjyo.reco.FirestoreHelper
 
 import choijjyo.reco.R
+import com.google.firebase.auth.FirebaseAuth
 
 class Fragment_Color : Fragment() {
+
+    private lateinit var auth: FirebaseAuth
+    private lateinit var uid: String
 
     private val like_colorButtonIds = arrayOf(
         R.id.like_colorButton1, R.id.like_colorButton2, R.id.like_colorButton3, R.id.like_colorButton4,
@@ -33,13 +38,25 @@ class Fragment_Color : Fragment() {
     private val dislike_selectedButtons = mutableListOf<String>()
     private lateinit var like_selectedButtonsTextView: TextView
     private lateinit var dislike_selectedButtonsTextView: TextView
+    private lateinit var saveButton: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.like_color, container, false)
+        return inflater.inflate(R.layout.like_color, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            uid = currentUser.uid
+        }
 
         // 선택된 버튼을 표시할 TextView 초기화
         like_selectedButtonsTextView = view.findViewById(R.id.like_selectedButtonsTextView)
         dislike_selectedButtonsTextView = view.findViewById(R.id.dislike_selectedButtonsTextView)
+        saveButton = view.findViewById(R.id.save_colorlike)
 
         // 첫 번째 TableLayout에 대한 버튼 설정
         setupButtons(view.findViewById(R.id.like_color_buttonlayout), like_colorButtonIds, like_selectedButtons)
@@ -47,7 +64,11 @@ class Fragment_Color : Fragment() {
         // 두 번째 TableLayout에 대한 버튼 설정
         setupButtons(view.findViewById(R.id.dislike_color_buttonlayout), dislike_colorButtonIds, dislike_selectedButtons)
 
-        return view
+        saveButton.setOnClickListener {
+            saveSelectedButtonsToFirestore()
+        }
+
+        loadPreferenceFromFirestore()
     }
 
     // TableLayout에 버튼 설정하는 함수
@@ -85,5 +106,35 @@ class Fragment_Color : Fragment() {
 
         val dislikeSelectedText = dislike_selectedButtons.joinToString(", ")
         dislike_selectedButtonsTextView.text = "선택된 버튼(싫어하는 색상): $dislikeSelectedText"
+    }
+
+    private fun saveSelectedButtonsToFirestore() {
+        val preferenceColorData = PreferenceColorData(
+            colorLikeList = like_selectedButtons,
+            colorDislikeList = dislike_selectedButtons
+        )
+        FirestoreHelper.savePreferenceColor(activity, uid, preferenceColorData)
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(), "선택한 선호 색상이 저장되었습니다.", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(requireContext(), "선택한 선호 색상을 저장하는 중에 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun loadPreferenceFromFirestore() {
+        FirestoreHelper.loadPreferenceColor(activity, uid, object : FirestoreHelper.OnPreferenceColorDataLoadedListener {
+            override fun onDataLoaded(preferenceColorData: PreferenceColorData?) {
+                preferenceColorData?.let { data ->
+                    like_selectedButtons.clear()
+                    like_selectedButtons.addAll(data.colorLikeList)
+
+                    dislike_selectedButtons.clear()
+                    dislike_selectedButtons.addAll(data.colorDislikeList)
+
+                    updateSelectedButtonsText()
+                }
+            }
+        })
     }
 }
