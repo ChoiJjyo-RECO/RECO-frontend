@@ -10,6 +10,7 @@ import choijjyo.reco.FirestoreHelper
 import choijjyo.reco.Like.LikeActivity
 import choijjyo.reco.MyCloset.MyClosetActivity
 import choijjyo.reco.R
+import choijjyo.reco.Recognize.ChoiceActivity
 import choijjyo.reco.databinding.ActivityMainBinding
 import choijjyo.reco.Recognize.RecognizeActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -55,7 +56,7 @@ class MainActivity : AppCompatActivity(), RecentImageAdapter.OnItemClickListener
         }
 
         binding.recognize.setOnClickListener {
-            intent = Intent(this, RecognizeActivity::class.java)
+            intent = Intent(this, ChoiceActivity::class.java)
             intent.putExtra("userUid", uid)
             startActivity(intent)
         }
