@@ -3,25 +3,20 @@ package choijjyo.reco.Recognize
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import choijjyo.reco.Main.RecentImageViewHolder
 import choijjyo.reco.R
 import com.bumptech.glide.Glide
 
-class SimilarImageAdapter (private var imageList: List<SearchResultItem>) : RecyclerView.Adapter<SimilarImageAdapter.ImageViewHolder>() {
+class SimilarImageAdapter (private var imageList: List<SearchResultItem>) : RecyclerView.Adapter<RecentImageViewHolder>() {
 
-    class ImageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imageView: ImageView = view.findViewById(R.id.similarImage)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentImageViewHolder {
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.recent_item_image, parent, false)
+        return RecentImageViewHolder(itemView)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.similar_image_xml, parent, false)
-        return ImageViewHolder(itemView)
-    }
-
-    override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecentImageViewHolder, position: Int) {
         val currentItem = imageList[position]
         Glide.with(holder.imageView.context).load(currentItem.imageUrl).into(holder.imageView)
         // ImageView에 클릭 리스너 설정
