@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <LinearLayout
+            android:background="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <!--로고 레이아웃-->
+        <FrameLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+            <!-- 이미지뷰 -->
+            <ImageView
+                    android:layout_width="360dp"
+                    android:layout_height="73dp"
+                    android:layout_gravity="left"
+                    android:src="@drawable/reco_header" />
+
+            <!-- 버튼 -->
+            <Button
+                    android:id="@+id/backToMainButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="10dp"
+                    android:paddingHorizontal="15dp"
+                    android:background="@drawable/welcome_rectangle"
+                    style="@style/backtomain"
+                    android:text="메인화면으로 돌아가기" />
+
+        </FrameLayout>
+
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal|center_vertical">
+
+            <!--촬영하기 버튼-->
+            <LinearLayout
+                    android:id="@+id/cameraBtn"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:background="@drawable/main_button"
+                    android:layout_marginHorizontal="50dp"
+                    android:layout_marginBottom="30dp"
+                    android:paddingVertical="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <ImageView
+                        android:src="@drawable/button_camera"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center"
+                        android:id="@+id/imageView1" />
+
+                <TextView
+                        android:text="카메라로 사진 찍기"
+                        android:gravity="center"
+                        android:background="@color/white"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_marginBottom="5dp"
+                        android:padding="10dp" />
+
+            </LinearLayout>
+
+            <!--불러하기 버튼-->
+            <LinearLayout
+                    android:id="@+id/galleryBtn"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:background="@drawable/main_button"
+                    android:layout_marginHorizontal="50dp"
+                    android:paddingVertical="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <ImageView
+                        android:src="@drawable/button_gallery"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center"
+                        android:id="@+id/imageView2" />
+
+                <TextView
+                        android:gravity="center"
+                        android:text="갤러리에서 불러오기"
+                        android:background="@color/white"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_marginBottom="5dp"
+                        android:padding="10dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>
