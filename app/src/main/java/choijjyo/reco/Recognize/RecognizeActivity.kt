@@ -321,7 +321,7 @@ class RecognizeActivity : AppCompatActivity() {
             val docId = uri?.lastPathSegment
 
             // 요청 URL에 쿼리 매개변수 추가
-            val url = URL("https://3e53-121-166-22-33.ngrok-free.app/detect_and_analyze?uid=$uid&doc_id=$docId")
+            val url = URL("https://db3b-211-243-48-67.ngrok-free.app/detect_and_analyze?uid=$uid&doc_id=$docId")
             val conn = url.openConnection() as HttpURLConnection
             conn.connectTimeout = 10000
             conn.requestMethod = "GET"
@@ -352,8 +352,8 @@ class RecognizeActivity : AppCompatActivity() {
                 Log.d("googleSearch keyword",googleSearchKeyword)
                 if (docId != null) {
                     lifecycleScope.launch {
-                        sendToRecommendFragment(modelResult, docId)
                         sendToSimilarFragment(googleSearchKeyword, docId)
+                        sendToRecommendFragment(modelResult, docId)
                     }
                 }
             }
@@ -409,6 +409,7 @@ class RecognizeActivity : AppCompatActivity() {
     }
 
     private fun sendToRecommendFragment(modelResult: String, docid: String) {
+        binding.tabLayoutSearch.getTabAt(0)?.select()
         val fragment = supportFragmentManager.findFragmentByTag("FragmentTag0") as? Fragment_RecommendClothes
         if (fragment != null) {
             fragment.setSearchKeyword(modelResult, docid)

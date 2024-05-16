@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import choijjyo.reco.BuildConfig
 import choijjyo.reco.FirestoreHelper
+import choijjyo.reco.Like.PreferenceClothTypeData
+import choijjyo.reco.Like.PreferenceColorData
 import choijjyo.reco.R
 import com.aallam.openai.api.chat.ChatCompletion
 import com.aallam.openai.api.chat.ChatCompletionRequest
@@ -38,6 +40,10 @@ class Fragment_RecommendClothes: Fragment() {
     private var searchKeyword: String? = null
     private var googleSearchKeyword: String? = null
     private var docId: String? = null
+    private var colorLike = mutableListOf<String>()
+    private var colorDisLike = mutableListOf<String>()
+    private var clothesLike = mutableListOf<String>()
+    private var clothesDisLike = mutableListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,6 +74,31 @@ class Fragment_RecommendClothes: Fragment() {
         }
     }
     private suspend fun searchOnGpt(keyword: String, docId: String) {
+        auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            uid = currentUser.uid
+            FirestoreHelper.loadPreferenceColor(activity, uid, object : FirestoreHelper.OnPreferenceColorDataLoadedListener {
+                override fun onDataLoaded(preferenceColorData: PreferenceColorData?) {
+                    preferenceColorData?.let { data ->
+
+                        colorLike = data.colorLikeList.toMutableList()
+                        colorDisLike = data.colorDislikeList.toMutableList()
+
+                    }
+                }
+            })
+            FirestoreHelper.loadPreferenceClothType(activity, uid, object : FirestoreHelper.OnPreferenceClothTypeDataLoadedListener {
+                override fun onDataLoaded(preferenceClothTypeData: PreferenceClothTypeData?) {
+                    preferenceClothTypeData?.let { data ->
+
+                        clothesLike = data.clothTypeLikeList.toMutableList()
+                        clothesDisLike = data.clothTypeDislikeList.toMutableList()
+
+                    }
+                }
+            })
+        }
         val openAi = OpenAI(
             token = BuildConfig.OPENAI_APIKEY,
             timeout = Timeout(socket = 60.seconds),
@@ -77,15 +108,15 @@ class Fragment_RecommendClothes: Fragment() {
             messages = listOf(
                 ChatMessage(
                     role = ChatRole.System,
-                    content = ""
+                    content = "사용자가 선호하는 색상은 $colorLike , 싫어하는 색상은 $colorDisLike 입니다. 사용자가 선호하는 옷 종류는 $clothesLike 이고, 싫어하는 옷 종류는 $clothesDisLike 입니다. 사용자의 취향을 고려해서 옷을 추천해주세요."
                 ),
                 ChatMessage(
                     role = ChatRole.User,
-                    content = "$keyword 에 어울릴 만한 옷을 6가지  추천해줘. \\n답변 예시는 다음과 같습니다: \"검은색 치마\" OR \"하늘색 바지\" OR \"핑크색 셔츠\" OR \"주황색 티셔츠\" OR \"파란색 셔츠\" OR \"검은색 자켓\". \\n이 형식을 따라 답변해주세요. "
+                    content = "$keyword 에 어울릴 만한 옷을 6가지  추천해줘.\\n답변 예시는 다음과 같습니다: \"검은색 치마\" OR \"하늘색 바지\" OR \"핑크색 셔츠\" OR \"주황색 티셔츠\" OR \"파란색 셔츠\" OR \"검은색 자켓\". \\n이 형식을 따라 답변해주세요. "
                 )
             )
         )
-        Log.d("챗지피티", "ㅇㅇㅇ")
+        Log.d("챗지피티", "working")
         try {
             val completion: ChatCompletion = openAi.chatCompletion(chatCompletionRequest)
             googleSearchKeyword = completion.choices.firstOrNull()?.message?.content ?: "추천을 받아올 수 없습니다."
