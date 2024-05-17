@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginHorizontal="30dp"
         android:orientation="vertical">
 
     <TextView
@@ -10,7 +11,7 @@
             android:textColor="@color/white"
             android:paddingHorizontal="15dp"
             android:paddingVertical="7dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="5dp"
             android:layout_marginHorizontal="10dp"
             android:layout_width="match_parent"
@@ -35,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
             android:stretchColumns="*">
 
         <TableRow
@@ -42,84 +44,70 @@
                 android:layout_height="match_parent">
 
             <Button
-                    android:id="@+id/like_colorButton1"
+                    android:id="@+id/like_colorButton5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="검정색"
-                    android:onClick="selectColor" />
-
-            <Button
-                    android:id="@+id/like_colorButton2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="하얀색"
-                    android:onClick="selectColor" />
-
-            <Button
-                    android:id="@+id/like_colorButton3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="회색"
+                    style="@style/CustomButtonStyle"
+                    android:backgroundTint="#FFC0CB"
+                    android:text="핑크색"
                     android:onClick="selectColor" />
 
             <Button
                     android:id="@+id/like_colorButton4"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
+                    android:background="@drawable/preference_button"
+                    android:backgroundTint="#FF0000"
                     android:text="빨간색"
-                    android:onClick="selectColor" />
-        </TableRow>
-
-        <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            <Button
-                    android:id="@+id/like_colorButton5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="핑크색"
+                    android:textColor="@color/white"
                     android:onClick="selectColor" />
 
             <Button
                     android:id="@+id/like_colorButton6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
                     android:text="주황색"
+                    android:backgroundTint="#FFA500"
                     android:onClick="selectColor" />
-
-            <Button
-                    android:id="@+id/like_colorButton7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="베이지"
-                    android:onClick="selectColor" />
-
-
-            <Button
-                    android:id="@+id/like_colorButton8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="갈색"
-                    android:onClick="selectColor" />
-        </TableRow>
-
-        <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
             <Button
                     android:id="@+id/like_colorButton9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
                     android:text="노랑색"
+                    android:backgroundTint="#FFFF00"
+                    android:onClick="selectColor" />
+        </TableRow>
+        <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <Button
+                    android:id="@+id/like_colorButton12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
+                    android:backgroundTint="#BDFCC9"
+                    android:text="민트색"
+                    android:onClick="selectColor" />
+
+            <Button
+                    android:id="@+id/like_colorButton20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
+                    android:backgroundTint="#B7FF00"
+                    android:text="네온"
                     android:onClick="selectColor" />
 
             <Button
                     android:id="@+id/like_colorButton10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
+                    android:backgroundTint="#1DDB16"
                     android:text="초록색"
                     android:onClick="selectColor" />
 
@@ -127,14 +115,10 @@
                     android:id="@+id/like_colorButton11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
+                    android:backgroundTint="#476600"
                     android:text="카키색"
-                    android:onClick="selectColor" />
-
-            <Button
-                    android:id="@+id/like_colorButton12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="민트색"
+                    android:textColor="@color/white"
                     android:onClick="selectColor" />
         </TableRow>
 
@@ -143,31 +127,87 @@
                 android:layout_height="wrap_content">
 
             <Button
+                    android:id="@+id/like_colorButton16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
+                    android:backgroundTint="#87CEEB"
+                    android:text="하늘색"
+                    android:onClick="selectColor" />
+
+            <Button
                     android:id="@+id/like_colorButton13"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="파란색"
+                    style="@style/CustomButtonStyle"
+                    android:backgroundTint="#0000FF"
+                    android:text="파란색"                    android:textColor="@color/white"
                     android:onClick="selectColor" />
 
             <Button
                     android:id="@+id/like_colorButton14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
+                    android:backgroundTint="#182944"
                     android:text="남색"
+                    android:textColor="@color/white"
                     android:onClick="selectColor" />
 
             <Button
                     android:id="@+id/like_colorButton15"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
+                    android:backgroundTint="#172737"
                     android:text="청색"
+                    android:textColor="@color/white"
+                    android:onClick="selectColor" />
+
+
+        </TableRow>
+        <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <Button
+                    android:id="@+id/like_colorButton18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
+                    android:backgroundTint="#AC78BA"
+                    android:text="라벤더"
                     android:onClick="selectColor" />
 
             <Button
-                    android:id="@+id/like_colorButton16"
+                    android:id="@+id/like_colorButton17"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="하늘색"
+                    style="@style/CustomButtonStyle"
+                    android:backgroundTint="#663399"
+                    android:text="보라색"
+                    android:textColor="@color/white"
+                    android:onClick="selectColor" />
+
+            <Button
+                    android:id="@+id/like_colorButton8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
+                    android:backgroundTint="#583925"
+                    android:text="갈색"
+                    android:textColor="@color/white"
+                    android:onClick="selectColor" />
+
+
+            <Button
+                    android:id="@+id/like_colorButton19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
+                    android:backgroundTint="#722F37"
+                    android:text="와인색"
+                    android:textColor="@color/white"
                     android:onClick="selectColor" />
         </TableRow>
 
@@ -176,32 +216,44 @@
                 android:layout_height="wrap_content">
 
             <Button
-                    android:id="@+id/like_colorButton17"
+                    android:id="@+id/like_colorButton2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="보라색"
+                    style="@style/CustomButtonStyle2"
+                    android:text="하얀색"
                     android:onClick="selectColor" />
 
             <Button
-                    android:id="@+id/like_colorButton18"
+                    android:id="@+id/like_colorButton7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="라벤더"
+                    style="@style/CustomButtonStyle"
+                    android:backgroundTint="#F5F5DC"
+                    android:text="베이지"
                     android:onClick="selectColor" />
 
             <Button
-                    android:id="@+id/like_colorButton19"
+                    android:id="@+id/like_colorButton3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="와인색"
+                    style="@style/CustomButtonStyle"
+                    android:backgroundTint="#787878"
+                    android:text="회색"
+                    android:textColor="@color/white"
                     android:onClick="selectColor" />
 
             <Button
-                    android:id="@+id/like_colorButton20"
+                    android:id="@+id/like_colorButton1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="네온"
-                    android:onClick="selectColor" />
+                    android:layout_weight="1"
+                    style="@style/CustomButtonStyle"
+                    android:background="@drawable/preference_button"
+                    android:backgroundTint="@color/black"
+                    android:textColor="@color/white"
+                    android:text="검정색"
+                    android:onClick="selectColor"/>
+
         </TableRow>
     </TableLayout>
     <TextView
@@ -210,7 +262,7 @@
             android:textColor="@color/white"
             android:paddingHorizontal="15dp"
             android:paddingVertical="7dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:layout_marginBottom="5dp"
             android:layout_marginHorizontal="10dp"
             android:layout_width="match_parent"
@@ -235,6 +287,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
             android:stretchColumns="*" >
 
         <TableRow
@@ -244,7 +297,8 @@
             <Button
                     android:id="@+id/dislike_colorButton1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
                     android:text="검정색"
                     android:onClick="selectColor" />
 
@@ -252,6 +306,7 @@
                     android:id="@+id/dislike_colorButton2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
                     android:text="하얀색"
                     android:onClick="selectColor" />
 
@@ -259,6 +314,7 @@
                     android:id="@+id/dislike_colorButton3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
                     android:text="회색"
                     android:onClick="selectColor" />
 
@@ -266,6 +322,7 @@
                     android:id="@+id/dislike_colorButton4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
                     android:text="빨간색"
                     android:onClick="selectColor" />
         </TableRow>
@@ -276,6 +333,7 @@
                     android:id="@+id/dislike_colorButton5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
                     android:text="핑크색"
                     android:onClick="selectColor" />
 
@@ -283,6 +341,7 @@
                     android:id="@+id/dislike_colorButton6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
                     android:text="주황색"
                     android:onClick="selectColor" />
 
@@ -290,6 +349,7 @@
                     android:id="@+id/dislike_colorButton7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
                     android:text="베이지"
                     android:onClick="selectColor" />
 
@@ -298,6 +358,7 @@
                     android:id="@+id/dislike_colorButton8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
                     android:text="갈색"
                     android:onClick="selectColor" />
         </TableRow>
@@ -308,6 +369,7 @@
                     android:id="@+id/dislike_colorButton9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
                     android:text="노랑색"
                     android:onClick="selectColor" />
 
@@ -315,6 +377,7 @@
                     android:id="@+id/dislike_colorButton10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
                     android:text="초록색"
                     android:onClick="selectColor" />
 
@@ -322,6 +385,7 @@
                     android:id="@+id/dislike_colorButton11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
                     android:text="카키색"
                     android:onClick="selectColor" />
 
@@ -329,6 +393,7 @@
                     android:id="@+id/dislike_colorButton12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
                     android:text="민트색"
                     android:onClick="selectColor" />
         </TableRow>
@@ -339,6 +404,7 @@
                     android:id="@+id/dislike_colorButton13"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
                     android:text="파란색"
                     android:onClick="selectColor" />
 
@@ -346,6 +412,7 @@
                     android:id="@+id/dislike_colorButton14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
                     android:text="남색"
                     android:onClick="selectColor" />
 
@@ -353,6 +420,7 @@
                     android:id="@+id/dislike_colorButton15"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
                     android:text="청색"
                     android:onClick="selectColor" />
 
@@ -360,6 +428,7 @@
                     android:id="@+id/dislike_colorButton16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
                     android:text="하늘색"
                     android:onClick="selectColor" />
         </TableRow>
@@ -370,6 +439,7 @@
                     android:id="@+id/dislike_colorButton17"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
                     android:text="보라색"
                     android:onClick="selectColor" />
 
@@ -377,6 +447,7 @@
                     android:id="@+id/dislike_colorButton18"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
                     android:text="라벤더"
                     android:onClick="selectColor" />
 
@@ -384,6 +455,7 @@
                     android:id="@+id/dislike_colorButton19"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
                     android:text="와인색"
                     android:onClick="selectColor" />
 
@@ -391,6 +463,7 @@
                     android:id="@+id/dislike_colorButton20"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
                     android:text="네온"
                     android:onClick="selectColor" />
         </TableRow>
@@ -399,8 +472,9 @@
             android:id="@+id/save_colorlike"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:layout_marginHorizontal="10dp"
             android:layout_alignParentTop="true"
+            android:textSize="18dp"
             android:text="취향 저장하기" />
 </LinearLayout>
