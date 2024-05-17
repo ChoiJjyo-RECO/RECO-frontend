@@ -156,6 +156,12 @@ class ChoiceActivity : AppCompatActivity() {
             .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
             .check()
 
+        // 갤러리 쓰기 권한 체크
+        TedPermission.create()
+            .setPermissionListener(readPermission)
+            .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            .check()
+
         // 카메라 쓰기 권한 체크
         TedPermission.create()
             .setPermissionListener(cameraPermission)
