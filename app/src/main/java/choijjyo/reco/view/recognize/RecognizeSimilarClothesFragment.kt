@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import choijjyo.reco.BuildConfig
 import choijjyo.reco.data.source.firestore.FirestoreHelper
 import choijjyo.reco.R
-import choijjyo.reco.adapter.search.SimilarImageAdapter
+import choijjyo.reco.adapter.search.SearchImageAdapter
 import choijjyo.reco.data.entity.search.SearchResponse
 import choijjyo.reco.data.entity.search.SearchResultItem
 import com.google.firebase.auth.FirebaseAuth
@@ -25,24 +25,21 @@ class RecognizeSimilarClothesFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var uid: String
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: SimilarImageAdapter
+    private lateinit var adapter: SearchImageAdapter
     private var searchKeyword: String? = null
     private var docId: String? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.similar_clothes, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_search_item, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView = view.findViewById(R.id.similarRecyclerView)
-        adapter = SimilarImageAdapter(listOf())
+        recyclerView = view.findViewById(R.id.closet_search_view)
+        adapter = SearchImageAdapter(listOf())
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
 
     }
     fun setSearchKeyword(keyword: String, docid: String) {
