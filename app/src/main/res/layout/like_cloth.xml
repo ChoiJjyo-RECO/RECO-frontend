@@ -27,7 +27,7 @@
             android:background="@drawable/main_button"
             android:paddingHorizontal="15dp"
             android:paddingVertical="10dp"
-            android:text="선호하는 색상을 선택해주세요 (0~5개)"
+            android:text="선호하는 옷 종류를 선택해주세요 (0~5개)"
             android:textColor="@color/black" />
 
 
@@ -137,7 +137,7 @@
 
     <TextView
             android:id="@+id/dislike_selectedButtonsTextView"
-            android:text="기피하는 색상을 선택해주세요 (0 ~ 5개)"
+            android:text="기피하는 옷 종류를 선택해주세요 (0 ~ 5개)"
             android:background="@drawable/main_button"
             android:paddingHorizontal="15dp"
             android:paddingVertical="10dp"
