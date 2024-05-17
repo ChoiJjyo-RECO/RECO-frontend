@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import choijjyo.reco.data.source.firestore.FirestoreHelper
 import choijjyo.reco.R
-import choijjyo.reco.view.myCloset.adapter.ClosetImageAdapter
+import choijjyo.reco.adapter.closet.ClosetItemImageAdapter
 import com.google.firebase.auth.FirebaseAuth
 
-class ClosetBottomFragment : Fragment(), ClosetImageAdapter.OnItemClickListener {
+class ClosetBottomFragment : Fragment(), ClosetItemImageAdapter.OnItemClickListener {
     private lateinit var auth: FirebaseAuth
     private lateinit var uid: String
     private lateinit var recyclerView: RecyclerView
