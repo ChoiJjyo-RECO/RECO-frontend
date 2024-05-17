@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import choijjyo.reco.data.source.firestore.FirestoreHelper
@@ -40,14 +39,22 @@ class RecognizeActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityRecognizeBinding
-    private lateinit var progressBar: ProgressBar
+//    private lateinit var progressBar: ProgressBar
     private lateinit var uid: String
     private lateinit var auth: FirebaseAuth
     private var uri: Uri? = null
     private lateinit var originalBitmap: Bitmap
     private val colorFilterHelper = ColorFilterHelper()
     private lateinit var getUri : String
+    private lateinit var deuteranopiaButton: Button
+    private lateinit var protanopiaButton: Button
+    private lateinit var tritanopiaButton: Button
+    private lateinit var originalImgButton: Button
 
+    private var isDeuteranopiaButtonPressed = false
+    private var isProtanopiaButtonPressed = false
+    private var isTritanopiaButtonPressed = false
+    private var isOriginalImgButtonPressed = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,20 +69,56 @@ class RecognizeActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        progressBar = findViewById(R.id.progressBar)
+        deuteranopiaButton = binding.deuteranopiaButton
+        protanopiaButton = binding.protanopiaButton
+        tritanopiaButton = binding.tritanopiaButton
+        originalImgButton = binding.originalImgButton
+//        progressBar = binding.progressBar
         setGallery(uri)
 
         binding.deuteranopiaButton.setOnClickListener {
-            applyDeuteranopia()
+            if (!isDeuteranopiaButtonPressed) {
+                applyDeuteranopia()
+                updateButtonBackground(deuteranopiaButton, true)
+                resetButtonBackground(deuteranopiaButton)
+                isDeuteranopiaButtonPressed = true
+                isProtanopiaButtonPressed = false
+                isTritanopiaButtonPressed = false
+                isOriginalImgButtonPressed = false
+            }
         }
         binding.protanopiaButton.setOnClickListener {
-            applyProtanopia()
+            if (!isProtanopiaButtonPressed) {
+                applyProtanopia()
+                updateButtonBackground(protanopiaButton, true)
+                resetButtonBackground(protanopiaButton)
+                isDeuteranopiaButtonPressed = false
+                isProtanopiaButtonPressed = true
+                isTritanopiaButtonPressed = false
+                isOriginalImgButtonPressed = false
+            }
         }
         binding.tritanopiaButton.setOnClickListener {
-            applyTritanopia()
+            if (!isTritanopiaButtonPressed) {
+                applyTritanopia()
+                updateButtonBackground(tritanopiaButton, true)
+                resetButtonBackground(tritanopiaButton)
+                isDeuteranopiaButtonPressed = false
+                isProtanopiaButtonPressed = false
+                isTritanopiaButtonPressed = true
+                isOriginalImgButtonPressed = false
+            }
         }
         binding.originalImgButton.setOnClickListener {
-            showOriginal()
+            if (!isOriginalImgButtonPressed) {
+                showOriginal()
+                updateButtonBackground(originalImgButton, true)
+                resetButtonBackground(originalImgButton)
+                isDeuteranopiaButtonPressed = false
+                isProtanopiaButtonPressed = false
+                isTritanopiaButtonPressed = false
+                isOriginalImgButtonPressed = true
+            }
         }
 
         binding.tabLayoutSearch.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -128,8 +171,9 @@ class RecognizeActivity : AppCompatActivity() {
     }
 
     fun setGallery(uri : Uri?) {
-        progressBar.visibility = View.VISIBLE
-        binding.progressText.visibility = View.VISIBLE
+//        progressBar.visibility = View.VISIBLE
+//        binding.progressText.visibility = View.VISIBLE
+        binding.progressLayout.visibility = View.VISIBLE
         binding.cameraIV.setImageURI(uri)
         originalBitmap = (binding.cameraIV.drawable as BitmapDrawable).bitmap
         uri?.let { uploadImageToFirestore(it) }
@@ -205,8 +249,9 @@ class RecognizeActivity : AppCompatActivity() {
 
             // 결과 표시
             runOnUiThread {
-                binding.resultText.visibility = View.VISIBLE
-                binding.resultText.text = "색상: $closestColorCategory\n종류: $objectClass"
+                binding.resultLayout.visibility = View.VISIBLE
+                binding.resultColor.text = "$closestColorCategory"  // 색상
+                binding.resultClothType.text = "$objectClass"       // 종류
                 val googleSearchKeyword = "$closestColorCategory $objectClass 제품 사진"
                 val modelResult = "$closestColorCategory $objectClass"
                 Log.d("googleSearch keyword",googleSearchKeyword)
@@ -230,8 +275,9 @@ class RecognizeActivity : AppCompatActivity() {
             }
         } finally {
             runOnUiThread {
-                progressBar.visibility = View.GONE
-                binding.progressText.visibility = View.GONE
+//                binding.progressBar.visibility = View.GONE
+//                binding.progressText.visibility = View.GONE
+                binding.progressLayout.visibility = View.GONE
             }
         }
     }
@@ -284,6 +330,28 @@ class RecognizeActivity : AppCompatActivity() {
                 hideOtherFragments(this, "FragmentTag0") // 다른 프래그먼트는 숨기기
                 commitNow()
             }
+        }
+    }
+    private fun updateButtonBackground(button: Button, isPressed: Boolean) {
+        if (isPressed) {
+            button.setBackgroundResource(R.drawable.btn_selected_bg) // 눌린 상태 배경색
+        } else {
+            button.setBackgroundResource(R.drawable.btn_not_selected_bg) // 일반 상태 배경색
+        }
+    }
+
+    private fun resetButtonBackground(clickedButton: Button) {
+        if (clickedButton != binding.deuteranopiaButton) {
+            updateButtonBackground(binding.deuteranopiaButton, false)
+        }
+        if (clickedButton != binding.protanopiaButton) {
+            updateButtonBackground(binding.protanopiaButton, false)
+        }
+        if (clickedButton != binding.tritanopiaButton) {
+            updateButtonBackground(binding.tritanopiaButton, false)
+        }
+        if (clickedButton != binding.originalImgButton) {
+            updateButtonBackground(binding.originalImgButton, false)
         }
     }
 

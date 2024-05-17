@@ -49,13 +49,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:tabMaxWidth="0dp"
-                android:layout_margin="20dp"
+                android:padding="10dp"
                 android:gravity="center">
 
             <Button
                     android:id="@+id/deuteranopiaButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/btn_not_selected_bg"
                     android:text="녹색맹 필터"
                     android:layout_weight="1" />
 
@@ -63,6 +65,8 @@
                     android:id="@+id/protanopiaButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/btn_not_selected_bg"
                     android:text="적색맹 필터"
                     android:layout_weight="1" />
 
@@ -70,6 +74,8 @@
                     android:id="@+id/tritanopiaButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/btn_not_selected_bg"
                     android:text="청색맹 필터"
                     android:layout_weight="1" />
 
@@ -77,40 +83,71 @@
                     android:id="@+id/originalImgButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/btn_not_selected_bg"
                     android:text="원본"
                     android:layout_weight="1" />
         </LinearLayout>
 
-        <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
+        <LinearLayout
+                android:id="@+id/progressLayout"
                 android:visibility="gone"
-                android:layout_marginBottom="16dp" />
-        <TextView
-                android:id="@+id/progressText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:text="사진을 확인하고 있어요.\n잠시만 기다려주세요!"
-                android:visibility="gone"
-                android:layout_marginBottom="16dp" />
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center">
+
+            <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+            <TextView
+                    android:id="@+id/progressText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:text="사진을 확인하고 있어요.\n잠시만 기다려주세요!" />
+        </LinearLayout>
 
         <!-- 결과 텍스트 -->
-        <TextView
-                android:id="@+id/resultText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:text="색상: \n분류: "
+        <LinearLayout
+                android:id="@+id/resultLayout"
                 android:visibility="gone"
-                android:padding="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:padding="5dp"
                 android:layout_marginBottom="20dp"
-                android:background="@drawable/outline_bg" />
+                android:layout_marginHorizontal="20dp"
+                android:background="@drawable/result_bg"
+                android:gravity="center">
+            <TextView
+                    android:id="@+id/resultColor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_weight="1" />
+            <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/black"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp" />
+            <TextView
+                    android:id="@+id/resultClothType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_weight="1" />
+        </LinearLayout>
 
         <!-- 탭 레이아웃 -->
         <com.google.android.material.tabs.TabLayout
