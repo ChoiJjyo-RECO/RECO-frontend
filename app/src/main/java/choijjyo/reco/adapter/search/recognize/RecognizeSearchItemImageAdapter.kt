@@ -1,4 +1,4 @@
-package choijjyo.reco.adapter.search
+package choijjyo.reco.adapter.search.recognize
 
 import android.content.Intent
 import android.content.res.Resources
@@ -7,24 +7,25 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import choijjyo.reco.R
-import choijjyo.reco.adapter.basic.holder.RecyclerViewImageViewHolder
+import choijjyo.reco.adapter.basic.holder.ItemImageViewHolder
 import choijjyo.reco.data.Constants
 import choijjyo.reco.data.entity.search.SearchResultItem
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class SearchImageAdapter (private var imageList: List<SearchResultItem>) : RecyclerView.Adapter<RecyclerViewImageViewHolder>() {
+class RecognizeSearchItemImageAdapter(
+    private var imageList: List<SearchResultItem>
+) : RecyclerView.Adapter<ItemImageViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewImageViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.recent_item_image, parent, false)
-        return RecyclerViewImageViewHolder(itemView)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemImageViewHolder {
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_image_basic, parent, false)
+        return ItemImageViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: RecyclerViewImageViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ItemImageViewHolder, position: Int) {
         val currentItem = imageList[position]
-        val screenWidth = Resources.getSystem().displayMetrics.widthPixels
         val requestOptions = RequestOptions().apply {
-            override(screenWidth / Constants.SPAN_COUNT)
+            override(Constants.COLUMN_COUNT)
         }
         Glide.with(holder.imageView.context).load(currentItem.imageUrl).apply(requestOptions)
             .into(holder.imageView)

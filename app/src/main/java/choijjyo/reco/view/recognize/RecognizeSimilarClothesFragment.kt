@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import choijjyo.reco.BuildConfig
 import choijjyo.reco.data.source.firestore.FirestoreHelper
 import choijjyo.reco.R
-import choijjyo.reco.adapter.search.SearchImageAdapter
+import choijjyo.reco.adapter.search.recognize.RecognizeSearchItemImageAdapter
 import choijjyo.reco.data.entity.search.SearchResponse
 import choijjyo.reco.data.entity.search.SearchResultItem
 import com.google.firebase.auth.FirebaseAuth
@@ -25,19 +25,19 @@ class RecognizeSimilarClothesFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var uid: String
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: SearchImageAdapter
+    private lateinit var adapter: RecognizeSearchItemImageAdapter
     private var searchKeyword: String? = null
     private var docId: String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_search_item, container, false)
+        return inflater.inflate(R.layout.recyclerview_search_item, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView = view.findViewById(R.id.closet_search_view)
-        adapter = SearchImageAdapter(listOf())
+        recyclerView = view.findViewById(R.id.search_item_view)
+        adapter = RecognizeSearchItemImageAdapter(listOf())
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
 

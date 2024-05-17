@@ -17,7 +17,7 @@ import choijjyo.reco.data.source.firestore.FirestoreHelper
 import choijjyo.reco.data.entity.preference.PreferenceClothTypeData
 import choijjyo.reco.data.entity.preference.PreferenceColorData
 import choijjyo.reco.R
-import choijjyo.reco.adapter.search.SearchImageAdapter
+import choijjyo.reco.adapter.search.recognize.RecognizeSearchItemImageAdapter
 import choijjyo.reco.data.entity.search.SearchResponse
 import choijjyo.reco.data.entity.search.SearchResultItem
 import com.aallam.openai.api.chat.ChatCompletion
@@ -39,7 +39,7 @@ class RecognizeRecommendClothesFragment: Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var uid: String
     private lateinit var recyclerView: RecyclerView
-    private lateinit var imageAdapter: SearchImageAdapter
+    private lateinit var imageAdapter: RecognizeSearchItemImageAdapter
     private var searchKeyword: String? = null
     private var googleSearchKeyword: String? = null
     private var docId: String? = null
@@ -49,12 +49,12 @@ class RecognizeRecommendClothesFragment: Fragment() {
     private var clothesDisLike = mutableListOf<String>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_search_item, container, false)
+        return inflater.inflate(R.layout.recyclerview_search_item, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView = view.findViewById(R.id.closet_search_view)
-        imageAdapter = SearchImageAdapter(listOf())
+        recyclerView = view.findViewById(R.id.search_item_view)
+        imageAdapter = RecognizeSearchItemImageAdapter(listOf())
         recyclerView.adapter = imageAdapter
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
 
