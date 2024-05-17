@@ -46,7 +46,6 @@ class ClothesActivity : AppCompatActivity() {
             intent = Intent(this, ClosetActivity::class.java)
             startActivity(intent)
         }
-
         // 초기화 시 첫 번째 탭의 프래그먼트를 추가
         if (savedInstanceState == null) {
             val fragment = ClothesRecommendFragment(itemImageName)

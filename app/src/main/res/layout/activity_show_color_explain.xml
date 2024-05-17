@@ -37,6 +37,48 @@
             android:textColor="@color/black"
             android:text="색깔설명" />
 
+    <View
+            android:id="@+id/colorBox"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="#FFFFFF"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center">
+
+        <Button
+                android:id="@+id/color_deuteranopiaButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="녹색맹 필터"
+                />
+
+        <Button
+                android:id="@+id/color_protanopiaButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="적색맹 필터" />
+
+        <Button
+                android:id="@+id/color_tritanopiaButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="청색맹 필터" />
+
+        <Button
+                android:id="@+id/color_originalImgButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="원본" />
+    </LinearLayout>
+
     <Button
             android:id="@+id/btn_color_explain_shutdown"
             android:layout_width="wrap_content"

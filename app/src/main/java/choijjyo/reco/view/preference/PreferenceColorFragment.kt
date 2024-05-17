@@ -8,6 +8,7 @@ import android.widget.TableLayout
 import android.widget.TextView
 import android.widget.Toast
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import androidx.fragment.app.Fragment
 import choijjyo.reco.data.source.firestore.FirestoreHelper
@@ -77,6 +78,7 @@ class PreferenceColorFragment : Fragment() {
 
     // TableLayout에 버튼 설정하는 함수
     private fun setupButtons(tableLayout: TableLayout, buttonIds: Array<Int>, selectedButtons: MutableList<String>) {
+
         val colorDescriptions = mapOf(
             "검정색" to "아무런 색도 없이 어두운 색으로, 깊고 신비로운 느낌을 줍니다.\n눈을 감았을 때에 느껴지는 어둠을 상상해 보세요.",
             "하얀색" to "모든 색을 포함한 맑고 순수한 색으로, 깨끗하고 차분한 느낌을 줍니다.\n순수함과 청결을 상징하며, 밝고 평화로운 이미지를 상상해 보세요.",
