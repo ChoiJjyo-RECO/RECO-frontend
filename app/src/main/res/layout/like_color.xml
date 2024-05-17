@@ -509,12 +509,14 @@
                     android:onClick="selectColor" />
         </TableRow>
     </TableLayout>
+
     <Button
             android:id="@+id/save_colorlike"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginHorizontal="50dp"
+            android:background="@drawable/main_button"
             android:layout_alignParentTop="true"
             android:textSize="18dp"
             android:text="취향 저장하기" />
