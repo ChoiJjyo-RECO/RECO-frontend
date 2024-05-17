@@ -48,7 +48,8 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                app:tabMaxWidth="0dp"
+                android:layout_margin="20dp"
                 android:gravity="center">
 
             <Button
@@ -56,25 +57,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="녹색맹 필터"
-                    />
+                    android:layout_weight="1" />
 
             <Button
                     android:id="@+id/protanopiaButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="적색맹 필터" />
+                    android:text="적색맹 필터"
+                    android:layout_weight="1" />
 
             <Button
                     android:id="@+id/tritanopiaButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="청색맹 필터" />
+                    android:text="청색맹 필터"
+                    android:layout_weight="1" />
 
             <Button
                     android:id="@+id/originalImgButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="원본" />
+                    android:text="원본"
+                    android:layout_weight="1" />
         </LinearLayout>
 
         <ProgressBar
@@ -82,6 +86,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp" />
+        <TextView
+                android:id="@+id/progressText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:text="사진을 확인하고 있어요.\n잠시만 기다려주세요!"
                 android:visibility="gone"
                 android:layout_marginBottom="16dp" />
 
@@ -92,8 +106,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="@color/black"
-                android:text="사진을 확인하고 있어요.\n잠시만 기다려주세요!"
-                android:layout_marginBottom="16dp" />
+                android:text="색상: \n분류: "
+                android:visibility="gone"
+                android:padding="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/outline_bg" />
 
         <!-- 탭 레이아웃 -->
         <com.google.android.material.tabs.TabLayout

@@ -129,9 +129,9 @@ class RecognizeActivity : AppCompatActivity() {
 
     fun setGallery(uri : Uri?) {
         progressBar.visibility = View.VISIBLE
+        binding.progressText.visibility = View.VISIBLE
         binding.cameraIV.setImageURI(uri)
         originalBitmap = (binding.cameraIV.drawable as BitmapDrawable).bitmap
-//        binding.resultText.text = ""
         uri?.let { uploadImageToFirestore(it) }
     }
 
@@ -205,6 +205,7 @@ class RecognizeActivity : AppCompatActivity() {
 
             // 결과 표시
             runOnUiThread {
+                binding.resultText.visibility = View.VISIBLE
                 binding.resultText.text = "색상: $closestColorCategory\n종류: $objectClass"
                 val googleSearchKeyword = "$closestColorCategory $objectClass 제품 사진"
                 val modelResult = "$closestColorCategory $objectClass"
@@ -230,6 +231,7 @@ class RecognizeActivity : AppCompatActivity() {
         } finally {
             runOnUiThread {
                 progressBar.visibility = View.GONE
+                binding.progressText.visibility = View.GONE
             }
         }
     }
