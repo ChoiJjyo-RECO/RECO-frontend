@@ -97,10 +97,10 @@ class PreferenceClothFragment : Fragment() {
     // 선택된 버튼을 표시하는 TextView를 업데이트하는 함수
     private fun updateSelectedButtonsText() {
         val likeSelectedText = like_selectedButtons.joinToString(", ")
-        like_selectedButtonsTextView.text = "선택된 버튼(좋아하는 색상): $likeSelectedText"
+        like_selectedButtonsTextView.text = "선택된 버튼(좋아하는 옷 종류): $likeSelectedText"
 
         val dislikeSelectedText = dislike_selectedButtons.joinToString(", ")
-        dislike_selectedButtonsTextView.text = "선택된 버튼(싫어하는 색상): $dislikeSelectedText"
+        dislike_selectedButtonsTextView.text = "선택된 버튼(싫어하는 욧 종류): $dislikeSelectedText"
     }
 
     private fun saveSelectedButtonsToFirestore() {
