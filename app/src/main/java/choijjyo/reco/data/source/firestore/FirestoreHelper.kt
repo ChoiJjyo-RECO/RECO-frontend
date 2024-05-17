@@ -14,7 +14,7 @@ import choijjyo.reco.data.entity.preference.PreferenceClothTypeData
 import choijjyo.reco.data.entity.preference.PreferenceColorData
 import choijjyo.reco.data.Constants
 import choijjyo.reco.adapter.recent.RecentItemImageAdapter
-import choijjyo.reco.view.myCloset.adapter.ClosetImageAdapter
+import choijjyo.reco.adapter.closet.ClosetItemImageAdapter
 import choijjyo.reco.adapter.search.closet.ClosetSearchItemImageAdapter
 import choijjyo.reco.view.myCloset.clothes.ClothesActivity
 import choijjyo.reco.data.entity.closet.ClosetData
@@ -155,7 +155,7 @@ object FirestoreHelper {
                         clothesList.add(clothes)
                     }
                 }
-                val adapter = ClosetImageAdapter(imageUrlList, colorCategoryList, clothesList, object : ClosetImageAdapter.OnItemClickListener {
+                val adapter = ClosetItemImageAdapter(imageUrlList, colorCategoryList, clothesList, object : ClosetItemImageAdapter.OnItemClickListener {
                     override fun onItemClick(position: Int) {
                         val imageName = imageNameList[position]
                         val imageUrl = imageUrlList[position]

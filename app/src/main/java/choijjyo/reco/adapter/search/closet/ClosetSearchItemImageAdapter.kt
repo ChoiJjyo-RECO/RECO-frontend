@@ -8,21 +8,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import choijjyo.reco.data.Constants
 import choijjyo.reco.R
-import choijjyo.reco.adapter.search.closet.holder.ClosetSearchItemImageViewHolder
+import choijjyo.reco.adapter.basic.holder.ItemImageViewHolder
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
 class ClosetSearchItemImageAdapter(
     private val imageUrlList: List<String>,
     private val clickUrlList: List<String>,
-) : RecyclerView.Adapter<ClosetSearchItemImageViewHolder>() {
+) : RecyclerView.Adapter<ItemImageViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClosetSearchItemImageViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemImageViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_image_basic, parent, false)
-        return ClosetSearchItemImageViewHolder(view)
+        return ItemImageViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ClosetSearchItemImageViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ItemImageViewHolder, position: Int) {
         val imageUrl = imageUrlList[position]
         val clickUrl = clickUrlList[position]
         val requestOptions = RequestOptions().apply {
