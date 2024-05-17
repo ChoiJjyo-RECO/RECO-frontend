@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginHorizontal="30dp"
         android:orientation="vertical">
 
     <TextView
@@ -9,8 +10,8 @@
             android:background="@drawable/welcome_rectangle"
             android:textColor="@color/white"
             android:paddingHorizontal="15dp"
-            android:paddingVertical="7dp"
-            android:layout_marginTop="20dp"
+            android:paddingVertical="10dp"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="5dp"
             android:layout_marginHorizontal="10dp"
             android:layout_width="match_parent"
@@ -25,7 +26,7 @@
             android:layout_marginBottom="5dp"
             android:background="@drawable/main_button"
             android:paddingHorizontal="15dp"
-            android:paddingVertical="7dp"
+            android:paddingVertical="10dp"
             android:text="선호하는 색상을 선택해주세요 (0~5개)"
             android:textColor="@color/black" />
 
@@ -35,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
             android:stretchColumns="*">
 
         <TableRow
@@ -45,7 +47,7 @@
                     android:id="@+id/like_clothButton1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    style="@style/CustomButtonStyle2"
                     android:text="티셔츠"
                     android:onClick="selectCloth" />
 
@@ -53,6 +55,7 @@
                     android:id="@+id/like_clothButton2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle2"
                     android:text="원피스"
                     android:onClick="selectCloth" />
 
@@ -60,6 +63,7 @@
                     android:id="@+id/like_clothButton3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle2"
                     android:text="자켓"
                     android:onClick="selectCloth" />
 
@@ -67,6 +71,7 @@
                     android:id="@+id/like_clothButton4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle2"
                     android:text="바지"
                     android:onClick="selectCloth" />
         </TableRow>
@@ -79,6 +84,7 @@
                     android:id="@+id/like_clothButton5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle2"
                     android:text="셔츠"
                     android:onClick="selectCloth" />
 
@@ -86,6 +92,7 @@
                     android:id="@+id/like_clothButton6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle2"
                     android:text="반바지"
                     android:onClick="selectCloth" />
 
@@ -93,6 +100,7 @@
                     android:id="@+id/like_clothButton7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle2"
                     android:text="치마"
                     android:onClick="selectCloth" />
 
@@ -101,18 +109,26 @@
                     android:id="@+id/like_clothButton8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle2"
                     android:text="긴소매"
                     android:onClick="selectCloth" />
         </TableRow>
     </TableLayout>
 
     <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginVertical="35dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/explain_line"
+            android:id="@+id/split_line" />
+
+    <TextView
             android:text="기피하는 옷 종류를 선택해주세요 (0 ~ 3개)"
             android:background="@drawable/welcome_rectangle"
             android:textColor="@color/white"
             android:paddingHorizontal="15dp"
-            android:paddingVertical="7dp"
-            android:layout_marginTop="20dp"
+            android:paddingVertical="10dp"
             android:layout_marginBottom="5dp"
             android:layout_marginHorizontal="10dp"
             android:layout_width="match_parent"
@@ -124,7 +140,7 @@
             android:text="기피하는 색상을 선택해주세요 (0 ~ 5개)"
             android:background="@drawable/main_button"
             android:paddingHorizontal="15dp"
-            android:paddingVertical="7dp"
+            android:paddingVertical="10dp"
             android:layout_marginBottom="5dp"
             android:layout_marginHorizontal="10dp"
             android:layout_width="match_parent"
@@ -146,7 +162,8 @@
             <Button
                     android:id="@+id/dislike_clothButton1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle2"
                     android:text="티셔츠"
                     android:onClick="selectCloth" />
 
@@ -154,6 +171,7 @@
                     android:id="@+id/dislike_clothButton2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle2"
                     android:text="원피스"
                     android:onClick="selectCloth" />
 
@@ -161,6 +179,7 @@
                     android:id="@+id/dislike_clothButton3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle2"
                     android:text="자켓"
                     android:onClick="selectCloth" />
 
@@ -168,6 +187,7 @@
                     android:id="@+id/dislike_clothButton4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle2"
                     android:text="바지"
                     android:onClick="selectCloth" />
         </TableRow>
@@ -178,6 +198,7 @@
                     android:id="@+id/dislike_clothButton5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle2"
                     android:text="셔츠"
                     android:onClick="selectCloth" />
 
@@ -185,6 +206,7 @@
                     android:id="@+id/dislike_clothButton6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle2"
                     android:text="반바지"
                     android:onClick="selectCloth" />
 
@@ -192,6 +214,7 @@
                     android:id="@+id/dislike_clothButton7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle2"
                     android:text="치마"
                     android:onClick="selectCloth" />
 
@@ -200,6 +223,7 @@
                     android:id="@+id/dislike_clothButton8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle2"
                     android:text="긴소매"
                     android:onClick="selectCloth" />
         </TableRow>
@@ -209,8 +233,10 @@
             android:id="@+id/save_clothlike"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginHorizontal="50dp"
+            android:background="@drawable/main_button"
             android:layout_alignParentTop="true"
+            android:textSize="18dp"
             android:text="취향 저장하기" />
 </LinearLayout>
