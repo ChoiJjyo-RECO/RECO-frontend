@@ -10,7 +10,7 @@
             android:background="@drawable/welcome_rectangle"
             android:textColor="@color/white"
             android:paddingHorizontal="15dp"
-            android:paddingVertical="7dp"
+            android:paddingVertical="10dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="5dp"
             android:layout_marginHorizontal="10dp"
@@ -23,11 +23,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
+            android:paddingVertical="10dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/main_button"
-            android:paddingHorizontal="15dp"
-            android:paddingVertical="7dp"
-            android:text="선호하는 색상을 선택해주세요 (0~5개)"
+            android:paddingHorizontal="15dp" android:text="선택된 버튼(좋아하는 색상): "
             android:textColor="@color/black" />
 
 
@@ -256,13 +255,21 @@
 
         </TableRow>
     </TableLayout>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginVertical="35dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/explain_line"
+            android:id="@+id/split_line" />
+
     <TextView
             android:text="기피하는 색상을 선택해주세요 (0~5개)"
             android:background="@drawable/welcome_rectangle"
             android:textColor="@color/white"
             android:paddingHorizontal="15dp"
-            android:paddingVertical="7dp"
-            android:layout_marginTop="50dp"
+            android:paddingVertical="10dp"
             android:layout_marginBottom="5dp"
             android:layout_marginHorizontal="10dp"
             android:layout_width="match_parent"
@@ -271,10 +278,10 @@
 
     <TextView
             android:id="@+id/dislike_selectedButtonsTextView"
-            android:text="기피하는 색상을 선택해주세요 (0 ~ 5개)"
+            android:text="선택된 버튼(싫어하는 색상): "
             android:background="@drawable/main_button"
             android:paddingHorizontal="15dp"
-            android:paddingVertical="7dp"
+            android:paddingVertical="10dp"
             android:layout_marginBottom="5dp"
             android:layout_marginHorizontal="10dp"
             android:layout_width="match_parent"
@@ -292,30 +299,15 @@
 
         <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
-            <Button
-                    android:id="@+id/dislike_colorButton1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/CustomButtonStyle"
-                    android:text="검정색"
-                    android:onClick="selectColor" />
+                android:layout_height="match_parent">
 
             <Button
-                    android:id="@+id/dislike_colorButton2"
+                    android:id="@+id/dislike_colorButton5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/CustomButtonStyle"
-                    android:text="하얀색"
-                    android:onClick="selectColor" />
-
-            <Button
-                    android:id="@+id/dislike_colorButton3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/CustomButtonStyle"
-                    android:text="회색"
+                    android:backgroundTint="#FFC0CB"
+                    android:text="핑크색"
                     android:onClick="selectColor" />
 
             <Button
@@ -323,18 +315,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/CustomButtonStyle"
+                    android:backgroundTint="#FF0000"
                     android:text="빨간색"
-                    android:onClick="selectColor" />
-        </TableRow>
-        <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <Button
-                    android:id="@+id/dislike_colorButton5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/CustomButtonStyle"
-                    android:text="핑크색"
+                    android:textColor="@color/white"
                     android:onClick="selectColor" />
 
             <Button
@@ -342,35 +325,39 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/CustomButtonStyle"
+                    android:backgroundTint="#FFA500"
                     android:text="주황색"
                     android:onClick="selectColor" />
 
-            <Button
-                    android:id="@+id/dislike_colorButton7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/CustomButtonStyle"
-                    android:text="베이지"
-                    android:onClick="selectColor" />
-
-
-            <Button
-                    android:id="@+id/dislike_colorButton8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/CustomButtonStyle"
-                    android:text="갈색"
-                    android:onClick="selectColor" />
-        </TableRow>
-        <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
             <Button
                     android:id="@+id/dislike_colorButton9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/CustomButtonStyle"
+                    android:backgroundTint="#FFFF00"
                     android:text="노랑색"
+                    android:onClick="selectColor" />
+        </TableRow>
+        <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <Button
+                    android:id="@+id/dislike_colorButton12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
+                    android:backgroundTint="#BDFCC9"
+                    android:text="민트색"
+                    android:onClick="selectColor" />
+
+            <Button
+                    android:id="@+id/dislike_colorButton20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
+                    android:backgroundTint="#B7FF00"
+                    android:text="네온"
                     android:onClick="selectColor" />
 
             <Button
@@ -378,6 +365,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/CustomButtonStyle"
+                    android:backgroundTint="#1DDB16"
                     android:text="초록색"
                     android:onClick="selectColor" />
 
@@ -386,26 +374,34 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/CustomButtonStyle"
+                    android:backgroundTint="#476600"
                     android:text="카키색"
+                    android:textColor="@color/white"
                     android:onClick="selectColor" />
 
-            <Button
-                    android:id="@+id/dislike_colorButton12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/CustomButtonStyle"
-                    android:text="민트색"
-                    android:onClick="selectColor" />
+
         </TableRow>
         <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+            <Button
+                    android:id="@+id/dislike_colorButton16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
+                    android:backgroundTint="#87CEEB"
+                    android:text="하늘색"
+                    android:onClick="selectColor" />
+
             <Button
                     android:id="@+id/dislike_colorButton13"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/CustomButtonStyle"
+                    android:backgroundTint="#0000FF"
                     android:text="파란색"
+                    android:textColor="@color/white"
                     android:onClick="selectColor" />
 
             <Button
@@ -413,7 +409,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/CustomButtonStyle"
+                    android:backgroundTint="#182944"
                     android:text="남색"
+                    android:textColor="@color/white"
                     android:onClick="selectColor" />
 
             <Button
@@ -421,34 +419,42 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/CustomButtonStyle"
+                    android:backgroundTint="#172737"
                     android:text="청색"
-                    android:onClick="selectColor" />
-
-            <Button
-                    android:id="@+id/dislike_colorButton16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/CustomButtonStyle"
-                    android:text="하늘색"
+                    android:textColor="@color/white"
                     android:onClick="selectColor" />
         </TableRow>
         <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <Button
-                    android:id="@+id/dislike_colorButton17"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/CustomButtonStyle"
-                    android:text="보라색"
-                    android:onClick="selectColor" />
 
             <Button
                     android:id="@+id/dislike_colorButton18"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/CustomButtonStyle"
+                    android:backgroundTint="#AC78BA"
                     android:text="라벤더"
+                    android:onClick="selectColor" />
+
+            <Button
+                    android:id="@+id/dislike_colorButton17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
+                    android:backgroundTint="#663399"
+                    android:text="보라색"
+                    android:textColor="@color/white"
+                    android:onClick="selectColor" />
+
+            <Button
+                    android:id="@+id/dislike_colorButton8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
+                    android:backgroundTint="#583925"
+                    android:text="갈색"
+                    android:textColor="@color/white"
                     android:onClick="selectColor" />
 
             <Button
@@ -456,15 +462,50 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/CustomButtonStyle"
+                    android:backgroundTint="#722F37"
                     android:text="와인색"
+                    android:textColor="@color/white"
+                    android:onClick="selectColor" />
+        </TableRow>
+        <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <Button
+                    android:id="@+id/dislike_colorButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle2"
+                    android:text="하얀색"
                     android:onClick="selectColor" />
 
             <Button
-                    android:id="@+id/dislike_colorButton20"
+                    android:id="@+id/dislike_colorButton7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/CustomButtonStyle"
-                    android:text="네온"
+                    android:backgroundTint="#F5F5DC"
+                    android:text="베이지"
+                    android:onClick="selectColor" />
+
+            <Button
+                    android:id="@+id/dislike_colorButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
+                    android:backgroundTint="#787878"
+                    android:text="회색"
+                    android:textColor="@color/white"
+                    android:onClick="selectColor" />
+
+            <Button
+                    android:id="@+id/dislike_colorButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomButtonStyle"
+                    android:backgroundTint="#000000"
+                    android:textColor="@color/white"
+                    android:text="검정색"
                     android:onClick="selectColor" />
         </TableRow>
     </TableLayout>

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginHorizontal="30dp"
         android:orientation="vertical">
 
     <TextView
@@ -9,8 +10,8 @@
             android:background="@drawable/welcome_rectangle"
             android:textColor="@color/white"
             android:paddingHorizontal="15dp"
-            android:paddingVertical="7dp"
-            android:layout_marginTop="20dp"
+            android:paddingVertical="10dp"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="5dp"
             android:layout_marginHorizontal="10dp"
             android:layout_width="match_parent"
@@ -25,7 +26,7 @@
             android:layout_marginBottom="5dp"
             android:background="@drawable/main_button"
             android:paddingHorizontal="15dp"
-            android:paddingVertical="7dp"
+            android:paddingVertical="10dp"
             android:text="선호하는 색상을 선택해주세요 (0~5개)"
             android:textColor="@color/black" />
 
@@ -35,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
             android:stretchColumns="*">
 
         <TableRow
@@ -111,8 +113,8 @@
             android:background="@drawable/welcome_rectangle"
             android:textColor="@color/white"
             android:paddingHorizontal="15dp"
-            android:paddingVertical="7dp"
-            android:layout_marginTop="20dp"
+            android:paddingVertical="10dp"
+            android:layout_marginTop="50dp"
             android:layout_marginBottom="5dp"
             android:layout_marginHorizontal="10dp"
             android:layout_width="match_parent"
@@ -124,7 +126,7 @@
             android:text="기피하는 색상을 선택해주세요 (0 ~ 5개)"
             android:background="@drawable/main_button"
             android:paddingHorizontal="15dp"
-            android:paddingVertical="7dp"
+            android:paddingVertical="10dp"
             android:layout_marginBottom="5dp"
             android:layout_marginHorizontal="10dp"
             android:layout_width="match_parent"
@@ -209,8 +211,9 @@
             android:id="@+id/save_clothlike"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:layout_marginHorizontal="10dp"
             android:layout_alignParentTop="true"
+            android:textSize="18dp"
             android:text="취향 저장하기" />
 </LinearLayout>
