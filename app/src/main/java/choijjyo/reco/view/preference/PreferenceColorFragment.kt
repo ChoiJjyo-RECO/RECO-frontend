@@ -8,7 +8,6 @@ import android.widget.TableLayout
 import android.widget.TextView
 import android.widget.Toast
 import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import androidx.fragment.app.Fragment
 import choijjyo.reco.data.source.firestore.FirestoreHelper
@@ -46,7 +45,7 @@ class PreferenceColorFragment : Fragment() {
     private var customDialog: ShowColorExplain? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.like_color, container, false)
+        return inflater.inflate(R.layout.preference_color, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

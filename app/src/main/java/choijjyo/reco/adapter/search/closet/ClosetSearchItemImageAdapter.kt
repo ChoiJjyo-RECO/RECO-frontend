@@ -1,4 +1,4 @@
-package choijjyo.reco.adapter.search
+package choijjyo.reco.adapter.search.closet
 
 import android.content.Intent
 import android.content.res.Resources
@@ -8,26 +8,25 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import choijjyo.reco.data.Constants
 import choijjyo.reco.R
-import choijjyo.reco.adapter.search.holder.ClosetSearchImageViewHolder
+import choijjyo.reco.adapter.search.closet.holder.ClosetSearchItemImageViewHolder
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class ClosetSearchImageAdapter(
+class ClosetSearchItemImageAdapter(
     private val imageUrlList: List<String>,
     private val clickUrlList: List<String>,
-) : RecyclerView.Adapter<ClosetSearchImageViewHolder>() {
+) : RecyclerView.Adapter<ClosetSearchItemImageViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClosetSearchImageViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.recent_item_image, parent, false)
-        return ClosetSearchImageViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClosetSearchItemImageViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_image_basic, parent, false)
+        return ClosetSearchItemImageViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ClosetSearchImageViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ClosetSearchItemImageViewHolder, position: Int) {
         val imageUrl = imageUrlList[position]
         val clickUrl = clickUrlList[position]
-        val screenWidth = Resources.getSystem().displayMetrics.widthPixels
         val requestOptions = RequestOptions().apply {
-            override(screenWidth / Constants.SPAN_COUNT)
+            override(Constants.COLUMN_COUNT)
         }
         Glide.with(holder.itemView.context).load(imageUrl).apply(requestOptions)
             .into(holder.imageView)

@@ -13,9 +13,9 @@ import choijjyo.reco.R
 import choijjyo.reco.data.entity.preference.PreferenceClothTypeData
 import choijjyo.reco.data.entity.preference.PreferenceColorData
 import choijjyo.reco.data.Constants
-import choijjyo.reco.adapter.basic.RecyclerViewImageAdapter
+import choijjyo.reco.adapter.recent.RecentItemImageAdapter
 import choijjyo.reco.view.myCloset.adapter.ClosetImageAdapter
-import choijjyo.reco.adapter.search.ClosetSearchImageAdapter
+import choijjyo.reco.adapter.search.closet.ClosetSearchItemImageAdapter
 import choijjyo.reco.view.myCloset.clothes.ClothesActivity
 import choijjyo.reco.data.entity.closet.ClosetData
 import choijjyo.reco.data.entity.search.SearchResultItem
@@ -106,7 +106,7 @@ object FirestoreHelper {
                     noImagesTextView.visibility = View.VISIBLE
                 } else {
                     recyclerView.visibility = View.VISIBLE
-                    val adapter = RecyclerViewImageAdapter(imageUrlList, object : RecyclerViewImageAdapter.OnItemClickListener {
+                    val adapter = RecentItemImageAdapter(imageUrlList, object : RecentItemImageAdapter.OnItemClickListener {
                         override fun onItemClick(position: Int) {
                             val imageName = imageNameList[position]
                             val imageUrl = imageUrlList[position]
@@ -194,7 +194,7 @@ object FirestoreHelper {
                         clickUrlList.add(clickUrl)
                     }
                 }
-                val adapter = ClosetSearchImageAdapter(imageUrlList, clickUrlList)
+                val adapter = ClosetSearchItemImageAdapter(imageUrlList, clickUrlList)
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = GridLayoutManager(fragment.requireContext(), 3)
             }
@@ -218,7 +218,7 @@ object FirestoreHelper {
                         clickUrlList.add(clickUrl)
                     }
                 }
-                val adapter = ClosetSearchImageAdapter(imageUrlList, clickUrlList)
+                val adapter = ClosetSearchItemImageAdapter(imageUrlList, clickUrlList)
                 recyclerView.adapter = adapter
                 recyclerView.layoutManager = GridLayoutManager(fragment.requireContext(), 3)
             }

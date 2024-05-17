@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import choijjyo.reco.R
 
 class ClosetImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val imageView: ImageView = itemView.findViewById(R.id.closetImageView)
-    val colorCategoryTextView: TextView = itemView.findViewById(R.id.colorCategoryTextView)
-    val clothesTextView: TextView = itemView.findViewById(R.id.clothesTextView)
+    val imageView: ImageView = itemView.findViewById(R.id.closet_item_IV)
+    val colorTextView: TextView = itemView.findViewById(R.id.clothes_color_TV)
+    val typeTextView: TextView = itemView.findViewById(R.id.clothes_type_TV)
 }

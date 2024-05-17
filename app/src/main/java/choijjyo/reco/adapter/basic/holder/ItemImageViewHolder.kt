@@ -5,6 +5,6 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import choijjyo.reco.R
 
-class RecyclerViewImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val imageView: ImageView = itemView.findViewById(R.id.recentImageView)
+class ItemImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    val imageView: ImageView = itemView.findViewById(R.id.basic_item_IV)
 }

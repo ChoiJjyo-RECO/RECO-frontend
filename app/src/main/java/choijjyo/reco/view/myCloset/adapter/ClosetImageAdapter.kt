@@ -21,7 +21,7 @@ class ClosetImageAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClosetImageViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.closet_item_image, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_image_closet, parent, false)
         return ClosetImageViewHolder(view)
     }
 
@@ -34,8 +34,8 @@ class ClosetImageAdapter(
             override(screenWidth / 3)
         }
         Glide.with(holder.itemView.context).load(imageUrl).apply(requestOptions).into(holder.imageView)
-        holder.colorCategoryTextView.text = "색상: $colorCategory"
-        holder.clothesTextView.text = "분류: $clothes"
+        holder.colorTextView.text = "색상: $colorCategory"
+        holder.typeTextView.text = "분류: $clothes"
         holder.itemView.setOnClickListener {
             listener.onItemClick(position)
         }
