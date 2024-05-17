@@ -17,12 +17,12 @@ class ClothesRecommendFragment(private val itemImageName: String?) : Fragment() 
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_closet_recommend, container, false)
+        return inflater.inflate(R.layout.fragment_search_item, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         auth = FirebaseAuth.getInstance()
-        recyclerView = view.findViewById(R.id.closet_recommend_view)
+        recyclerView = view.findViewById(R.id.closet_search_view)
 
         val currentUser = auth.currentUser
         if (currentUser != null) {

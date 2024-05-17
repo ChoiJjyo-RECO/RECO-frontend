@@ -96,7 +96,7 @@ class RecognizeActivity : AppCompatActivity() {
                 fragment?.let {
                     val transaction = supportFragmentManager.beginTransaction()
                     if (!it.isAdded) {
-                        transaction.add(R.id.searchfragment_container, it, tag)
+                        transaction.add(R.id.searchRecognize_container, it, tag)
                     }
                     hideOtherFragments(transaction, tag)
                     transaction.show(it).commit()
@@ -260,7 +260,7 @@ class RecognizeActivity : AppCompatActivity() {
                 setSearchKeyword(googleSearchKeyword, docid)
             }
             supportFragmentManager.beginTransaction().apply {
-                add(R.id.searchfragment_container, similar_Fragment, "FragmentTag1")
+                add(R.id.searchRecognize_container, similar_Fragment, "FragmentTag1")
                 hideOtherFragments(this, "FragmentTag1") // 다른 프래그먼트는 숨기기
                 commitNow()
             }
@@ -278,7 +278,7 @@ class RecognizeActivity : AppCompatActivity() {
                 setSearchKeyword(modelResult, docid)
             }
             supportFragmentManager.beginTransaction().apply {
-                add(R.id.searchfragment_container, recommend_Fragment, "FragmentTag0")
+                add(R.id.searchRecognize_container, recommend_Fragment, "FragmentTag0")
                 hideOtherFragments(this, "FragmentTag0") // 다른 프래그먼트는 숨기기
                 commitNow()
             }

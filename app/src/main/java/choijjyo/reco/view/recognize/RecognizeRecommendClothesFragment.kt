@@ -10,14 +10,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import choijjyo.reco.BuildConfig
 import choijjyo.reco.data.source.firestore.FirestoreHelper
 import choijjyo.reco.data.entity.preference.PreferenceClothTypeData
 import choijjyo.reco.data.entity.preference.PreferenceColorData
 import choijjyo.reco.R
-import choijjyo.reco.adapter.search.RecommendImageAdapter
+import choijjyo.reco.adapter.search.SearchImageAdapter
 import choijjyo.reco.data.entity.search.SearchResponse
 import choijjyo.reco.data.entity.search.SearchResultItem
 import com.aallam.openai.api.chat.ChatCompletion
@@ -39,7 +39,7 @@ class RecognizeRecommendClothesFragment: Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var uid: String
     private lateinit var recyclerView: RecyclerView
-    private lateinit var imageAdapter: RecommendImageAdapter
+    private lateinit var imageAdapter: SearchImageAdapter
     private var searchKeyword: String? = null
     private var googleSearchKeyword: String? = null
     private var docId: String? = null
@@ -48,19 +48,15 @@ class RecognizeRecommendClothesFragment: Fragment() {
     private var clothesLike = mutableListOf<String>()
     private var clothesDisLike = mutableListOf<String>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.recommend_clothes, container, false)
-        return view
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_search_item, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView = view.findViewById(R.id.recommendRecyclerView)
-        imageAdapter = RecommendImageAdapter(listOf())
+        recyclerView = view.findViewById(R.id.closet_search_view)
+        imageAdapter = SearchImageAdapter(listOf())
         recyclerView.adapter = imageAdapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
 
     }
     fun setSearchKeyword(keyword: String, docid: String) {
