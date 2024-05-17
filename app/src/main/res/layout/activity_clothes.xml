@@ -63,19 +63,26 @@
                             android:src="#505050" />
                 </androidx.cardview.widget.CardView>
 
-                <TextView
-                        android:id="@+id/itemColorCategory"
+                <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="색상: "
-                        android:layout_gravity="center_horizontal" />
+                        android:orientation="vertical"
+                        android:layout_gravity="center">
 
-                <TextView
-                        android:id="@+id/itemClothes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="분류: "
-                        android:layout_gravity="center_horizontal" />
+                    <TextView
+                            android:id="@+id/itemColorCategory"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="색상: 검정"
+                            android:layout_gravity="center_horizontal|left" />
+
+                    <TextView
+                            android:id="@+id/itemClothes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="분류: 원피스"
+                            android:layout_gravity="center_horizontal|left" />
+                </LinearLayout>
 
             </LinearLayout>
         </FrameLayout>
@@ -97,14 +104,14 @@
                     android:id="@+id/recommendClothesItem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Recommend Clothes"
+                    android:text="추천 아이템"
                     tools:layout_editor_absoluteY="400dp"
                     tools:layout_editor_absoluteX="-5dp" />
             <com.google.android.material.tabs.TabItem
                     android:id="@+id/silmilarClothesItem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Similar Clothes" />
+                    android:text="비슷한 아이템" />
         </com.google.android.material.tabs.TabLayout>
 
         <FrameLayout

@@ -44,14 +44,6 @@
 
         <!-- 색맹 필터 버튼 -->
 
-        <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                android:layout_marginBottom="16dp" />
-
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -64,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="녹색맹 필터"
-/>
+                    />
 
             <Button
                     android:id="@+id/protanopiaButton"
@@ -85,13 +77,22 @@
                     android:text="원본" />
         </LinearLayout>
 
+        <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp" />
+
         <!-- 결과 텍스트 -->
         <TextView
                 android:id="@+id/resultText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textColor="#0000ff"
+                android:textColor="@color/black"
+                android:text="사진을 확인하고 있어요.\n잠시만 기다려주세요!"
                 android:layout_marginBottom="16dp" />
 
         <!-- 탭 레이아웃 -->
@@ -99,6 +100,7 @@
                 android:id="@+id/tabLayoutSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:tabMaxWidth="0dp"
                 app:tabIndicatorColor="@android:color/transparent"
                 app:tabBackground="@drawable/tab_selector"
                 app:tabGravity="fill"
@@ -108,13 +110,13 @@
                     android:id="@+id/recommend_clothes_Item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Recommend Clothes" />
+                    android:text="추천 아이템" />
 
             <com.google.android.material.tabs.TabItem
                     android:id="@+id/similar_clothes_Item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Similar Clothes" />
+                    android:text="비슷한 아이템" />
         </com.google.android.material.tabs.TabLayout>
 
         <!-- 프래그먼트 컨테이너 -->
