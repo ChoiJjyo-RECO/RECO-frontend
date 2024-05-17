@@ -1,5 +1,6 @@
 package choijjyo.reco.view.recognize
 
+import android.content.Intent
 import androidx.lifecycle.lifecycleScope
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
@@ -15,6 +17,7 @@ import choijjyo.reco.data.source.firestore.FirestoreHelper
 import choijjyo.reco.R
 import choijjyo.reco.data.entity.closet.ClosetData
 import choijjyo.reco.databinding.ActivityRecognizeBinding
+import choijjyo.reco.view.MainActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -107,6 +110,13 @@ class RecognizeActivity : AppCompatActivity() {
             }
         })
         binding.tabLayoutSearch.selectTab(binding.tabLayoutSearch.getTabAt(0))
+
+        val backButton = findViewById<Button>(R.id.backToMainButton)
+        backButton.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish() // Optional: Finish the current activity
+        }
 
     }
     private fun hideOtherFragments(transaction: FragmentTransaction, exceptTag: String) {
