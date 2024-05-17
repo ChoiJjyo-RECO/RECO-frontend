@@ -111,11 +111,11 @@ class RecognizeRecommendClothesFragment: Fragment() {
             messages = listOf(
                 ChatMessage(
                     role = ChatRole.System,
-                    content = "사용자가 선호하는 색상은 $colorLike , 싫어하는 색상은 $colorDisLike 입니다. 사용자가 선호하는 옷 종류는 $clothesLike 이고, 싫어하는 옷 종류는 $clothesDisLike 입니다. 사용자의 취향을 고려해서 옷을 추천해주세요."
+                    content = "사용자가 선호하는 색상은 $colorLike , 싫어하는 색상은 $colorDisLike 입니다. 사용자가 선호하는 옷 종류는 $clothesLike 이고, 싫어하는 옷 종류는 $clothesDisLike 입니다. 사용자의 취향을 고려해서 옷을 추천해주세요. 하의에는 상의, 상의에는 하의를 추천해주세요."
                 ),
                 ChatMessage(
                     role = ChatRole.User,
-                    content = "$keyword 에 어울릴 만한 옷을 6가지  추천해줘.\\n답변 예시는 다음과 같습니다: \"검은색 치마\" OR \"하늘색 바지\" OR \"핑크색 셔츠\" OR \"주황색 티셔츠\" OR \"파란색 셔츠\" OR \"검은색 자켓\". \\n이 형식을 따라 답변해주세요. "
+                    content = "$keyword 에 어울릴 만한 옷을 6가지  추천해줘. \\n답변 예시는 다음과 같습니다: \"검은색 치마\" OR \"하늘색 바지\" OR \"핑크색 셔츠\" OR \"주황색 티셔츠\" OR \"파란색 셔츠\" OR \"검은색 자켓\". \\n이 형식을 따라 답변해주세요. "
                 )
             )
         )
