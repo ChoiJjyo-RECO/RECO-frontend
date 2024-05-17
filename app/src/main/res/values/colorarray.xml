@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="검정색">#000000</color>
+    <color name="하얀색">#FFFFFF</color>
+    <color name="회색">#787878</color>
+    <color name="빨간색">#FF0000</color>
+    <color name="핑크색">#FFC0CB</color>
+    <color name="주황색">#FFA500</color>
+    <color name="베이지">#F5F5DC</color>
+    <color name="갈색">#583927</color>
+    <color name="초록색">#1BDD16</color>
+    <color name="카키색">#476600</color>
+    <color name="민트색">#BDFCC9</color>
+    <color name="파란색">#0000FF</color>
+    <color name="남색">#182944</color>
+    <color name="청색">#172737</color>
+    <color name="하늘색">#87CEEB</color>
+    <color name="보라색">#663399</color>
+    <color name="라벤더">#AC78BA</color>
+    <color name="와인색">#722F37</color>
+    <color name="네온">#B7FF00</color>
+    <color name="노랑색">#FFFF00</color>
+</resources>
