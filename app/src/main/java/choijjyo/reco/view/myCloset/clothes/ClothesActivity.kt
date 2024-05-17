@@ -54,7 +54,7 @@ class ClothesActivity : AppCompatActivity() {
 
                 if (fragment == null) {
                     fragment = when (position) {
-                        0 -> ClothesSimilarFragment(itemImageName)
+                        0 -> ClothesRecommendFragment(itemImageName)
                         1 -> ClothesSimilarFragment(itemImageName)
                         else -> null
                     }
