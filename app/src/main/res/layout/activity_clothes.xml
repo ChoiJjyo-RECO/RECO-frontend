@@ -85,10 +85,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#000000"
-                app:tabRippleColor="#0000FF"
+                app:tabMaxWidth="0dp"
                 app:tabGravity="fill"
                 app:tabTextColor="#FFFFFF"
-                app:tabIndicatorHeight="5dp" >
+                app:tabIndicatorColor="@android:color/transparent"
+                app:tabBackground="@drawable/tab_selector">
+
+
 
             <com.google.android.material.tabs.TabItem
                     android:id="@+id/recommendClothesItem"
