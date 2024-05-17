@@ -7,6 +7,8 @@ import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TextView
 import android.widget.Toast
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.fragment.app.Fragment
 import choijjyo.reco.data.source.firestore.FirestoreHelper
 
@@ -76,14 +78,15 @@ class PreferenceColorFragment : Fragment() {
     // TableLayout에 버튼 설정하는 함수
     private fun setupButtons(tableLayout: TableLayout, buttonIds: Array<Int>, selectedButtons: MutableList<String>) {
         val colorDescriptions = mapOf(
-            "검정색" to "아무런 색도 없이 어두운 색으로, 깊고 신비로운 느낌을 줍니다. 안정적이고 우아한 이미지를 상상해 보세요.",
-            "하얀색" to "모든 색을 포함한 맑고 순수한 색으로, 깨끗하고 차분한 느낌을 줍니다. 순수함과 청결을 상징하며, 밝고 평화로운 이미지를 상상해 보세요.",
-            "회색" to "검은색과 흰색이 섞인 색으로, 중립적이고 차분한 느낌을 줍니다. 안정감과 신뢰를 상징하며, 조용하고 고요한 이미지를 상상해 보세요.",
+            "검정색" to "아무런 색도 없이 어두운 색으로, 깊고 신비로운 느낌을 줍니다.\n눈을 감았을 때에 느껴지는 어둠을 상상해 보세요.",
+            "하얀색" to "모든 색을 포함한 맑고 순수한 색으로, 깨끗하고 차분한 느낌을 줍니다.\n순수함과 청결을 상징하며, 밝고 평화로운 이미지를 상상해 보세요.",
+            "회색" to "검은색과 흰색이 섞인 색으로, 중립적이고 차분한 느낌을 줍니다.\n안정감과 신뢰를 상징하며, 조용하고 고요한 이미지를 상상해 보세요.",
             "빨간색" to "열정과 활력을 상징하는 밝고 강렬한 색으로, 감정적인 느낌을 줍니다. 사랑과 흥분, 활기찬 분위기를 상징하며, 화려하고 활발한 이미지를 상상해 보세요.",
             "핑크색" to "연인의 사랑과 여성성을 상징하는 부드럽고 로맨틱한 색으로, 따뜻하고 달콤한 느낌을 줍니다. 부드러움과 사랑스러움을 상징하며, 사랑에 관련된 로맨틱한 이미지를 상상해 보세요.",
             "주황색" to "활기찬 활력과 따뜻한 느낌을 주는 밝은 색으로, 열정과 활동적인 분위기를 상징합니다. 따뜻하고 활기찬 이미지를 상상해 보세요.",
             "베이지색" to "온화하고 부드러운 느낌을 주는 연한 갈색의 변형으로, 안정감과 차분함을 상징합니다. 부드럽고 따뜻한 이미지를 상상해 보세요.",
             "갈색" to "대부분의 나무와 흙의 색상과 비슷한 색으로, 안정감과 신뢰를 상징합니다. 자연스러우며 진중한 이미지를 상상해 보세요.",
+            "노랑색" to "태양과 같이 밝고 활기찬 색으로, 즐거움과 활력을 상징합니다. 노란색은 따뜻하고 행복한 느낌을 주며, 밝고 활기찬 분위기를 전달합니다. 흐트러진 머리카락을 감싸는 따뜻한 햇빛, 햇살 가득한 들판의 꽃들, 노란색 장미의 화려한 향기 등을 상상하면 노란색이 주는 활력과 희망의 느낌을 더욱 느낄 수 있을 것입니다.",
             "초록색" to "자연과 생명을 상징하는 색으로, 신선하고 안정된 느낌을 줍니다. 싱그러운 푸르름과 생명력 넘치는 이미지를 상상해 보세요.",
             "카키색" to "녹색과 갈색이 섞인 색으로, 중립적이면서도 세련된 느낌을 줍니다. 시크하고 차분한 이미지를 상상해 보세요.",
             "민트색" to "상쾌하고 시원한 느낌을 주는 연한 초록색으로, 청량감과 신선함을 상징합니다. 상쾌하고 깨끗한 이미지를 상상해 보세요.",
@@ -94,7 +97,7 @@ class PreferenceColorFragment : Fragment() {
             "보라색" to "신비로움과 우아함을 상징하는 색으로, 고귀하고 로맨틱한 느낌을 줍니다. 우아하고 신비로운 이미지를 상상해 보세요.",
             "라벤더" to "연한 보라색의 변형으로, 부드럽고 우아한 느낌을 줍니다. 로맨틱하고 부드러운 이미지를 상상해 보세요.",
             "와인색" to "깊고 풍부한 보라색의 변형으로, 고급스러우며 우아한 느낌을 줍니다. 고급스럽고 우아한 이미지를 상상해 보세요.",
-            "네온" to "선명하고 발랄한 느낌을 주는 밝은 색으로, 주로 현대적이고 활동적인 분위기를 연상시킵니다. 활기찬 이미지를 상상해 보세요."
+            "네온색" to "선명하고 발랄한 느낌을 주는 밝은 색으로, 주로 현대적이고 활동적인 분위기를 연상시킵니다. 활기찬 이미지를 상상해 보세요."
         )
         for (buttonId in buttonIds) {
             val button = tableLayout.findViewById<Button>(buttonId)
@@ -104,6 +107,8 @@ class PreferenceColorFragment : Fragment() {
                 val colorDescription = colorDescriptions[colorName] ?: ""
                 customDialog = ShowColorExplain(requireContext(), button.text.toString(), colorDescription)
                 customDialog?.show()
+                customDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+
                 true
             }
         }
