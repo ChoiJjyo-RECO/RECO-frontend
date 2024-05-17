@@ -12,6 +12,7 @@ import choijjyo.reco.BuildConfig
 import choijjyo.reco.data.source.firestore.FirestoreHelper
 import choijjyo.reco.R
 import choijjyo.reco.adapter.search.recognize.RecognizeSearchItemImageAdapter
+import choijjyo.reco.data.Constants
 import choijjyo.reco.data.entity.search.SearchResponse
 import choijjyo.reco.data.entity.search.SearchResultItem
 import com.google.firebase.auth.FirebaseAuth
@@ -39,7 +40,7 @@ class RecognizeSimilarClothesFragment : Fragment() {
         recyclerView = view.findViewById(R.id.search_item_view)
         adapter = RecognizeSearchItemImageAdapter(listOf())
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), Constants.HORIZONTAL_COUNT, RecyclerView.HORIZONTAL, false)
 
     }
     fun setSearchKeyword(keyword: String, docid: String) {

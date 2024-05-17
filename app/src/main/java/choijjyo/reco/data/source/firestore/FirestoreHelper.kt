@@ -123,7 +123,7 @@ object FirestoreHelper {
                     })
 
                     recyclerView.adapter = adapter
-                    recyclerView.layoutManager = GridLayoutManager(activity, Constants.SPAN_COUNT)
+                    recyclerView.layoutManager = GridLayoutManager(activity, Constants.VERTICAL_COUNT)
                 }
             }
             .addOnFailureListener { exception ->
@@ -171,7 +171,7 @@ object FirestoreHelper {
                     }
                 })
                 recyclerView.adapter = adapter
-                recyclerView.layoutManager = GridLayoutManager(fragment.requireContext(), 3)
+                recyclerView.layoutManager = GridLayoutManager(fragment.requireContext(), Constants.VERTICAL_COUNT)
             }
             .addOnFailureListener { exception ->
                 Log.e("LoadImages", "Error getting documents: ", exception)
@@ -196,7 +196,7 @@ object FirestoreHelper {
                 }
                 val adapter = ClosetSearchItemImageAdapter(imageUrlList, clickUrlList)
                 recyclerView.adapter = adapter
-                recyclerView.layoutManager = GridLayoutManager(fragment.requireContext(), 3)
+                recyclerView.layoutManager = GridLayoutManager(fragment.requireContext(), Constants.VERTICAL_COUNT)
             }
             .addOnFailureListener { exception ->
                 Log.e("LoadImages", "Error getting documents: ", exception)
@@ -220,7 +220,7 @@ object FirestoreHelper {
                 }
                 val adapter = ClosetSearchItemImageAdapter(imageUrlList, clickUrlList)
                 recyclerView.adapter = adapter
-                recyclerView.layoutManager = GridLayoutManager(fragment.requireContext(), 3)
+                recyclerView.layoutManager = GridLayoutManager(fragment.requireContext(), Constants.VERTICAL_COUNT)
             }
             .addOnFailureListener { exception ->
                 Log.e("LoadImages", "Error getting documents: ", exception)
