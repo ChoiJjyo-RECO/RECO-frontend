@@ -55,13 +55,13 @@
                         android:id="@+id/color_like"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Color" />
+                        android:text="색상" />
 
                 <com.google.android.material.tabs.TabItem
                         android:id="@+id/closet_like"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Cloth Type" />
+                        android:text="의류 유형" />
 
             </com.google.android.material.tabs.TabLayout>
 

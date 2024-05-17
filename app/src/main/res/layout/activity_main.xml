@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
                     android:textSize="23dp"
-                    android:text="눈송이"
+                    android:text=""
                     android:textColor="#FFFFFF" />
             <TextView
                     android:id="@+id/welcomemessage"
@@ -155,7 +155,7 @@
                 android:layout_marginTop="25dp"
                 android:layout_marginHorizontal="25dp"
                 style="@style/recent"
-                android:text="Recent Scan Items"/>
+                android:text="최근 인식한 아이템"/>
 
         <TextView
                 android:id="@+id/RecentLine"

@@ -131,7 +131,7 @@ class RecognizeActivity : AppCompatActivity() {
         progressBar.visibility = View.VISIBLE
         binding.cameraIV.setImageURI(uri)
         originalBitmap = (binding.cameraIV.drawable as BitmapDrawable).bitmap
-        binding.resultText.text = ""
+//        binding.resultText.text = ""
         uri?.let { uploadImageToFirestore(it) }
     }
 
