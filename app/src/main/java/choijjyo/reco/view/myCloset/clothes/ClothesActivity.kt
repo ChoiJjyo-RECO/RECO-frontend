@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Lifecycle
 import choijjyo.reco.R
 import choijjyo.reco.databinding.ActivityClothesBinding
 import choijjyo.reco.view.myCloset.closet.ClosetActivity
@@ -46,6 +47,14 @@ class ClothesActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // 초기화 시 첫 번째 탭의 프래그먼트를 추가
+        if (savedInstanceState == null) {
+            val fragment = ClothesRecommendFragment(itemImageName)
+            supportFragmentManager.beginTransaction()
+                .add(R.id.searchRecord_container, fragment, "FragmentTag0")
+                .commit()
+        }
+
         binding.tabLayoutClothes.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 val position = tab.position
@@ -66,7 +75,7 @@ class ClothesActivity : AppCompatActivity() {
                         transaction.add(R.id.searchRecord_container, it, tag)
                     }
                     hideOtherFragments(transaction, tag)
-                    transaction.show(it).commit()
+                    transaction.show(it).commitNow()
                 }
             }
 
