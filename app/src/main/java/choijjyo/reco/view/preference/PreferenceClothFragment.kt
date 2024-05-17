@@ -36,7 +36,7 @@ class PreferenceClothFragment : Fragment() {
     private lateinit var saveButton: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.like_cloth, container, false)
+        return inflater.inflate(R.layout.preference_cloth_type, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

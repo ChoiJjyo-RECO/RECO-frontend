@@ -14,7 +14,7 @@
             app:cardElevation="4dp">
 
         <ImageView
-                android:id="@+id/closetImageView"
+                android:id="@+id/closet_item_IV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
@@ -30,7 +30,7 @@
             android:layout_gravity="center">
 
         <TextView
-                android:id="@+id/colorCategoryTextView"
+                android:id="@+id/clothes_color_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
@@ -40,7 +40,7 @@
                 android:text="색상: " />
 
         <TextView
-                android:id="@+id/clothesTextView"
+                android:id="@+id/clothes_type_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"

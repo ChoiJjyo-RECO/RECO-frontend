@@ -12,18 +12,18 @@ import choijjyo.reco.view.myCloset.closet.ClosetActivity
 import choijjyo.reco.R
 import choijjyo.reco.view.recognize.ChoiceActivity
 import choijjyo.reco.databinding.ActivityMainBinding
-import choijjyo.reco.adapter.basic.RecyclerViewImageAdapter
+import choijjyo.reco.adapter.recent.RecentItemImageAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class MainActivity : AppCompatActivity(), RecyclerViewImageAdapter.OnItemClickListener {
+class MainActivity : AppCompatActivity(), RecentItemImageAdapter.OnItemClickListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private lateinit var uid: String
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: RecyclerViewImageAdapter
+    private lateinit var adapter: RecentItemImageAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), RecyclerViewImageAdapter.OnItemClickLi
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
         recyclerView = findViewById(R.id.recentView)
-        adapter = RecyclerViewImageAdapter(imageList, this)
+        adapter = RecentItemImageAdapter(imageList, this)
         recyclerView.adapter = adapter
 
         val currentUser = auth.currentUser

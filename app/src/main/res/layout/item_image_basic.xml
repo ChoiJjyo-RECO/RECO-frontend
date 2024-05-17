@@ -17,7 +17,7 @@
             app:cardElevation="4dp">
 
         <ImageView
-                android:id="@+id/recentImageView"
+                android:id="@+id/basic_item_IV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
