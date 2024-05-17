@@ -9,11 +9,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import choijjyo.reco.R
 import choijjyo.reco.databinding.ActivityChoiceBinding
+import choijjyo.reco.view.MainActivity
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import java.io.File
@@ -55,6 +58,13 @@ class ChoiceActivity : AppCompatActivity() {
 
         binding.cameraBtn.setOnClickListener {
             takeCapture()
+        }
+
+        val backButton = findViewById<Button>(R.id.backToMainButton)
+        backButton.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish() // Optional: Finish the current activity
         }
     }
 
@@ -168,4 +178,7 @@ class ChoiceActivity : AppCompatActivity() {
             .setPermissions(Manifest.permission.CAMERA)
             .check()
     }
+
+
+
 }
