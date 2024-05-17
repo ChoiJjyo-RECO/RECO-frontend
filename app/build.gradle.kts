@@ -1,7 +1,15 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+}
+
+val properties = Properties().apply {
+    load(FileInputStream(rootProject.file("local.properties")))
 }
 
 android {
@@ -15,10 +23,16 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        // Enable MultiDex
+        multiDexEnabled = true
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
+        buildConfigField("String","GOOGLESEARCH_APIKEY", getApiKey("GOOGLESEARCH_APIKEY"))
+        buildConfigField("String","GOOGLESEARCH_SEARCHID", getApiKey("GOOGLESEARCH_SEARCHID"))
+        buildConfigField("String","OPENAI_APIKEY", getApiKey("OPENAI_APIKEY"))
     }
 
     buildTypes {
@@ -31,15 +45,16 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
     buildFeatures {
         compose = true
         dataBinding = true
+        buildConfig = true
     }
     dataBinding {
         enable = true
@@ -54,7 +69,13 @@ android {
     }
 }
 
+fun getApiKey(propertyKey: String): String {
+    return gradleLocalProperties(rootDir).getProperty(propertyKey)
+}
+
 dependencies {
+
+    implementation ("com.android.support:multidex:1.0.3")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
@@ -77,6 +98,7 @@ dependencies {
 
     // tedpermission
     implementation("io.github.ParkSangGwon:tedpermission-normal:3.3.0")
+    implementation(project(":opencv"))
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -89,4 +111,20 @@ dependencies {
     //getImageFromServer(Glide)
     implementation ("com.github.bumptech.glide:glide:4.11.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.11.0")
+
+    //google custom search API
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    //tabLayout
+    implementation ("com.google.android.material:material:1.12.0")
+
+    //openai api
+    //okhttp
+    implementation ("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation ("io.ktor:ktor-client-okhttp:2.3.11")
+
+    implementation ("com.aallam.openai:openai-client:3.7.2")
+
+
 }
