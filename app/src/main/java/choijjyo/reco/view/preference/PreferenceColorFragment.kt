@@ -45,7 +45,7 @@ class PreferenceColorFragment : Fragment() {
     private var customDialog: ShowColorExplain? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.preference_color, container, false)
+        return inflater.inflate(R.layout.fragment_preference_color, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

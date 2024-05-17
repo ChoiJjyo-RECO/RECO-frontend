@@ -15,10 +15,10 @@ class PreferenceActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_like)
+        setContentView(R.layout.activity_preference)
 
         fragment1 = PreferenceColorFragment()
-        fragment2 = PreferenceClothFragment()
+        fragment2 = PreferenceClothTypeFragment()
 
         supportFragmentManager.beginTransaction().add(R.id.frameLayout, fragment1).commit()
         val tabLayout = findViewById<TabLayout>(R.id.like_tab)

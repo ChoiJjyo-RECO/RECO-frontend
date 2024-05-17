@@ -14,7 +14,7 @@ import choijjyo.reco.R
 import choijjyo.reco.data.entity.preference.PreferenceClothTypeData
 import com.google.firebase.auth.FirebaseAuth
 
-class PreferenceClothFragment : Fragment() {
+class PreferenceClothTypeFragment : Fragment() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var uid: String
@@ -36,7 +36,7 @@ class PreferenceClothFragment : Fragment() {
     private lateinit var saveButton: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.preference_cloth_type, container, false)
+        return inflater.inflate(R.layout.fragment_preference_cloth_type, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
