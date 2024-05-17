@@ -34,17 +34,15 @@
 
             <TextView
                     android:id="@+id/username"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
                     android:textSize="23dp"
-                    android:text=""
+                    android:text="익명"
                     android:textColor="#FFFFFF" />
             <TextView
                     android:id="@+id/welcomemessage"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.7"
                     android:textSize="23dp"
                     android:text=" 님 환영합니다!"
                     android:textColor="#FFFFFF" />
