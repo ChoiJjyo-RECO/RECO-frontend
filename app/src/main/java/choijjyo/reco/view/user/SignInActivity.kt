@@ -47,7 +47,6 @@ class SignInActivity : AppCompatActivity() {
                     intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     Toast.makeText(this, "로그인에 성공했어요", Toast.LENGTH_LONG).show()
-                    Toast.makeText(this, auth.currentUser?.uid.toString(), Toast.LENGTH_LONG).show()
                 } else {
                     Toast.makeText(this, "로그인에 실패했어요", Toast.LENGTH_LONG).show()
                 }
@@ -63,7 +62,7 @@ class SignInActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val uid = auth.currentUser?.uid
                     if (uid != null) {
-                        Toast.makeText(this, "익명 로그인: success", Toast.LENGTH_SHORT).show()
+                        Log.d("SignInActivity", "익명 로그인: success")
                         intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                         finish()
@@ -74,14 +73,14 @@ class SignInActivity : AppCompatActivity() {
                             )
                         )
                     } else {
-                        Toast.makeText(this, "익명 사용자 ID를 가져오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
+                        Log.d("SignInActivity", "익명 사용자 ID를 가져오는 데 실패했습니다.")
                     }
                 } else {
-                    Toast.makeText(this, "익명 로그인: failed.", Toast.LENGTH_SHORT).show()
+                    Log.d("SignInActivity", "익명 로그인: failed")
                 }
             }
     }
     private fun getRandomNumber(): Int {
-        return (1..1000).random()
+        return (1000..10000).random()
     }
 }
