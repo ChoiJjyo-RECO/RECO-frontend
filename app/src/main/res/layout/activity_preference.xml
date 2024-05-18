@@ -44,12 +44,15 @@
                     android:id="@+id/like_tab"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
                     app:tabGravity="fill"
                     app:tabMaxWidth="0dp"
                     app:tabMode="fixed"
-                    app:tabIndicatorColor="@android:color/transparent"
                     app:tabBackground="@drawable/tab_selector"
-                    app:tabTextColor="#ffffff" >
+                    app:tabIndicatorHeight="0dp"
+                    app:tabIndicatorColor="@android:color/transparent"
+                    app:tabSelectedTextColor="#ffffff"
+                    app:tabTextColor="#000000">
 
                 <com.google.android.material.tabs.TabItem
                         android:id="@+id/color_like"

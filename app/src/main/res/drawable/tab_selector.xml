@@ -2,8 +2,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- 선택되었을 때의 배경색 -->
     <item android:state_selected="true" android:drawable="@color/tab_selected_color" />
-    <!-- 선택되지 않았을 때의 배경색 -->
-    <item android:drawable="@android:color/black"/>
-
-
+    <!-- 선택되지 않았을 때의 배경색과 검정색 외곽선 -->
+    <item android:drawable="@drawable/white_background_with_black_stroke" />
 </selector>
