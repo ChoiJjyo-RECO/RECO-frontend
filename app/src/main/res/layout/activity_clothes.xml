@@ -83,6 +83,50 @@
                             android:text="분류: 원피스"
                             android:layout_gravity="center_horizontal|left" />
                 </LinearLayout>
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:tabMaxWidth="0dp"
+                        android:padding="10dp"
+                        android:gravity="center">
+
+                    <Button
+                            android:id="@+id/clothes_deuteranopiaButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/btn_not_selected_bg"
+                            android:text="녹색맹 필터"
+                            android:layout_weight="1" />
+
+                    <Button
+                            android:id="@+id/clothes_protanopiaButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/btn_not_selected_bg"
+                            android:text="적색맹 필터"
+                            android:layout_weight="1" />
+
+                    <Button
+                            android:id="@+id/clothes_tritanopiaButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/btn_not_selected_bg"
+                            android:text="청색맹 필터"
+                            android:layout_weight="1" />
+
+                    <Button
+                            android:id="@+id/clothes_originalImgButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/btn_not_selected_bg"
+                            android:text="원본"
+                            android:layout_weight="1" />
+                </LinearLayout>
 
             </LinearLayout>
         </FrameLayout>
