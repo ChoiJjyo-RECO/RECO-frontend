@@ -111,7 +111,7 @@ class RecognizeRecommendClothesFragment: Fragment() {
                 ),
                 ChatMessage(
                     role = ChatRole.User,
-                    content = "$keyword 에 어울릴 만한 옷을 6가지  추천해줘. \\n답변 예시는 다음과 같습니다: \"검은색 치마\" OR \"하늘색 바지\" OR \"핑크색 셔츠\" OR \"주황색 티셔츠\" OR \"파란색 셔츠\" OR \"검은색 자켓\". \\n 꼭 이 형식을 따라 답변해주세요. "
+                    content = "$keyword 에 어울릴 만한 옷을 6가지  추천해줘. \\n답변 예시는 다음과 같습니다: \"검은색 치마\" OR \"하늘색 바지\" OR \"핑크색 셔츠\" OR \"주황색 티셔츠\" OR \"파란색 셔츠\" OR \"검은색 자켓\" \\n 꼭 이 형식을 따라 답변해주세요. "
                 )
             )
         )
