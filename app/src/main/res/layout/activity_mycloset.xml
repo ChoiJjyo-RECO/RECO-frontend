@@ -45,8 +45,8 @@
             app:tabIndicatorColor="@android:color/transparent"
             app:tabIndicatorHeight="0dp"
             app:tabMode="fixed"
-            app:tabSelectedTextColor="#000000"
-            app:tabTextColor="#ffffff">
+            app:tabSelectedTextColor="#ffffff"
+            app:tabTextColor="#000000">
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/closet_all"
