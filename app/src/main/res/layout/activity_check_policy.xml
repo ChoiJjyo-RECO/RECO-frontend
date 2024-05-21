@@ -8,22 +8,22 @@
             android:orientation="vertical"
             android:background="@color/white"
             tools:context=".CheckPolicyActivity">
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <LinearLayout
-                    android:layout_width="360dp"
-                    android:layout_height="73dp"
-                    android:orientation="vertical"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="MissingConstraints">
-                <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/reco_header" />
-            </LinearLayout>
+        <!-- 회원가입 창 종료 -->
 
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
 
+        <!-- 이미지뷰 -->
+        <ImageView
+                android:layout_width="360dp"
+                android:layout_height="73dp"
+                android:layout_gravity="left"
+                android:src="@drawable/reco_header" />
+
+        <!-- 버튼 -->
             <Button
                     android:id="@+id/exitBtn"
                     android:layout_width="48dp"
@@ -34,23 +34,26 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:contentDescription="회원가입 창 닫기  버튼"/>
-        </LinearLayout>
+
+        </FrameLayout>
 
 
         <TextView
-                android:layout_width="250dp"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:text="이용약관 확인하기"
+                android:text="== 이용약관 확인하기 =="
                 android:textColor="@color/black"
-                android:textSize="18dp"
+                android:textSize="25dp"
                 android:gravity="center"
+                android:layout_margin="20dp"
                 android:layout_gravity="center"/>
 
         <ScrollView
                 android:background="#E3E3E3"
-                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="60dp"
                 android:layout_width="match_parent"
-                android:layout_height="480dp">
+                android:layout_height="570dp">
 
             <TextView
                     android:text="
@@ -216,8 +219,10 @@
 \n
 부 칙\n
 제1조 (개정일)\n
-이 약관은 2024년 5월 23일부터 시행합니다."
+이 약관은 2024년 5월 23일부터 시행합니다.\n\n\n"
+                    android:layout_marginTop="30dp"
                     android:layout_marginBottom="5dp"
+                    android:layout_marginHorizontal="30dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
 
@@ -229,7 +234,7 @@
                 android:scaleType="fitXY"
                 android:background="@android:color/transparent"
                 android:layout_gravity="center"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="30dp"
                 android:layout_width="273dp"
                 android:layout_height="57dp"
                 android:contentDescription="동의 버튼"/>
