@@ -117,7 +117,7 @@
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:scaleType="fitXY"
-                        android:src="@drawable/loginbtn"
+                        android:src="@drawable/login_btn"
                         android:importantForAccessibility="no" />
 
                 <ImageButton
