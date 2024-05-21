@@ -60,7 +60,7 @@
                             android:layout_height="wrap_content"
                             android:scaleType="fitCenter"
                             android:adjustViewBounds="true"
-                            android:src="#505050" />
+                            android:src="@drawable/placeholder_view" />
                 </androidx.cardview.widget.CardView>
 
                 <LinearLayout
@@ -73,14 +73,16 @@
                             android:id="@+id/itemColorCategory"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="색상: 검정"
+                            android:text="색상: "
+                            android:textColor="@color/black"
                             android:layout_gravity="center_horizontal|left" />
 
                     <TextView
                             android:id="@+id/itemClothes"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="분류: 원피스"
+                            android:text="분류: "
+                            android:textColor="@color/black"
                             android:layout_gravity="center_horizontal|left" />
                 </LinearLayout>
                 <LinearLayout
@@ -138,8 +140,10 @@
                 android:background="#000000"
                 app:tabMaxWidth="0dp"
                 app:tabGravity="fill"
-                app:tabTextColor="#FFFFFF"
                 app:tabIndicatorColor="@android:color/transparent"
+                app:tabIndicatorHeight="0dp"
+                app:tabSelectedTextColor="#ffffff"
+                app:tabTextColor="#000000"
                 app:tabBackground="@drawable/tab_selector">
 
 

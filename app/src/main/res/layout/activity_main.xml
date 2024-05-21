@@ -112,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/closet"
                         android:layout_gravity="center_horizontal"
-                        android:text="나만의 옷장보기" />
+                        android:text="나만의 옷장" />
             </LinearLayout>
 
             <!-- 세 번째 버튼 -->
@@ -159,8 +159,7 @@
                 style="@style/recent"
                 android:text="최근 인식한 아이템"/>
 
-        <TextView
-                android:id="@+id/RecentLine"
+        <View
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
                 android:layout_marginTop="5dp"
