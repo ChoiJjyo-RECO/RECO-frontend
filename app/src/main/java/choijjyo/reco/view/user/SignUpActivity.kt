@@ -45,7 +45,7 @@ class SignUpActivity : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "회원가입 성공!", Toast.LENGTH_SHORT).show()
                     val user = auth.currentUser
                     if (user != null) {
                         val uid = user.uid
@@ -60,7 +60,13 @@ class SignUpActivity : AppCompatActivity() {
                     startActivity(intent)
                     finish()
                 } else {
-                    Toast.makeText(this, "회원가입 실패: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    val errorMessage = when (task.exception?.message) {
+                        "The email address is badly formatted." -> "이메일 형식이 올바르지 않습니다."
+                        "The email address is already in use by another account." -> "이미 사용 중인 이메일 주소입니다."
+                        "The given password is invalid. [ Password should be at least 6 characters ]" -> "비밀번호는 최소 6자 이상이어야 합니다."
+                        else -> "회원가입 실패: ${task.exception?.message}"
+                    }
+                    Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
                 }
             }
     }

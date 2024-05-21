@@ -57,7 +57,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical|center_horizontal"
-                        android:layout_marginHorizontal="40dp"
                         android:layout_marginBottom="30dp">
 
                     <TextView
@@ -88,7 +87,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical|center_horizontal"
-                        android:layout_marginHorizontal="40dp"
                         android:layout_marginBottom="20dp">
 
                     <TextView
@@ -109,7 +107,7 @@
                             android:padding="7dp"
                             android:textColor="#585858"
                             android:backgroundTint="@color/black"
-                            android:hint="아이디 입력" />
+                            android:hint="이메일 입력" />
                 </LinearLayout>
 
                 <TextView
@@ -127,7 +125,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:layout_marginHorizontal="40dp"
                         android:layout_marginBottom="10dp">
 
                     <TextView
