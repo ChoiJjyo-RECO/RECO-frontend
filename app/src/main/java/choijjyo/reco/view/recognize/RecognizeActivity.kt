@@ -172,13 +172,13 @@ class RecognizeActivity : AppCompatActivity() {
         binding.progressLayout.visibility = View.VISIBLE
         binding.cameraIV.setImageURI(uri)
         originalBitmap = (binding.cameraIV.drawable as BitmapDrawable).bitmap
-        uri?.let { uploadImageToFirestore(it) }
+        uri?.let { uploadImageToStorage(it) }
     }
 
 
 
     // Firebase Storage에 이미지 업로드
-    private fun uploadImageToFirestore(uri: Uri) {
+    private fun uploadImageToStorage(uri: Uri) {
         this.uri = uri
         val storageRef = FirebaseStorage.getInstance().reference
         val imageName = uri.lastPathSegment ?: "default_filename"
@@ -187,7 +187,7 @@ class RecognizeActivity : AppCompatActivity() {
         val uploadTask = imagesRef.putFile(uri)
 
         uploadTask.addOnSuccessListener {
-            Log.d("RecognizeActivity", "이미지가 업로드되었습니다.")
+            Log.d("RecognizeActivity", "Storage에 이미지가 업로드되었습니다.")
 
             // 자동으로 모델 실행
             GlobalScope.launch(Dispatchers.IO){
@@ -209,8 +209,7 @@ class RecognizeActivity : AppCompatActivity() {
                 Log.d("RecognizeActivity", "이미지 URL을 가져오는 데 실패했습니다.")
             }
         }.addOnFailureListener {
-            //progressBar.visibility = View.GONE
-            Log.d("RecognizeActivity", "이미지 업로드에 실패했습니다.")
+            Log.d("RecognizeActivity", "Storage 이미지 업로드에 실패했습니다.")
         }
     }
 
@@ -284,6 +283,7 @@ class RecognizeActivity : AppCompatActivity() {
         } finally {
             runOnUiThread {
                 binding.progressLayout.visibility = View.GONE
+                binding.searchLayout.visibility = View.VISIBLE
             }
         }
     }

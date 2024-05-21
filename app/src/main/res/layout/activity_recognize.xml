@@ -34,156 +34,170 @@
                     android:text="메인화면으로 돌아가기" />
         </FrameLayout>
 
-        <ImageView
-                android:id="@+id/cameraIV"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/placeholder_view" />
-
         <!-- 색맹 필터 버튼 -->
 
         <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabMaxWidth="0dp"
-                android:padding="10dp"
-                android:gravity="center">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center" >
 
-            <Button
-                    android:id="@+id/deuteranopiaButton"
-                    android:layout_width="wrap_content"
+            <ImageView
+                    android:id="@+id/cameraIV"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/btn_not_selected_bg"
-                    android:text="녹색맹 필터"
-                    android:layout_weight="1" />
+                    android:maxHeight="400dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/placeholder_view" />
 
-            <Button
-                    android:id="@+id/protanopiaButton"
-                    android:layout_width="wrap_content"
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/btn_not_selected_bg"
-                    android:text="적색맹 필터"
-                    android:layout_weight="1" />
+                    app:tabMaxWidth="0dp"
+                    android:padding="10dp"
+                    android:gravity="center">
 
-            <Button
-                    android:id="@+id/tritanopiaButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/btn_not_selected_bg"
-                    android:text="청색맹 필터"
-                    android:layout_weight="1" />
+                <Button
+                        android:id="@+id/deuteranopiaButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/btn_not_selected_bg"
+                        android:text="녹색맹 필터"
+                        android:layout_weight="1" />
 
-            <Button
-                    android:id="@+id/originalImgButton"
-                    android:layout_width="wrap_content"
+                <Button
+                        android:id="@+id/protanopiaButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/btn_not_selected_bg"
+                        android:text="적색맹 필터"
+                        android:layout_weight="1" />
+
+                <Button
+                        android:id="@+id/tritanopiaButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/btn_not_selected_bg"
+                        android:text="청색맹 필터"
+                        android:layout_weight="1" />
+
+                <Button
+                        android:id="@+id/originalImgButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/btn_not_selected_bg"
+                        android:text="원본"
+                        android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/progressLayout"
+                    android:visibility="gone"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_margin="20dp"
+                    android:gravity="center">
+
+                <ProgressBar
+                        android:id="@+id/progressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+                <TextView
+                        android:id="@+id/progressText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:text="사진을 확인하고 있어요.\n잠시만 기다려주세요!" />
+            </LinearLayout>
+
+            <!-- 결과 텍스트 -->
+            <LinearLayout
+                    android:id="@+id/resultLayout"
+                    android:visibility="gone"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:padding="5dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="40dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/result_bg"
+                    android:gravity="center">
+                <TextView
+                        android:id="@+id/resultColor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_weight="1" />
+                <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/black"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp" />
+                <TextView
+                        android:id="@+id/resultClothType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/search_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/btn_not_selected_bg"
-                    android:text="원본"
-                    android:layout_weight="1" />
+                    android:orientation="vertical"
+                    android:visibility="gone" >
+                <!-- 탭 레이아웃 -->
+                <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tabLayoutSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:tabMaxWidth="0dp"
+                        app:tabIndicatorColor="@android:color/transparent"
+                        app:tabBackground="@drawable/tab_selector"
+                        app:tabGravity="fill"
+                        app:tabIndicatorHeight="0dp"
+                        app:tabSelectedTextColor="#ffffff"
+                        app:tabTextColor="#000000">
+
+                    <com.google.android.material.tabs.TabItem
+                            android:id="@+id/recommend_clothes_Item"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="추천 아이템" />
+
+                    <com.google.android.material.tabs.TabItem
+                            android:id="@+id/similar_clothes_Item"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="비슷한 아이템" />
+                </com.google.android.material.tabs.TabLayout>
+
+                <!-- 프래그먼트 컨테이너 -->
+                <FrameLayout
+                        android:id="@+id/searchRecognize_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp" />
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-                android:id="@+id/progressLayout"
-                android:visibility="gone"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="20dp"
-                android:gravity="center">
-
-            <ProgressBar
-                    android:id="@+id/progressBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center" />
-            <TextView
-                    android:id="@+id/progressText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:text="사진을 확인하고 있어요.\n잠시만 기다려주세요!" />
-        </LinearLayout>
-
-        <!-- 결과 텍스트 -->
-        <LinearLayout
-                android:id="@+id/resultLayout"
-                android:visibility="gone"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:padding="5dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginHorizontal="20dp"
-                android:background="@drawable/result_bg"
-                android:gravity="center">
-            <TextView
-                    android:id="@+id/resultColor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:text="회색"
-                    android:layout_weight="1" />
-            <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/black"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp" />
-            <TextView
-                    android:id="@+id/resultClothType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:text="자켓"
-                    android:layout_weight="1" />
-        </LinearLayout>
-
-        <!-- 탭 레이아웃 -->
-        <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayoutSearch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabMaxWidth="0dp"
-                app:tabIndicatorColor="@android:color/transparent"
-                app:tabBackground="@drawable/tab_selector"
-                app:tabGravity="fill"
-                app:tabIndicatorHeight="0dp"
-                app:tabSelectedTextColor="#ffffff"
-                app:tabTextColor="#000000">
-
-            <com.google.android.material.tabs.TabItem
-                    android:id="@+id/recommend_clothes_Item"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="추천 아이템" />
-
-            <com.google.android.material.tabs.TabItem
-                    android:id="@+id/similar_clothes_Item"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="비슷한 아이템" />
-        </com.google.android.material.tabs.TabLayout>
-
-        <!-- 프래그먼트 컨테이너 -->
-        <FrameLayout
-                android:id="@+id/searchRecognize_container"
-                android:layout_width="match_parent"
-                android:layout_height="300dp" />
 
     </LinearLayout>
 </layout>
