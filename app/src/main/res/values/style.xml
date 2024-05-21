@@ -26,14 +26,14 @@
     <style name="CustomButtonStyle" tools:ignore="DuplicateDefinition">
         <item name="android:layout_weight">1</item>
         <item name="android:layout_marginHorizontal" tools:targetApi="o">10dp</item>
-        <item name="android:layout_marginVertical" tools:targetApi="o">5dp</item>
+        <item name="android:layout_marginVertical" tools:targetApi="o">3dp</item>
         <item name="android:background">@drawable/preference_button</item>
     </style>
 
     <style name="CustomButtonStyle2" tools:ignore="DuplicateDefinition">
         <item name="android:layout_weight">1</item>
         <item name="android:layout_marginHorizontal" tools:targetApi="o">10dp</item>
-        <item name="android:layout_marginVertical" tools:targetApi="o">5dp</item>
+        <item name="android:layout_marginVertical" tools:targetApi="o">3dp</item>
         <item name="android:background">@drawable/preference_button2</item>
     </style>
 

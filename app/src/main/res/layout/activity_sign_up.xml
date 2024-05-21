@@ -61,7 +61,7 @@
                         android:layout_marginBottom="30dp">
 
                     <TextView
-                            android:text="Name :"
+                            android:text="Name   :"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
@@ -92,7 +92,7 @@
                         android:layout_marginBottom="20dp">
 
                     <TextView
-                            android:text="    ID    :"
+                            android:text="EMAIL  :"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
@@ -109,7 +109,7 @@
                             android:padding="7dp"
                             android:textColor="#585858"
                             android:backgroundTint="@color/black"
-                            android:hint="아이디 입력" />
+                            android:hint="이메일 입력" />
                 </LinearLayout>
 
                 <TextView
@@ -132,7 +132,7 @@
 
                     <TextView
                             android:id="@+id/textView"
-                            android:text="   PW   :"
+                            android:text="   PW    :"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15dp"
