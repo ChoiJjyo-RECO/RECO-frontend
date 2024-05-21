@@ -57,13 +57,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical|center_horizontal"
-                        android:layout_marginHorizontal="40dp"
                         android:layout_marginBottom="30dp">
 
                     <TextView
-                            android:text="Name   :"
+                            android:text="Name :"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:minWidth="50dp"
+                            android:gravity="right"
                             android:layout_marginRight="20dp"
                             android:textColor="@color/black"
                             android:textSize="18dp"
@@ -83,106 +84,137 @@
 
                 <!-- 아이디 포함 -->
 
-                <!-- 사용 불가능한 아이디 -->
                 <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical|center_horizontal"
-                        android:layout_marginHorizontal="40dp"
-                        android:layout_marginBottom="20dp">
-
-                    <TextView
-                            android:text="EMAIL  :"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="20dp"
-                            android:textColor="@color/black"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
-
-                    <EditText
-                            android:id="@+id/inputID"
-                            android:layout_width="300dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center"
-                            android:inputType="text"
-                            android:padding="7dp"
-                            android:textColor="#585858"
-                            android:backgroundTint="@color/black"
-                            android:hint="이메일 입력" />
-                </LinearLayout>
-
-                <TextView
-                        android:id="@+id/checkIDText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:layout_marginHorizontal="100dp"
-                        android:text="* 중복된 아이디입니다."
-                        android:textColor="#8B0000"
-                        android:visibility="invisible" />
-
-                <!-- 비밀번호 -->
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:layout_marginHorizontal="40dp"
-                        android:layout_marginBottom="10dp">
-
-                    <TextView
-                            android:id="@+id/textView"
-                            android:text="   PW    :"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginRight="20dp"
-                            android:textColor="@color/black"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
-
+                        android:orientation="vertical"
+                        android:layout_marginBottom="20dp" >
+                    <!-- 사용 불가능한 아이디 -->
                     <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                        <LinearLayout
+                                android:id="@+id/email_layout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical|center_horizontal">
 
-                        <EditText
-                                android:id="@+id/inputPW"
-                                android:hint="비밀번호 입력"
-                                android:layout_width="300dp"
-                                android:layout_height="50dp"
-                                android:layout_gravity="center"
-                                android:inputType="text"
-                                android:padding="7dp"
-                                android:layout_marginBottom="5dp"
-                                android:backgroundTint="@color/black"
-                                android:textColor="#585858" />
+                            <TextView
+                                    android:text="Email :"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:minWidth="50dp"
+                                    android:gravity="right"
+                                    android:layout_marginRight="20dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="18dp"
+                                    android:textStyle="bold" />
 
-                        <EditText
-                                android:id="@+id/checkPW"
-                                android:hint="비밀번호 재확인"
-                                android:layout_width="300dp"
-                                android:layout_height="50dp"
+                            <EditText
+                                    android:id="@+id/inputEmail"
+                                    android:layout_width="300dp"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="center"
+                                    android:inputType="text"
+                                    android:padding="7dp"
+                                    android:textColor="#585858"
+                                    android:backgroundTint="@color/black"
+                                    android:hint="이메일 입력" />
+                        </LinearLayout>
+
+                        <TextView
+                                android:id="@+id/checkIDText"
+                                android:layout_width="350dp"
+                                android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:inputType="text"
-                                android:padding="7dp"
-                                android:backgroundTint="@color/black"
-                                android:textColor="#585858" />
+                                android:gravity="end"
+                                android:text="* 중복된 이메일입니다."
+                                android:textColor="@color/red"
+                                android:visibility="gone" />
                     </LinearLayout>
-
-                    <!-- 비밀번호 확인 -->
                 </LinearLayout>
 
-                <!-- 비밀번호 안내문구 -->
-                <TextView
+
+                <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:layout_marginHorizontal="100dp"
-                        android:text="* 비밀번호는 영문자 + 특수문자 8글자 이상  "
-                        android:textColor="#3386FF"
-                        android:backgroundTint="@color/black"
-                        android:visibility="invisible" />
+                        android:orientation="vertical"
+                        android:layout_marginBottom="10dp" >
+                    <!-- 비밀번호 -->
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                        <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+                            <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal">
+
+                                <TextView
+                                        android:id="@+id/textView"
+                                        android:text="PW :"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:minWidth="50dp"
+                                        android:gravity="right"
+                                        android:layout_marginTop="15dp"
+                                        android:layout_marginRight="20dp"
+                                        android:textColor="@color/black"
+                                        android:textSize="18dp"
+                                        android:textStyle="bold" />
+
+                                <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content">
+
+                                    <EditText
+                                            android:id="@+id/inputPW"
+                                            android:hint="비밀번호 입력"
+                                            android:layout_width="300dp"
+                                            android:layout_height="50dp"
+                                            android:layout_gravity="center"
+                                            android:inputType="text"
+                                            android:padding="7dp"
+                                            android:layout_marginBottom="5dp"
+                                            android:backgroundTint="@color/black"
+                                            android:textColor="#585858" />
+
+                                    <EditText
+                                            android:id="@+id/checkPW"
+                                            android:hint="비밀번호 재확인"
+                                            android:layout_width="300dp"
+                                            android:layout_height="50dp"
+                                            android:layout_gravity="center"
+                                            android:inputType="text"
+                                            android:padding="7dp"
+                                            android:backgroundTint="@color/black"
+                                            android:textColor="#585858" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <!-- 비밀번호 확인 -->
+                        </LinearLayout>
+
+                        <!-- 비밀번호 안내문구 -->
+                        <TextView
+                                android:id="@+id/checkPWText"
+                                android:layout_width="350dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="end"
+                                android:text="* 비밀번호는 영문자 + 특수문자 8글자 이상"
+                                android:textColor="#3386FF"
+                                android:backgroundTint="@color/black"
+                                android:visibility="visible" />
+                    </LinearLayout>
+                </LinearLayout>
 
                 <!-- 성별 포함 -->
                 <LinearLayout
@@ -193,7 +225,7 @@
 
                 </LinearLayout>
 
-                <!-- 상세 이용약관 확인 버튼 포함 -->
+                <!--                <!— 상세 이용약관 확인 버튼 포함 —>-->
                 <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
