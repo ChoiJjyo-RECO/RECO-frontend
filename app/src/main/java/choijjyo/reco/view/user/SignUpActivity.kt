@@ -3,7 +3,9 @@ package choijjyo.reco.view.user
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import choijjyo.reco.data.source.firestore.FirestoreHelper
 import choijjyo.reco.view.MainActivity
@@ -35,16 +37,34 @@ class SignUpActivity : AppCompatActivity() {
     }
     private fun joinAccount() {
         var name = binding.inputName.text.toString()
-        var email = binding.inputID.text.toString()
+        var email = binding.inputEmail.text.toString()
         var password = binding.inputPW.text.toString()
         var passwordCheck = binding.checkPW.text.toString()
 
-        // TODO: 유효성 검사 추가
-
+        if (name.isEmpty()) {
+            Toast.makeText(this, "이름을 입력해주세요.", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (email.isEmpty()) {
+            Toast.makeText(this, "이메일을 입력해주세요.", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (password.isEmpty()) {
+            Toast.makeText(this, "비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (password != passwordCheck) {
+            binding.checkPWText.visibility = View.VISIBLE
+            binding.checkPWText.text = "비밀번호가 일치하지 않습니다."
+            binding.checkPWText.setTextColor(ContextCompat.getColor(this@SignUpActivity, R.color.red))
+            Toast.makeText(this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+            return
+        }
 
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+                    binding.checkIDText.visibility = View.GONE
                     Toast.makeText(this, "회원가입 성공!", Toast.LENGTH_SHORT).show()
                     val user = auth.currentUser
                     if (user != null) {
@@ -61,9 +81,25 @@ class SignUpActivity : AppCompatActivity() {
                     finish()
                 } else {
                     val errorMessage = when (task.exception?.message) {
-                        "The email address is badly formatted." -> "이메일 형식이 올바르지 않습니다."
-                        "The email address is already in use by another account." -> "이미 사용 중인 이메일 주소입니다."
-                        "The given password is invalid. [ Password should be at least 6 characters ]" -> "비밀번호는 최소 6자 이상이어야 합니다."
+                        "The email address is badly formatted." -> {
+                            binding.checkPWText.visibility = View.GONE
+                            binding.checkIDText.visibility = View.VISIBLE
+                            binding.checkIDText.text = "이메일 형식이 올바르지 않습니다."
+                            "이메일 형식이 올바르지 않습니다."
+                        }
+                        "The email address is already in use by another account." -> {
+                            binding.checkPWText.visibility = View.GONE
+                            binding.checkIDText.visibility = View.VISIBLE
+                            binding.checkIDText.text = "이미 사용 중인 이메일 주소입니다."
+                            "이미 사용 중인 이메일 주소입니다."
+                        }
+                        "The given password is invalid. [ Password should be at least 6 characters ]" -> {
+                            binding.checkIDText.visibility = View.GONE
+                            binding.checkPWText.visibility = View.VISIBLE
+                            binding.checkPWText.text = "비밀번호는 최소 6자 이상이어야 합니다."
+                            binding.checkPWText.setTextColor(ContextCompat.getColor(this@SignUpActivity, R.color.red))
+                            "비밀번호는 최소 6자 이상이어야 합니다."
+                        }
                         else -> "회원가입 실패: ${task.exception?.message}"
                     }
                     Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
