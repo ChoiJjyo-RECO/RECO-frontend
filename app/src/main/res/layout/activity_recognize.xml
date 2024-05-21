@@ -132,6 +132,8 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="회색"
                     android:layout_weight="1" />
             <View
                     android:layout_width="1dp"
@@ -146,6 +148,8 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:text="자켓"
                     android:layout_weight="1" />
         </LinearLayout>
 
@@ -158,7 +162,9 @@
                 app:tabIndicatorColor="@android:color/transparent"
                 app:tabBackground="@drawable/tab_selector"
                 app:tabGravity="fill"
-                app:tabTextColor="#FFFFFF" >
+                app:tabIndicatorHeight="0dp"
+                app:tabSelectedTextColor="#ffffff"
+                app:tabTextColor="#000000">
 
             <com.google.android.material.tabs.TabItem
                     android:id="@+id/recommend_clothes_Item"
