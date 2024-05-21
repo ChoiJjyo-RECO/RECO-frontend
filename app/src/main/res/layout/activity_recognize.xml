@@ -44,8 +44,8 @@
 
             <ImageView
                     android:id="@+id/cameraIV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="311dp"
+                    android:layout_height="220dp"
                     android:maxHeight="400dp"
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
