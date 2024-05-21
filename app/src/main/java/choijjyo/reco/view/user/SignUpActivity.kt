@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -21,14 +22,47 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivitySignUpBinding
 
+    private lateinit var inputName: EditText
+    private lateinit var inputEmail: EditText
+    private lateinit var inputPW: EditText
+    private lateinit var checkPW: EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         auth = Firebase.auth
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
 
-        binding.joinBtn.setOnClickListener {
+        inputName = findViewById(R.id.inputName)
+        inputEmail = findViewById(R.id.inputEmail)
+        inputPW = findViewById(R.id.inputPW)
+        checkPW = findViewById(R.id.checkPW)
+
+        inputName.setText(intent.getStringExtra("inputName"))
+        inputEmail.setText(intent.getStringExtra("inputEmail"))
+        inputPW.setText(intent.getStringExtra("inputPW"))
+        checkPW.setText(intent.getStringExtra("checkPW"))
+
+        val agreed = intent.getBooleanExtra("AGREED", false)
+
+        if (agreed) {
+            binding.checkPolicyBtn.visibility = View.GONE
+            binding.signUpBtn.visibility = View.VISIBLE
+        } else {
+            binding.checkPolicyBtn.visibility = View.VISIBLE
+            binding.signUpBtn.visibility = View.GONE
+        }
+
+        binding.signUpBtn.setOnClickListener {
             joinAccount()
+        }
+        binding.checkPolicyBtn.setOnClickListener {
+            val intent = Intent(this, CheckPolicyActivity::class.java)
+            intent.putExtra("inputName", inputName.text.toString())
+            intent.putExtra("inputEmail", inputEmail.text.toString())
+            intent.putExtra("inputPW", inputPW.text.toString())
+            intent.putExtra("checkPW", checkPW.text.toString())
+            startActivity(intent)
         }
         binding.exitBtn.setOnClickListener {
             intent = Intent(this, SignInActivity::class.java)
