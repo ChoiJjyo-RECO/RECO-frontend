@@ -39,7 +39,6 @@ class RecognizeActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityRecognizeBinding
-//    private lateinit var progressBar: ProgressBar
     private lateinit var uid: String
     private lateinit var auth: FirebaseAuth
     private var uri: Uri? = null
@@ -73,7 +72,6 @@ class RecognizeActivity : AppCompatActivity() {
         protanopiaButton = binding.protanopiaButton
         tritanopiaButton = binding.tritanopiaButton
         originalImgButton = binding.originalImgButton
-//        progressBar = binding.progressBar
         setGallery(uri)
 
         binding.deuteranopiaButton.setOnClickListener {
@@ -171,8 +169,6 @@ class RecognizeActivity : AppCompatActivity() {
     }
 
     fun setGallery(uri : Uri?) {
-//        progressBar.visibility = View.VISIBLE
-//        binding.progressText.visibility = View.VISIBLE
         binding.progressLayout.visibility = View.VISIBLE
         binding.cameraIV.setImageURI(uri)
         originalBitmap = (binding.cameraIV.drawable as BitmapDrawable).bitmap
@@ -217,6 +213,19 @@ class RecognizeActivity : AppCompatActivity() {
             Log.d("RecognizeActivity", "이미지 업로드에 실패했습니다.")
         }
     }
+
+    private fun deleteImageFromStorage(imageUri: Uri) {
+        val storageRef = FirebaseStorage.getInstance().reference
+        val imageName = imageUri.lastPathSegment ?: "default_filename"
+        val imageRef = storageRef.child("users/${uid}/closet/$imageName")
+
+        imageRef.delete().addOnSuccessListener {
+            Log.d("RecognizeActivity", "이미지가 삭제되었습니다.")
+        }.addOnFailureListener { exception ->
+            Log.d("RecognizeActivity", "이미지 삭제에 실패했습니다: ${exception.message}")
+        }
+    }
+
     private fun request() {
         try {
             Log.d("uid", "uid: $uid")
@@ -230,7 +239,6 @@ class RecognizeActivity : AppCompatActivity() {
             conn.requestMethod = "GET"
             conn.doInput = true
 
-            val resCode = conn.responseCode
             val reader = BufferedReader(InputStreamReader(conn.inputStream))
             val response = StringBuilder()
             var line: String?
@@ -245,7 +253,6 @@ class RecognizeActivity : AppCompatActivity() {
             val jsonResponse = JSONObject(response.toString())
             val objectClass = jsonResponse.getString("object_class")
             val closestColorCategory = jsonResponse.getString("closest_color_category")
-            val imgURL = jsonResponse.getString("image_URL")
 
             // 결과 표시
             runOnUiThread {
@@ -271,12 +278,11 @@ class RecognizeActivity : AppCompatActivity() {
                 Toast.makeText(this@RecognizeActivity, "의류를 인식할 수 없습니다. 다시 촬영해주세요.", Toast.LENGTH_SHORT).show()
                 if (docId != null) {
                     FirestoreHelper.deleteClothesDocFromFirestore(this, uid, docId)
+                    uri?.let { deleteImageFromStorage(it) }
                 }
             }
         } finally {
             runOnUiThread {
-//                binding.progressBar.visibility = View.GONE
-//                binding.progressText.visibility = View.GONE
                 binding.progressLayout.visibility = View.GONE
             }
         }
