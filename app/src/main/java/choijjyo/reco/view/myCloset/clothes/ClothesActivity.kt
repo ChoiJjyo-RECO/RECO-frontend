@@ -97,6 +97,7 @@ class ClothesActivity : AppCompatActivity() {
         binding.backToClosetButton.setOnClickListener {
             intent = Intent(this, ClosetActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_left_enter, R.anim.slide_left_exit)
         }
         deuteranopiaButton = binding.clothesDeuteranopiaButton
         protanopiaButton = binding.clothesProtanopiaButton
