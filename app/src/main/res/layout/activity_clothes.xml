@@ -99,7 +99,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:background="@drawable/btn_not_selected_bg"
-                            android:text="녹색맹 필터"
+                            android:text="녹색약 필터"
                             android:layout_weight="1" />
 
                     <Button
@@ -108,7 +108,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:background="@drawable/btn_not_selected_bg"
-                            android:text="적색맹 필터"
+                            android:text="적색약 필터"
                             android:layout_weight="1" />
 
                     <Button
@@ -117,7 +117,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
                             android:background="@drawable/btn_not_selected_bg"
-                            android:text="청색맹 필터"
+                            android:text="청색약 필터"
                             android:layout_weight="1" />
 
                     <Button

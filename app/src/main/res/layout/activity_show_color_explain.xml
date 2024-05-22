@@ -16,7 +16,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:textColor="@color/black"
-            android:text="색깔이름"
+            android:text="색상 이름"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="25sp" />
@@ -36,7 +36,7 @@
             android:layout_marginHorizontal="40dp"
             android:padding="30dp"
             android:textColor="@color/black"
-            android:text="색깔설명" />
+            android:text="색상 설명" />
 
     <View
             android:id="@+id/colorBox"
@@ -58,20 +58,20 @@
                 android:id="@+id/color_deuteranopiaButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="녹색맹 필터"
+                android:text="녹색약 필터"
                 />
 
         <Button
                 android:id="@+id/color_protanopiaButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="적색맹 필터" />
+                android:text="적색약 필터" />
 
         <Button
                 android:id="@+id/color_tritanopiaButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="청색맹 필터" />
+                android:text="청색약 필터" />
 
         <Button
                 android:id="@+id/color_originalImgButton"
