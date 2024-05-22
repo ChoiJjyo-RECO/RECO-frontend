@@ -140,7 +140,7 @@ class PreferenceColorFragment : Fragment() {
     // 선택된 버튼을 표시하는 TextView를 업데이트하는 함수
     private fun updateSelectedButtonsText() {
         val likeSelectedText = like_selectedButtons.joinToString(", ")
-        val likeSelectedTextViewText = "선택된 버튼(싫어하는 색상): <b><u>$likeSelectedText</u></b>"
+        val likeSelectedTextViewText = "선택된 버튼 (좋아하는 색상): <b><u>$likeSelectedText</u></b>"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             like_selectedButtonsTextView.text = Html.fromHtml(likeSelectedTextViewText, Html.FROM_HTML_MODE_LEGACY)
         } else {
@@ -148,7 +148,7 @@ class PreferenceColorFragment : Fragment() {
         }
 
         val dislikeSelectedText = dislike_selectedButtons.joinToString(", ")
-        val dislikeSelectedTextViewText = "선택된 버튼(싫어하는 색상): <b><u>$dislikeSelectedText</u></b>"
+        val dislikeSelectedTextViewText = "선택된 버튼 (싫어하는 색상): <b><u>$dislikeSelectedText</u></b>"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             dislike_selectedButtonsTextView.text = Html.fromHtml(dislikeSelectedTextViewText, Html.FROM_HTML_MODE_LEGACY)
         } else {
