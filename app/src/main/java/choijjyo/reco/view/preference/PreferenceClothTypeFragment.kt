@@ -1,5 +1,7 @@
 package choijjyo.reco.view.preference
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -97,10 +99,20 @@ class PreferenceClothTypeFragment : Fragment() {
     // 선택된 버튼을 표시하는 TextView를 업데이트하는 함수
     private fun updateSelectedButtonsText() {
         val likeSelectedText = like_selectedButtons.joinToString(", ")
-        like_selectedButtonsTextView.text = "선택된 버튼 (좋아하는 옷 종류): $likeSelectedText"
+        val likeSelectedTextViewText = "선택된 버튼 (좋아하는 옷 종류): <b><u>$likeSelectedText</u></b>"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            like_selectedButtonsTextView.text = Html.fromHtml(likeSelectedTextViewText, Html.FROM_HTML_MODE_LEGACY)
+        } else {
+            like_selectedButtonsTextView.text = Html.fromHtml(likeSelectedTextViewText)
+        }
 
         val dislikeSelectedText = dislike_selectedButtons.joinToString(", ")
-        dislike_selectedButtonsTextView.text = "선택된 버튼 (싫어하는 옷 종류): $dislikeSelectedText"
+        val dislikeSelectedTextViewText = "선택된 버튼 (싫어하는 옷 종류): <b><u>$dislikeSelectedText</u></b>"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            dislike_selectedButtonsTextView.text = Html.fromHtml(dislikeSelectedTextViewText, Html.FROM_HTML_MODE_LEGACY)
+        } else {
+            dislike_selectedButtonsTextView.text = Html.fromHtml(dislikeSelectedTextViewText)
+        }
     }
 
     private fun saveSelectedButtonsToFirestore() {
