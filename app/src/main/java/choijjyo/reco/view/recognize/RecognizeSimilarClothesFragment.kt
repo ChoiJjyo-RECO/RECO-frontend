@@ -60,7 +60,7 @@ class RecognizeSimilarClothesFragment : Fragment() {
         val apiService = retrofit.create(GoogleCustomSearchAPI::class.java)
 
         val call = apiService.searchImages(
-            query = googleSearchKeyword,
+            query ="$googleSearchKeyword 상품 사진",
             apiKey = BuildConfig.GOOGLESEARCH_APIKEY,
             searchEngineId = BuildConfig.GOOGLESEARCH_SEARCHID
         )
