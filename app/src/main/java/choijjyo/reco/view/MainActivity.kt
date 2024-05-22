@@ -59,14 +59,17 @@ class MainActivity : AppCompatActivity(), RecentItemImageAdapter.OnItemClickList
             intent = Intent(this, ChoiceActivity::class.java)
             intent.putExtra("userUid", uid)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_right_exit)
         }
         binding.closet.setOnClickListener {
             intent = Intent(this, ClosetActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_right_exit)
         }
         binding.preference.setOnClickListener {
             val likeIntent = Intent(this, PreferenceActivity::class.java)
             startActivity(likeIntent)
+            overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_right_exit)
         }
     }
 

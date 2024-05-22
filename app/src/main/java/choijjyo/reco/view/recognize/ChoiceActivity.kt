@@ -67,6 +67,7 @@ class ChoiceActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_left_enter, R.anim.slide_left_exit)
             finish() // Optional: Finish the current activity
         }
     }
@@ -171,16 +172,6 @@ class ChoiceActivity : AppCompatActivity() {
             .setPermissions(Manifest.permission.READ_MEDIA_IMAGES)
             .check()
 
-        TedPermission.create()
-            .setPermissionListener(readPermission)
-            .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
-            .check()
-
-        // 갤러리 쓰기 권한 체크
-        TedPermission.create()
-            .setPermissionListener(readPermission)
-            .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            .check()
 
         // 카메라 쓰기 권한 체크
         TedPermission.create()
