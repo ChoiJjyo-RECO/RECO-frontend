@@ -107,7 +107,7 @@ class RecognizeRecommendClothesFragment: Fragment() {
             messages = listOf(
                 ChatMessage(
                     role = ChatRole.System,
-                    content = "사용자가 선호하는 색상은 $colorLike , 싫어하는 색상은 $colorDisLike 입니다. 사용자가 선호하는 옷 종류는 $clothesLike 이고, 싫어하는 옷 종류는 $clothesDisLike 입니다. 사용자의 취향을 고려해서 옷을 추천해주세요. 하의에는 상의, 상의에는 하의를 추천해주세요."
+                    content = "사용자가 선호하는 색상은 $colorLike , 싫어하는 색상은 $colorDisLike 입니다. 사용자가 선호하는 옷 종류는 $clothesLike 이고, 싫어하는 옷 종류는 $clothesDisLike 입니다. 사용자의 취향을 고려해서 옷을 추천해주세요. 하의에는 상의, 상의에는 하의를 추천해주세요. 다음과 같은 형식으로 응답해주세요: \"색상 옷종류\" OR \"색상 옷종류\" OR \"색상 옷종류\" OR \"색상 옷종류\" OR \"색상 옷종류\" OR \"색상 옷종류\"."
                 ),
                 ChatMessage(
                     role = ChatRole.User,
