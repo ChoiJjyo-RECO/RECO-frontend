@@ -267,12 +267,14 @@ class RecognizeActivity : AppCompatActivity() {
                         sendToRecommendFragment(modelResult, docId)
                     }
                 }
+                binding.searchLayout.visibility = View.VISIBLE
             }
 
 
         } catch (ex: Exception) {
             println("예외 발생함: ${ex.toString()}")
             runOnUiThread {
+                binding.searchLayout.visibility = View.GONE
                 val docId = uri?.lastPathSegment
                 Toast.makeText(this@RecognizeActivity, "의류를 인식할 수 없습니다. 다시 촬영해주세요.", Toast.LENGTH_SHORT).show()
                 if (docId != null) {
@@ -283,7 +285,6 @@ class RecognizeActivity : AppCompatActivity() {
         } finally {
             runOnUiThread {
                 binding.progressLayout.visibility = View.GONE
-                binding.searchLayout.visibility = View.VISIBLE
             }
         }
     }
