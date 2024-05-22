@@ -182,7 +182,7 @@
                                             android:layout_width="300dp"
                                             android:layout_height="50dp"
                                             android:layout_gravity="center"
-                                            android:inputType="text"
+                                            android:inputType="textPassword"
                                             android:padding="7dp"
                                             android:layout_marginBottom="5dp"
                                             android:backgroundTint="@color/black"
@@ -194,7 +194,7 @@
                                             android:layout_width="300dp"
                                             android:layout_height="50dp"
                                             android:layout_gravity="center"
-                                            android:inputType="text"
+                                            android:inputType="textPassword"
                                             android:padding="7dp"
                                             android:backgroundTint="@color/black"
                                             android:textColor="#585858" />
